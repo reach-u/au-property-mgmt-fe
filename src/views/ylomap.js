@@ -23,7 +23,11 @@ class YloMap extends React.Component {
     
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
-       
+      <Marker position={position}>
+          <Popup>
+            <span> Miski übervajalik info selle maja kohta <br/> lat: -4.04569 lng: 39.66366</span>
+          </Popup>
+        </Marker> 
       </Map>
     );
   }

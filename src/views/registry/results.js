@@ -12,7 +12,7 @@ class Results extends Component {
             interactive
             style={{maxWidth: '200px', margin: '15px', flexGrow: 1}}
             elevation={Elevation.TWO}>
-            <Icon icon="home" intent="primary" iconSize={50} />
+            <Icon icon="home" intent="primary" iconSize={30} />
             <h4>
               {item.name ||
                 `${item.street} ${item.house}${item.apartment ? `${-item.apartment}` : ''}`}
