@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {Classes, Card, Elevation, Icon} from '@blueprintjs/core';
+import {Card, Elevation, Icon} from '@blueprintjs/core';
 
 class Results extends Component {
   render() {

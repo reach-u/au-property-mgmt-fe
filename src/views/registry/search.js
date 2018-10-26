@@ -4,7 +4,7 @@ import {observer} from 'mobx-react';
 import {FlexItem} from '../../components/styledComponents';
 
 const address = 'searchAddress';
-const property = 'propertyNumber';
+// const property = 'propertyNumber';
 
 const Search = observer(({handleSearch, store}) => {
   const handleKeyDown = event => {
