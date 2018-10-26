@@ -35,7 +35,7 @@ const Search = observer(({handleSearch, store}) => {
 
   const style = () => {
     const styles =
-      store.estateCount > 0
+      store.state === 'loaded'
         ? {
             display: 'flex',
             width: '100%',
@@ -67,34 +67,36 @@ const Search = observer(({handleSearch, store}) => {
             className={`${Classes.INTENT_PRIMARY} input-field`}
             type="text"
             large
-            placeholder="Wajir Rd, Mombasa, Kenya"
+            placeholder="Try &quot;Mombasa&quot;"
             onSubmit={handleSearch}
             onKeyDown={handleKeyDown}
             id={address}
           />
         </FormGroup>
       </FlexItem>
+      {/*
       <FlexItem>
         <FormGroup label="Property number" labelFor={property}>
           <InputGroup
             className={`${Classes.INTENT_PRIMARY} input-field`}
             type="text"
             large
-            placeholder="100999"
+            placeholder="10032"
             onKeyDown={handleKeyDown}
             id={property}
           />
         </FormGroup>
       </FlexItem>
+      */}
       <FlexItem>
         <Button
           active
-          fill={store.estateCount === 0}
+          fill={store.estateCount === 0 && store.state !== 'loaded'}
           intent="primary"
           large
           style={{marginBottom: 15}}
           onClick={handleClick}>
-          Find real estate
+          Find real estates
         </Button>
       </FlexItem>
     </div>
