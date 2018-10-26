@@ -18,6 +18,14 @@ class RealEstateStore {
     return this.state === 'loaded' && this.estateCount === 0;
   }
 
+  get detailsAvailable() {
+    return !!this.details;
+  }
+
+  resetDetails() {
+    this.details = null;
+  }
+
   fetchEstates(query) {
     fetch(api.estates(query))
       .then(response => response.json())
@@ -34,7 +42,7 @@ class RealEstateStore {
   fetchEstateDetails(id) {
     fetch(api.details(id))
       .then(response => response.json())
-      .then(data => (this.details = data));
+      .then(data => (this.details = data.detailedData));
   }
 }
 
@@ -43,9 +51,11 @@ decorate(RealEstateStore, {
   estates: observable,
   estateCount: computed,
   dataAvailable: computed,
+  detailsAvailable: computed,
   noResults: computed,
   fetchEstateDetails: action,
   fetchEstates: action,
+  resetDetails: action,
   state: observable,
 });
 
