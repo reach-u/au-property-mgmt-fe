@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 //import L from 'leaflet';
-import {Map, TileLayer, Marker, Popup} from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import './ylomap.css';
 
 //const { Map, TileLayer, Marker, Popup } = window.ReactLeaflet;
@@ -19,10 +19,17 @@ class YloMap extends React.Component {
     const position = [this.state.lat, this.state.lng];
     return (
       <Map center={position} zoom={this.state.zoom}>
-        <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
+        <TileLayer
+    
+          url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+        />
+       
       </Map>
     );
   }
+    
+  
 }
+
 
 export default YloMap;
