@@ -2,6 +2,8 @@ import React from 'react';
 import {Button, InputGroup, Classes, FormGroup} from '@blueprintjs/core';
 import {observer} from 'mobx-react';
 import {FlexItem} from '../../components/styledComponents';
+import  AutoComplete from '../../components/AutoComplete';
+import {realEstateStore} from '../../stores/realEstate';
 
 const address = 'searchAddress';
 const property = 'propertyNumber';
@@ -18,19 +20,12 @@ const Search = observer(({handleSearch, store}) => {
   };
 
   const getValues = () => {
-    const values = Array.from(document.querySelectorAll('.input-field')).map(
-      element => element.childNodes[0]
-    );
+    const value = document.querySelector('.input-field').value;
 
-    return values
-      .map(node => node.value)
-      .filter(value => value)
-      .join(',');
+    if (!value)
+      return;
 
-    /* return values.reduce((object, node) => {
-      object[node.id] = node.value;
-      return object;
-    }, {}); */
+    return value;
   };
 
   const style = () => {
@@ -62,28 +57,8 @@ const Search = observer(({handleSearch, store}) => {
   return (
     <div style={style()}>
       <FlexItem>
-        <FormGroup label="Address" labelFor={address}>
-          <InputGroup
-            className={`${Classes.INTENT_PRIMARY} input-field`}
-            type="text"
-            large
-            placeholder="Try &quot;Mombasa&quot;"
-            onSubmit={handleSearch}
-            onKeyDown={handleKeyDown}
-            id={address}
-          />
-        </FormGroup>
-      </FlexItem>
-      <FlexItem>
-        <FormGroup label="Property number" labelFor={property}>
-          <InputGroup
-            className={`${Classes.INTENT_PRIMARY} input-field`}
-            type="text"
-            large
-            placeholder="10032"
-            onKeyDown={handleKeyDown}
-            id={property}
-          />
+        <FormGroup>
+          <AutoComplete store={realEstateStore}/>
         </FormGroup>
       </FlexItem>
       <FlexItem>
