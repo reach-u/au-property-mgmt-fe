@@ -2,9 +2,12 @@ import styled from 'styled-components';
 
 export const FlexDiv = styled.div`
   display: flex;
-  align-items: center;
+  align-items: ${props => props.alignItems || 'center'};
   justify-content: center;
   width: ${props => props.width};
   height: ${props => props.height || 'auto'};
-  padding: 5px;
+`;
+
+export const FlexItem = styled.div`
+  margin: 0 10px;
 `;
