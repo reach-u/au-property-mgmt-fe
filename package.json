@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@blueprintjs/core": "^3.7.0",
+    "mobx": "^5.5.2",
     "mobx-react": "^5.3.5",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
@@ -31,5 +32,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "proxy": "https://au.reach-u.com/"
 }
