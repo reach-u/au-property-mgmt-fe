@@ -25,6 +25,18 @@ class FullDetailsStore {
       this.details.apartment ? `-${this.details.apartment}` : ''
     }, ${this.details.county}, ${this.details.country}`;
   }
+
+  get mortgageData() {
+    const {mortgageSize, mortgageSubject} = this.detailedData;
+    return mortgageSize || mortgageSubject
+      ? `Mortgage ${mortgageSize}$ (${mortgageSubject})`
+      : 'No mortgage';
+  }
+
+  get previousOwnerData() {
+    const {previousOwner} = this.detailedData;
+    return previousOwner ? `Previously owned by ${previousOwner}` : 'No previous owner';
+  }
 }
 
 decorate(FullDetailsStore, {
@@ -33,6 +45,8 @@ decorate(FullDetailsStore, {
   coordinateData: computed,
   detailedData: computed,
   addressData: computed,
+  mortgageData: computed,
+  previousOwnerData: computed,
 });
 
 export const fullDetailsStore = new FullDetailsStore();

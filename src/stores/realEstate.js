@@ -38,9 +38,12 @@ class RealEstateStore {
     this.detailsId = null;
   }
 
-  fetchEstates(query) {
+  fetchEstates(query, onlyMyProperties = false, authStore) {
+    query = (!!onlyMyProperties) ? "" : query;
+    let userId = authStore.userAuth.code;
+    let apiSelection = (!!onlyMyProperties) ? api.myEstates(userId) : api.estates(query);
     this.resetDetails();
-    fetch(api.estates(query))
+    fetch(apiSelection)
       .then(response => response.json())
       .then(data => {
         if (data.error) {
