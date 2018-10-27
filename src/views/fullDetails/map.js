@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Map, TileLayer, Marker, ZoomControl} from 'react-leaflet';
+import {Map, TileLayer, Marker} from 'react-leaflet';
+import {Icon} from '@blueprintjs/core';
 import './styles.css';
 
 class MapView extends Component {
@@ -12,13 +13,32 @@ class MapView extends Component {
   render() {
     const position = [this.state.lat, this.state.lng];
     return (
-      <Map center={position} zoom={this.state.zoom} className="map" zoomControl={false}>
-        <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
-        <Marker position={position} />
-        <ZoomControl position="topright" />
-      </Map>
+      <div style={{position: 'relative'}}>
+        <Map
+          center={position}
+          zoom={this.state.zoom}
+          ref={e => {
+            this.mapInstance = e;
+          }}
+          className="map">
+          <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
+          <Marker position={position} />
+        </Map>
+        <button className="map-button" title="Back to property" onClick={this.handleClick}>
+          Recenter
+        </button>
+      </div>
     );
   }
+
+  componentDidMount() {
+    this.map = this.mapInstance.leafletElement;
+  }
+
+  handleClick = () => {
+    const {lat, lng, zoom} = this.state;
+    this.map.flyTo([lat, lng], zoom);
+  };
 }
 
 export default MapView;
