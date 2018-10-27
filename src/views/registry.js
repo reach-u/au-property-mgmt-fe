@@ -9,6 +9,7 @@ import Details from './registry/details';
 const Registry = observer(({store, authstore}) => {
 
   const handleSearch = (searchObject, myProperty = false) => {
+    console.log(myProperty);
     store.fetchEstates(searchObject, myProperty, authstore);
   };
 
