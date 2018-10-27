@@ -72,7 +72,7 @@ const Search = observer(({handleSearch, store, authstore}) => {
           Find real estates
         </Button>
       </FlexItem>
-    <FlexItem style={{width: "calc(100% - 900px)"}}>
+    <FlexItem style={{width: "calc(100% - 1000px)"}}>
     </FlexItem>
     <FlexItem className="my-properties">
       <a className="my-properties bp3-large bp3-intent-primary" href="#" onClick={showMyProperties}>My properties</a>
