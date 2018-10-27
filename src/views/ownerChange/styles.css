@@ -1,0 +1,10 @@
+.owner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 50px;
+}
+
+.owners {
+    padding: 10px;
+}

@@ -46,7 +46,7 @@ class FullDetails extends Component {
               rel="noopener noreferrer">
               View on Street U
             </a>
-            <Button intent="success" large className="buy-button">
+            <Button intent="success" large className="buy-button" onClick={this.handleBuyClick}>
               Buy property
             </Button>
           </div>
@@ -110,6 +110,10 @@ class FullDetails extends Component {
       </Overlay>
     );
   }
+
+  handleBuyClick = () => {
+    this.props.history.push(`/owner-change/${this.props.store.details.id}`);
+  };
 }
 
 export default observer(FullDetails);
