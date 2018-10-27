@@ -2,32 +2,107 @@
     display: grid;
     grid-template:
         [row-1-start] "header map map"
-        [row-2-start] "land property building"
+        [row-2-start] "building property land"
         / 1fr 1fr 1fr;
-    grid-gap: 30px;
-    padding: 20px;
+    padding: 20px 30px;
+}
+
+.close-button {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    color: #888;
+    cursor: pointer;
+}
+
+.data-element {
+    background: #fff;
+    padding: 0 30px 20px;
 }
 
 h1 {
     margin-top: 0 !important;
 }
 
+h2 {
+    margin: 0;
+}
+
 .header {
+    padding-top: 25px;
     grid-area: header;
+    position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.buy-button {
+    margin-top: 20px;
+}
+
+.land {
+    grid-area: land;
+}
+
+.property {
+    grid-area: property;
+}
+
+.building {
+    grid-area: building;
 }
 
 .map-card {
-    padding: 0 !important;
-    grid-area: map
+    grid-area: map;
+    padding-top: 20px;
 }
 
 .map {
     height: 300px;
 }
 
+.map-button {
+    position: absolute;
+    top: 10px;
+    left: 60px;
+    height: 32px;
+    z-index: 2000;
+    background: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 2px solid rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+.map-button:hover{
+    background: #f4f4f4;
+}
+
 .property-type {
     margin: 0 5px;
+}
+
+.centered-icon {
+    vertical-align: middle;
+}
+
+@media only screen and (max-width: 800px) {
+    .grid-container {
+        grid-template:
+                [row-1-start] "header"
+                [row-2-start]  "map"
+                [row-3-start] "building"
+                [row-4-start] "property"
+                [row-5-start] "land"
+        / auto;
+    }
+    .header {
+        padding: 40px 20px 0;
+        justify-content: flex-end;
+    }
+    .close-button {
+        left: auto;
+        right: 20px;
+    }
 }
