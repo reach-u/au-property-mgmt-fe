@@ -11,7 +11,7 @@ class App extends Component {
       <Switch>
         <Redirect exact from="/" to="/search" />
         <Route path="/search" render={props => <Registry store={realEstateStore} {...props} />} />
-        <Route path="/testmap" render={() => <YloMap/>} />
+        <Route path="/testmap" render={() => <YloMap />} />
       </Switch>
     );
   }

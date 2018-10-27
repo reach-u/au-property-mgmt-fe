@@ -4,6 +4,7 @@ import {FlexDiv} from '../components/styledComponents';
 import {observer} from 'mobx-react';
 import Results from './registry/results';
 import {NonIdealState} from '@blueprintjs/core';
+import Details from './registry/details';
 
 const Registry = observer(({store}) => {
   const handleSearch = searchObject => {
@@ -18,10 +19,17 @@ const Registry = observer(({store}) => {
         alignItems={store.state === 'loaded' ? 'flex-start' : 'center'}>
         <Search handleSearch={handleSearch} store={store} />
       </FlexDiv>
-      {store.dataAvailable && <Results store={store} />}
-      {store.noResults && (
-        <NonIdealState icon="search" title="No search results" description="Try another address" />
-      )}
+      <div style={{display: 'flex'}}>
+        {store.dataAvailable && <Results store={store} />}
+        {store.detailsAvailable && <Details store={store} />}
+        {store.noResults && (
+          <NonIdealState
+            icon="search"
+            title="No search results"
+            description="Try another address"
+          />
+        )}
+      </div>
     </Fragment>
   );
 });

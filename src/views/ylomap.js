@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 //import L from 'leaflet';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import {Map, TileLayer, Marker, Popup} from 'react-leaflet';
 import './ylomap.css';
 
 //const { Map, TileLayer, Marker, Popup } = window.ReactLeaflet;
@@ -31,9 +31,6 @@ class YloMap extends React.Component {
       </Map>
     );
   }
-    
-  
 }
-
 
 export default YloMap;
