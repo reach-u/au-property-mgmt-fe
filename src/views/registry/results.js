@@ -28,7 +28,7 @@ class Results extends Component {
             </div>
             <hr />
             <p>{`${item.house}, ${item.street}, ${item.county}, ${item.country}`}</p>
-            <a href={item.streetuUrl} target="_blank">
+            <a href={item.streetuUrl} target="_blank" rel="noopener noreferrer">
               View on Street U
             </a>
           </Card>

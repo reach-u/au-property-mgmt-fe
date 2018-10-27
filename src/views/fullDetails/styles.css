@@ -1,0 +1,33 @@
+.grid-container {
+    display: grid;
+    grid-template:
+        [row-1-start] "header map map"
+        [row-2-start] "land property building"
+        / 1fr 1fr 1fr;
+    grid-gap: 30px;
+    padding: 20px;
+}
+
+h1 {
+    margin-top: 0 !important;
+}
+
+.header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-card {
+    padding: 0 !important;
+    grid-area: map
+}
+
+.map {
+    height: 300px;
+}
+
+.property-type {
+    margin: 0 5px;
+}
