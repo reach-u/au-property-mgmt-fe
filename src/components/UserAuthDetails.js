@@ -7,11 +7,13 @@ class UserAuthDetails extends Component {
   state = {
     user: this.props.authstore.userAuth,
     users: this.props.authstore.users,
+    showMyProperties: this.props.showMyProperties,
     displayMenu: false
   };
 
   constructor(props) {
     super(props);
+
     this.showDropdownMenu = this.showDropdownMenu.bind(this);
     this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
   }
@@ -31,6 +33,7 @@ class UserAuthDetails extends Component {
 
   handleClick(user) {
     this.props.authstore.userAuth = user;
+    this.props.showMyProperties();
   }
 
   render() {
