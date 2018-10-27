@@ -6,9 +6,11 @@ import Results from './registry/results';
 import {NonIdealState} from '@blueprintjs/core';
 import Details from './registry/details';
 
-const Registry = observer(({store}) => {
-  const handleSearch = searchObject => {
-    store.fetchEstates(searchObject);
+const Registry = observer(({store, authstore}) => {
+
+  const handleSearch = (searchObject, myProperty = false) => {
+    console.log(myProperty);
+    store.fetchEstates(searchObject, myProperty, authstore);
   };
 
   return (
@@ -17,7 +19,7 @@ const Registry = observer(({store}) => {
         width="100%"
         height={store.state === 'loaded' ? 'auto' : '100%'}
         alignItems={store.state === 'loaded' ? 'flex-start' : 'center'}>
-        <Search handleSearch={handleSearch} store={store} />
+        <Search handleSearch={handleSearch} store={store} authstore={authstore} />
       </FlexDiv>
       <div style={{display: 'flex'}}>
         {store.dataAvailable && <Results store={store} />}

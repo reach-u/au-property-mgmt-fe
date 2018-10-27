@@ -2,35 +2,30 @@ import React from 'react';
 import {Button, InputGroup, Classes, FormGroup} from '@blueprintjs/core';
 import {observer} from 'mobx-react';
 import {FlexItem} from '../../components/styledComponents';
+import  AutoComplete from '../../components/AutoComplete';
+import  UserAuthDetails from '../../components/UserAuthDetails';
+import {realEstateStore} from '../../stores/realEstate';
 
 const address = 'searchAddress';
 const property = 'propertyNumber';
 
-const Search = observer(({handleSearch, store}) => {
-  const handleKeyDown = event => {
-    if (event.keyCode === 13) {
-      handleSearch(getValues());
-    }
-  };
+const Search = observer(({handleSearch, store, authstore}) => {
 
   const handleClick = () => {
     handleSearch(getValues());
   };
 
   const getValues = () => {
-    const values = Array.from(document.querySelectorAll('.input-field')).map(
-      element => element.childNodes[0]
-    );
+    const value = document.querySelector('.input-field').value;
 
-    return values
-      .map(node => node.value)
-      .filter(value => value)
-      .join(',');
+    if (!value)
+      return;
 
-    /* return values.reduce((object, node) => {
-      object[node.id] = node.value;
-      return object;
-    }, {}); */
+    return value;
+  };
+
+  const showMyProperties = () => {
+    handleSearch(null, true);
   };
 
   const style = () => {
@@ -62,28 +57,8 @@ const Search = observer(({handleSearch, store}) => {
   return (
     <div style={style()}>
       <FlexItem>
-        <FormGroup label="Address" labelFor={address}>
-          <InputGroup
-            className={`${Classes.INTENT_PRIMARY} input-field`}
-            type="text"
-            large
-            placeholder="Try &quot;Mombasa&quot;"
-            onSubmit={handleSearch}
-            onKeyDown={handleKeyDown}
-            id={address}
-          />
-        </FormGroup>
-      </FlexItem>
-      <FlexItem>
-        <FormGroup label="Property number" labelFor={property}>
-          <InputGroup
-            className={`${Classes.INTENT_PRIMARY} input-field`}
-            type="text"
-            large
-            placeholder="10032"
-            onKeyDown={handleKeyDown}
-            id={property}
-          />
+        <FormGroup>
+          <AutoComplete store={realEstateStore}/>
         </FormGroup>
       </FlexItem>
       <FlexItem>
@@ -97,6 +72,14 @@ const Search = observer(({handleSearch, store}) => {
           Find real estates
         </Button>
       </FlexItem>
+    <FlexItem style={{width: "calc(100% - 1000px)"}}>
+    </FlexItem>
+    <FlexItem className="my-properties">
+      <a className="my-properties bp3-large bp3-intent-primary" href="#" onClick={showMyProperties}>My properties</a>
+    </FlexItem>
+    <FlexItem>
+      {store.state === 'loaded' && <UserAuthDetails authstore={authstore} />}
+    </FlexItem>
     </div>
   );
 });
