@@ -6,6 +6,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import FullDetails from './views/fullDetails';
 import './index.css';
 import {fullDetailsStore} from './stores/fullDetails';
+import NotFoundPage from './views/404';
 
 class App extends Component {
   render() {
@@ -18,6 +19,7 @@ class App extends Component {
           path="/details/:id"
           render={props => <FullDetails store={fullDetailsStore} {...props} />}
         />
+        <Route path="/:id" component={NotFoundPage} />
       </Switch>
     );
   }
