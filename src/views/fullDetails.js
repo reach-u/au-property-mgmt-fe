@@ -43,6 +43,10 @@ class FullDetails extends Component {
         </Card>
         <Card elevation={Elevation.TWO} className="main-data">
           <h1>Property registration</h1>
+          <h4>
+            Owned by {detailedData.currentOwner} since{' '}
+            {new Date(detailedData.lastOwnerChangeDate).toDateString()}
+          </h4>
         </Card>
       </div>
     );
