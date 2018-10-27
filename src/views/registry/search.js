@@ -3,17 +3,13 @@ import {Button, InputGroup, Classes, FormGroup} from '@blueprintjs/core';
 import {observer} from 'mobx-react';
 import {FlexItem} from '../../components/styledComponents';
 import  AutoComplete from '../../components/AutoComplete';
+import  UserAuthDetails from '../../components/UserAuthDetails';
 import {realEstateStore} from '../../stores/realEstate';
 
 const address = 'searchAddress';
 const property = 'propertyNumber';
 
-const Search = observer(({handleSearch, store}) => {
-  const handleKeyDown = event => {
-    if (event.keyCode === 13) {
-      handleSearch(getValues());
-    }
-  };
+const Search = observer(({handleSearch, store, authstore}) => {
 
   const handleClick = () => {
     handleSearch(getValues());
@@ -26,6 +22,10 @@ const Search = observer(({handleSearch, store}) => {
       return;
 
     return value;
+  };
+
+  const showMyProperties = () => {
+    handleSearch(null, true);
   };
 
   const style = () => {
@@ -72,6 +72,14 @@ const Search = observer(({handleSearch, store}) => {
           Find real estates
         </Button>
       </FlexItem>
+    <FlexItem style={{width: "calc(100% - 900px)"}}>
+    </FlexItem>
+    <FlexItem className="my-properties">
+      <a className="my-properties bp3-large bp3-intent-primary" href="#" onClick={showMyProperties}>My properties</a>
+    </FlexItem>
+    <FlexItem>
+      {store.state === 'loaded' && <UserAuthDetails authstore={authstore} />}
+    </FlexItem>
     </div>
   );
 });

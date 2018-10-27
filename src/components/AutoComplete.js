@@ -38,9 +38,9 @@ class Autocomplete extends Component {
     let result = data.country + " " + data.county + " " +
       data.street + " " + data.house;
 
-//    if (!!data.apartment) {
-//      result += "-" + data.apartment;
-//    }
+    if (!!data.apartment) {
+      result += "-" + data.apartment;
+    }
     return result;
   }
 
