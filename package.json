@@ -39,5 +39,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "https://au.reach-u.com/"
+  "proxy": "http://au.reach-u.com/"
 }

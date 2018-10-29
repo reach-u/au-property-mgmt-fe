@@ -1,49 +1,51 @@
 import React from 'react';
-import {humanReadable} from '../../utils/string';
 import MapView from '../fullDetails/map';
-import {Card, Elevation, Icon} from '@blueprintjs/core';
-import './details.css';
-import pilt101651211 from './101651211.png' ;
-var streetuImageName;
-
+import {Button} from '@blueprintjs/core';
+import './details/details.css';
+import pilt101651211 from './details/101651211.png';
+import {withRouter} from 'react-router';
+import {observer} from 'mobx-react';
 
 const Details = ({store}) => {
-    
-    function getimage() {
-        
-        const picname='./'+store.details.landNumber.replace(":", "").replace(":", "")+'.png';
-        let imageName=require(picname);
-        
-        return imageName;
-        }
+  return (
+    <div className="details-container">
+      <div className="img-container">
+        <img className="streetuImage" alt="street view" src={pilt101651211} />
+      </div>
+      <div className="details-text">
+        <div className="details-header">
+          <h1>{store.detailedAddress}</h1>
+          <a href={`/details/${store.detailsId}`} rel="noopener noreferrer" target="_blank">
+            Show more
+          </a>
+        </div>
+        <Button
+          minimal
+          icon="cross"
+          className="details-close"
+          title="Close"
+          onClick={() => store.resetDetails()}
+        />
+        <p>
+          <strong>Property number:</strong> {store.detailsId}
+        </p>
+        <p>
+          <strong>Property type:</strong> {store.details.propertyType}
+        </p>
+        <p>
+          <strong>Property size:</strong> {store.details.propertySize} m<sup>2</sup>
+        </p>
+        <p>
+          <strong>Land number:</strong> {store.details.landNumber}
+        </p>
+        <p>
+          <strong>Land acreage:</strong> {store.details.landAcreage} m<sup>2</sup>{' '}
+        </p>
 
-    return (
-    
-   
-    <div style={{minWidth: '450px', borderLeft: '2px solid #888', padding: '20px'}}>
-      <h2>{store.detailedAddress}</h2>
-        <p> <strong>Property number:</strong> {store.detailsId}</p>
-        <p> <strong>Property type:</strong> {store.details.propertyType}</p>
-        <p> <strong>Property size:</strong> {store.details.propertySize} m <sup>2</sup></p>
-        <p> <strong>Land number:</strong> {store.details.landNumber}</p>
-        <p> <strong>Land acreage:</strong> {store.details.landAcreage} m <sup>2</sup> </p>    
-        <Card elevation={Elevation.THREE} className="main-data map-card">
-               <MapView coords={store.details} />
-        </Card>
-            <p>  . </p>
-        <Card elevation={Elevation.THREE} className="streetu-kuva" style={{padding: '0px'}} >
-                <img className='streetuImage' style={{Width: '20%', Height: '20%'}} src={pilt101651211} />
-        </Card>
+        <MapView coords={store.estateData.coordinates} />
+      </div>
     </div>
   );
 };
 
-export default Details;
-
- /*{Object.keys(store.details)
-        .filter(key => store.details[key])
-        .map(key => (
-          <p key={key}>
-            <strong>{humanReadable(key)}:</strong> {store.details[key]}
-          </p>
-        */
+export default withRouter(observer(Details));

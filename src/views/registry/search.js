@@ -1,16 +1,12 @@
 import React from 'react';
-import {Button, InputGroup, Classes, FormGroup} from '@blueprintjs/core';
+import {Button, FormGroup} from '@blueprintjs/core';
 import {observer} from 'mobx-react';
 import {FlexItem} from '../../components/styledComponents';
-import  AutoComplete from '../../components/AutoComplete';
-import  UserAuthDetails from '../../components/UserAuthDetails';
+import AutoComplete from '../../components/AutoComplete';
+import UserAuthDetails from '../../components/UserAuthDetails';
 import {realEstateStore} from '../../stores/realEstate';
 
-const address = 'searchAddress';
-const property = 'propertyNumber';
-
-const Search = observer(({handleSearch, store, authstore}) => {
-
+const Search = ({handleSearch, store, authstore}) => {
   const handleClick = () => {
     handleSearch(getValues());
   };
@@ -18,8 +14,7 @@ const Search = observer(({handleSearch, store, authstore}) => {
   const getValues = () => {
     const value = document.querySelector('.input-field').value;
 
-    if (!value)
-      return;
+    if (!value) return;
 
     return value;
   };
@@ -48,7 +43,9 @@ const Search = observer(({handleSearch, store, authstore}) => {
       {
         alignItems: 'flex-end',
         boxShadow:
-          '0px 1px 8px 0px rgba(0, 0, 0, 0.2),0px 3px 4px 0px rgba(0, 0, 0, 0.14),0px 3px 3px -2px rgba(0, 0, 0, 0.12)',
+          '0px 1px 5px 0px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 3px 1px -2px rgba(0, 0, 0, 0.12)',
+        zIndex: 10,
+        background: '#fff',
       },
       styles
     );
@@ -58,7 +55,7 @@ const Search = observer(({handleSearch, store, authstore}) => {
     <div style={style()}>
       <FlexItem>
         <FormGroup>
-          <AutoComplete store={realEstateStore}/>
+          <AutoComplete store={realEstateStore} />
         </FormGroup>
       </FlexItem>
       <FlexItem>
@@ -72,16 +69,15 @@ const Search = observer(({handleSearch, store, authstore}) => {
           Find real estates
         </Button>
       </FlexItem>
-    <FlexItem style={{width: "calc(100% - 1000px)"}}>
-    </FlexItem>
-    <FlexItem className="my-properties">
-      <a className="my-properties bp3-large bp3-intent-primary" href="#" onClick={showMyProperties}>My properties</a>
-    </FlexItem>
-    <FlexItem>
-      {store.state === 'loaded' && <UserAuthDetails authstore={authstore} />}
-    </FlexItem>
+      <FlexItem style={{width: 'calc(100% - 1000px)'}} />
+      <FlexItem className="my-properties">
+        <button className="my-properties bp3-large bp3-intent-primary" onClick={showMyProperties}>
+          My properties
+        </button>
+      </FlexItem>
+      <FlexItem>{store.state === 'loaded' && <UserAuthDetails authstore={authstore} />}</FlexItem>
     </div>
   );
-});
+};
 
-export default Search;
+export default observer(Search);

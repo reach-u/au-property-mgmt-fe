@@ -7,14 +7,6 @@
     padding: 20px 30px;
 }
 
-.close-button {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    color: #888;
-    cursor: pointer;
-}
-
 .data-element {
     background: #fff;
     padding: 0 30px 20px;
@@ -33,7 +25,6 @@ h5 {
 }
 
 .header {
-    padding-top: 25px;
     grid-area: header;
     position: relative;
     display: flex;

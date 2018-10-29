@@ -10,7 +10,7 @@ export default {
   transactionStatus: transactionId =>
     `au-property-mgmt-rest/api/1/priv/re/details/${transactionId}`,
   person: id => `http://139.59.148.64/coco-api/persons/${id}`,
-  getAllPersons: function () {
+  getAllPersons: function() {
     return 'http://africa.nortal.com/person-registry/persons?dateFrom=1900-10-27T08%3A56%3A24.315Z&dateTo=2018-10-27T08%3A56%3A24.315Z';
   },
 };

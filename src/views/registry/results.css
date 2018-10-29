@@ -1,0 +1,13 @@
+.card-container {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-grow: 2;
+}
+
+.result-card {
+    width: 250px;
+    height: 250px;
+    margin: 15px;
+}
