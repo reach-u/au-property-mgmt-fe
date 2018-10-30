@@ -13,7 +13,6 @@ class UserAuthDetails extends Component {
 
   constructor(props) {
     super(props);
-
     this.showDropdownMenu = this.showDropdownMenu.bind(this);
     this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
   }
@@ -41,7 +40,9 @@ class UserAuthDetails extends Component {
     return (
       <FlexItem className="dropdown" style={{background: "#0e5a8a"}}>
         <div className="bp3-button bp3-active bp3-large bp3-intent-primary" onClick={this.showDropdownMenu}>
-          Logged in as {this.props.authstore.userAuth.givenName + " " + this.props.authstore.userAuth.familyName}
+          Logged in as { (this.props.authstore && this.props.authstore.userAuth) ?
+          this.props.authstore.userAuth.givenName + " " + this.props.authstore.userAuth.familyName : ""
+        }
         </div>
 
         {this.state.displayMenu ? (
