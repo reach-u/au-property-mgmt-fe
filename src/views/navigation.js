@@ -43,16 +43,44 @@ class Navigation extends Component {
         </Button>
       );
     } else {
-      return <UserAuthDetails authstore={userStore} className="nav-button" />;
+      return (
+        <div className="nav-button logged-in">
+          <Button
+            minimal
+            intent="primary"
+            onClick={() => {
+              const {history, estateStore} = this.props;
+              estateStore.fetchEstates(null, true, userStore);
+              history.push('/results');
+            }}>
+            My properties
+          </Button>
+          <UserAuthDetails authstore={userStore} className="nav-button" />
+        </div>
+      );
     }
   }
 
   renderSearch({location}) {
     if (location.pathname.indexOf('/search') === -1) {
-      return <AutoComplete store={this.props.estateStore} />;
+      return (
+        <div>
+          <AutoComplete store={this.props.estateStore} />
+          <Button large onClick={this.handleSearchClick}>
+            Search
+          </Button>
+        </div>
+      );
     }
     return null;
   }
+
+  handleSearchClick = () => {
+    const {estateStore, history} = this.props;
+    const value = document.querySelector('.input-field').value;
+    estateStore.fetchEstates(value);
+    history.push('/results');
+  };
 }
 
 export default withRouter(observer(Navigation));

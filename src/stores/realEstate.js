@@ -21,7 +21,7 @@ class RealEstateStore {
     let userId = authStore && authStore.userAuth ? authStore.userAuth.code : '';
     let apiSelection = !!onlyMyProperties ? api.myEstates(userId) : api.estates(query);
     this.resetDetails();
-    fetch(apiSelection)
+    fetch(`${window.location.origin}/${apiSelection}`)
       .then(response => response.json())
       .then(data => {
         if (data.error) {

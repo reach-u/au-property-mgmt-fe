@@ -9,3 +9,7 @@
 .nav-button {
     z-index: 10;
 }
+
+.logged-in {
+    display: flex;
+}
