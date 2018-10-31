@@ -10,13 +10,14 @@ class UserAuthStore {
   }
 
   initAndLoginUsers() {
+    console.log("r");
     fetch(api.getAllPersons())
       .then(response => response.json())
       .then(data => {
         if (!data.error) {
           let selectedUser;
-          for (const item of data) {
-            if (!!item.givenName && item.givenName.toLowerCase().indexOf('sulev') > -1) {
+          for (let item of data) {
+            if (!!item.givenName && item.givenName.toLowerCase().indexOf("sulev") > -1) {
               selectedUser = item;
               break;
             }
