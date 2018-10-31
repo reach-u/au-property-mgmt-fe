@@ -39,9 +39,9 @@ class RealEstateStore {
   }
 
   fetchEstates(query, onlyMyProperties = false, authStore) {
-    query = (!!onlyMyProperties) ? "" : query;
-    let userId = (authStore && authStore.userAuth ) ? authStore.userAuth.code : "";
-    let apiSelection = (!!onlyMyProperties) ? api.myEstates(userId) : api.estates(query);
+    query = !!onlyMyProperties ? '' : query;
+    let userId = authStore && authStore.userAuth ? authStore.userAuth.code : '';
+    let apiSelection = !!onlyMyProperties ? api.myEstates(userId) : api.estates(query);
     this.resetDetails();
     fetch(apiSelection)
       .then(response => response.json())

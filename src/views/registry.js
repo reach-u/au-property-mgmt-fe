@@ -7,7 +7,6 @@ import {NonIdealState} from '@blueprintjs/core';
 import Details from './registry/details';
 
 const Registry = observer(({store, authstore}) => {
-
   const handleSearch = (searchObject, myProperty = false) => {
     store.fetchEstates(searchObject, myProperty, authstore);
   };

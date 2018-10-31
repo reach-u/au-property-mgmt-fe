@@ -11,7 +11,6 @@ import {userAuthStore} from './stores/userAuth';
 import OwnerChange from './views/ownerChange';
 
 class App extends Component {
-
   constructor() {
     super();
     App.pseudoLoginWithSulevAccount();
@@ -25,7 +24,12 @@ class App extends Component {
     return (
       <Switch>
         <Redirect exact from="/" to="/search" />
-        <Route path="/search" render={props => <Registry store={realEstateStore} authstore={userAuthStore} {...props} />} />
+        <Route
+          path="/search"
+          render={props => (
+            <Registry store={realEstateStore} authstore={userAuthStore} {...props} />
+          )}
+        />
         <Route path="/testmap" render={() => <YloMap />} />
         <Route
           path="/details/:id"

@@ -15,13 +15,12 @@ class Results extends Component {
         }}>
         {this.props.store.estates.map((item, index) => (
           <Card
-            key={index}  
+            key={index}
             onClick={() => this.props.store.fetchEstateDetails(item.id)}
             interactive
             style={{maxWidth: '200px', margin: '15px', flexGrow: 1}}
             elevation={Elevation.TWO}>
-
-            <div style={{ display: 'flex', alignItems: 'flex-end'}}>
+            <div style={{display: 'flex', alignItems: 'flex-end'}}>
               <Icon icon="home" intent="primary" iconSize={30} style={{margin: '0 5px 5px 0'}} />
               <h3 style={{marginBottom: 0}}>
                 {item.name ||
