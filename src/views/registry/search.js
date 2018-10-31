@@ -78,7 +78,7 @@ const Search = observer(({handleSearch, store, authstore}) => {
       <a className="my-properties bp3-large bp3-intent-primary" href="#" onClick={showMyProperties}>My properties</a>
     </FlexItem>
     <FlexItem>
-      {store.state === 'loaded' && <UserAuthDetails authstore={authstore} />}
+      {store.state === 'loaded' && <UserAuthDetails authstore={authstore} showMyProperties={showMyProperties} />}
     </FlexItem>
     </div>
   );

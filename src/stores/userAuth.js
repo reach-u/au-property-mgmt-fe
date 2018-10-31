@@ -12,11 +12,12 @@ class UserAuthStore {
   }
 
   initAndLoginUsers() {
+    console.log("r");
     fetch(api.getAllPersons()).then(response => response.json())
       .then(data => {
         if (!data.error) {
           let selectedUser;
-          for (const item of data) {
+          for (let item of data) {
             if (!!item.givenName && item.givenName.toLowerCase().indexOf("sulev") > -1) {
               selectedUser = item;
               break;
@@ -24,8 +25,6 @@ class UserAuthStore {
           }
           if (!selectedUser && data.length > 0) {
             selectedUser = data[this._getRndInteger(0, data.length-1)];
-          } else {
-            throw new Error("No users available");
           }
           this.users = data.filter(user => !!user.givenName);
           this.userAuth = selectedUser;
