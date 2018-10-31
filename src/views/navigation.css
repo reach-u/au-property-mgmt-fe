@@ -1,0 +1,11 @@
+.nav-middle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-button {
+    z-index: 10;
+}

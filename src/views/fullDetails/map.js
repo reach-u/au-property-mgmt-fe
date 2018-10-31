@@ -29,7 +29,7 @@ class MapView extends Component {
   render() {
     const position = [this.state.lat, this.state.lon];
     return (
-      <div style={{position: 'relative'}}>
+      <div style={{position: 'relative', zIndex: 1}}>
         <Map
           center={position}
           zoom={this.state.zoom}

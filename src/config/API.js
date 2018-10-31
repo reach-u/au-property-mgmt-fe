@@ -9,7 +9,10 @@ export default {
     `au-property-mgmt-rest/api/1/priv/re/sign_by_seller/${transactionId}`,
   transactionStatus: transactionId =>
     `au-property-mgmt-rest/api/1/priv/re/details/${transactionId}`,
+  payTax: transactionId => `au-property-mgmt-rest/api/1/priv/re/pay_tax/${transactionId}`,
   person: id => `http://139.59.148.64/coco-api/persons/${id}`,
+  getTransactions: addressId =>
+    `au-property-mgmt-rest/api/1/priv/re/details_by_address/${addressId}`,
   getAllPersons: function() {
     return 'http://africa.nortal.com/person-registry/persons?dateFrom=1900-10-27T08%3A56%3A24.315Z&dateTo=2018-10-27T08%3A56%3A24.315Z';
   },

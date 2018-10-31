@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import ReactAutocomplete from 'react-autocomplete';
 import api from '../config/API';
+import {withRouter} from 'react-router';
 
 class Autocomplete extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
+      value: this.props.store.query,
       items: [],
     };
   }
 
   setItems(query) {
-    fetch(api.estates(query))
+    fetch(`${window.location.origin}/${api.estates(query)}`)
       .then(response => response.json())
       .then(data => {
         if (data.error) {
@@ -21,7 +22,7 @@ class Autocomplete extends Component {
           let results = [];
           for (let i = 0; i < data.length; i++) {
             results.push({
-              label: this.getLabel(data[i]),
+              label: Autocomplete.getLabel(data[i]),
               id: data[i].id,
             });
           }
@@ -44,10 +45,13 @@ class Autocomplete extends Component {
 
   onSelect(e) {
     this.setState({value: e.value});
+    this.props.store.setQuery(e.value);
     this.props.store.fetchEstates(e.value);
+    this.props.history.push('/results');
   }
 
   handleChange(e) {
+    this.props.store.setQuery(e.target.value);
     this.setState({value: e.target.value});
     this.setItems(e.target.value);
   }
@@ -57,7 +61,8 @@ class Autocomplete extends Component {
       <ReactAutocomplete
         inputProps={{
           className: 'input-field bp3-input bp3-large bp3-intent-primary',
-          style: {width: '350px'},
+          style: {width: '350px', zIndex: 9999999},
+          placeholder: 'Search...',
         }}
         items={this.state.items}
         getItemValue={item => item.label}
@@ -84,4 +89,4 @@ class Autocomplete extends Component {
   }
 }
 
-export default Autocomplete;
+export default withRouter(Autocomplete);

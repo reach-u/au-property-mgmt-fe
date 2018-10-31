@@ -1,4 +1,4 @@
-import {decorate, observable} from 'mobx';
+import {decorate, observable, computed, action} from 'mobx';
 import api from '../config/API';
 
 class UserAuthStore {
@@ -31,11 +31,22 @@ class UserAuthStore {
         }
       });
   }
+
+  get currentUser() {
+    return this.userAuth || {};
+  }
+
+  get userName() {
+    return this.userAuth ? `${this.userAuth.givenName} ${this.userAuth.familyName}` : 'John Doe';
+  }
 }
 
 decorate(UserAuthStore, {
   userAuth: observable,
   users: observable,
+  initAndLoginUsers: action,
+  currentUser: computed,
+  userName: computed,
 });
 
 export const userAuthStore = new UserAuthStore();

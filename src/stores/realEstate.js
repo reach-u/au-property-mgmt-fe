@@ -13,6 +13,7 @@ class RealEstateStore {
   fullDetails = false;
   ownerDetails = {};
   loading = false;
+  query = '';
 
   fetchEstates(query, onlyMyProperties = false, authStore) {
     this.loading = true;
@@ -55,6 +56,10 @@ class RealEstateStore {
         this.loading = false;
       })
       .catch(() => (this.loading = false));
+  }
+
+  setQuery(input) {
+    this.query = input;
   }
 
   get estateCount() {
@@ -136,7 +141,9 @@ decorate(RealEstateStore, {
   ownerDetails: observable,
   ownerName: computed,
   previousOwnerData: computed,
+  query: observable,
   resetDetails: action,
+  setQuery: action,
   state: observable,
   toggleFullDetails: action,
 });

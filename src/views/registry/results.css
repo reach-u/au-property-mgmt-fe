@@ -7,6 +7,10 @@
 }
 
 .result-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-evenly;
     width: 250px;
     height: 250px;
     margin: 15px;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {FlexItem} from './styledComponents';
+import {Button} from '@blueprintjs/core';
 
 class UserAuthDetails extends Component {
   state = {
@@ -34,26 +34,23 @@ class UserAuthDetails extends Component {
 
   render() {
     return (
-      <FlexItem className="dropdown" style={{background: '#0e5a8a'}}>
-        <div
-          className="bp3-button bp3-active bp3-large bp3-intent-primary"
-          onClick={this.showDropdownMenu}>
-          Logged in as{' '}
-          {this.props.authstore.userAuth.givenName + ' ' + this.props.authstore.userAuth.familyName}
-        </div>
+      <div className={this.props.className}>
+        <Button large minimal style={{marginLeft: 30}} onClick={this.showDropdownMenu}>
+          Logged in as {this.props.authstore.userName}
+        </Button>
 
-        {this.state.displayMenu ? (
+        {this.state.displayMenu && (
           <ul>
             {this.props.authstore.users.map((object, i) => (
               <li key={i} onClick={() => this.handleClick(object)}>
-                <button onClick={() => this.handleClick(object)} className="active">
+                <p onClick={() => this.handleClick(object)} style={{margin: 0}}>
                   {object.givenName + ' ' + object.familyName}
-                </button>
+                </p>
               </li>
             ))}
           </ul>
-        ) : null}
-      </FlexItem>
+        )}
+      </div>
     );
   }
 }

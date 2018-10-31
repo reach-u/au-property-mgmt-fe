@@ -22,6 +22,9 @@ class FullDetails extends Component {
     return (
       <div className="grid-container">
         <div className="data-element header">
+          <Button minimal icon="arrow-left" onClick={() => this.props.history.goBack()}>
+            Back
+          </Button>
           <h1 className={loader}>
             {detailedAddress} <Icon icon="map-marker" iconSize={24} intent="primary" />
           </h1>
@@ -108,11 +111,12 @@ class FullDetails extends Component {
     const {id} = this.props.match.params;
     if (id) {
       this.props.estateStore.fetchEstateDetails(id);
+      this.props.transactionStore.fetchPropertyTransactions(id);
     }
   }
 
   handleBuyClick = () => {
-    this.props.history.push(`/owner-change/${this.props.store.details.id}`);
+    this.props.history.push(`/owner-change/${this.props.estateStore.detailsId}`);
   };
 }
 

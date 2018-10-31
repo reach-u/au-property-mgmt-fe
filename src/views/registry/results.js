@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {Card, Elevation, Icon} from '@blueprintjs/core';
+import {Card, Elevation, Icon, Divider} from '@blueprintjs/core';
 import './results.css';
 
 class Results extends Component {
@@ -21,7 +21,7 @@ class Results extends Component {
                   `${item.street} ${item.house}${item.apartment ? `${-item.apartment}` : ''}`}
               </h3>
             </div>
-            <hr />
+            <Divider />
             <p>{`${item.house}, ${item.street}, ${item.county}, ${item.country}`}</p>
             <a href={item.streetuUrl} target="_blank" rel="noopener noreferrer">
               View on Street U
