@@ -39,13 +39,8 @@ class FullDetails extends Component {
             rel="noopener noreferrer">
             View on Street U
           </a>
-          <Button
-            intent="success"
-            large
-            className={`${loader} buy-button`}
-            onClick={this.handleBuyClick}>
-            Buy property
-          </Button>
+
+          {this.renderActionButton()}
         </div>
 
         <div className="data-element map-card">
@@ -114,6 +109,26 @@ class FullDetails extends Component {
       this.props.transactionStore.fetchPropertyTransactions(id);
     }
   }
+
+  renderActionButton = () => {
+    const {
+      estateStore: {loading},
+      userStore: {userAuth},
+    } = this.props;
+    if (userAuth) {
+      const loader = loading ? Classes.SKELETON : '';
+      return (
+        <Button
+          intent="success"
+          large
+          className={`${loader} buy-button`}
+          onClick={this.handleBuyClick}>
+          Change ownership
+        </Button>
+      );
+    }
+    return null;
+  };
 
   handleBuyClick = () => {
     this.props.history.push(`/owner-change/${this.props.estateStore.detailsId}`);

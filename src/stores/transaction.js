@@ -24,11 +24,11 @@ class TransactionStore {
       });
   }
 
-  startTransaction(userId, addressId) {
+  startTransaction = (userId, addressId) => {
     fetch(`${window.location.origin}/${api.buyProperty(userId, addressId)}`, {method: 'POST'})
       .then(response => response.json())
       .then(data => (this.transactionId = data.transactionId));
-  }
+  };
 
   fetchTransaction() {
     fetch(`${window.location.origin}/${api.transactionStatus(this.transactionId)}`)

@@ -50,6 +50,7 @@ class App extends Component {
                 <FullDetails
                   estateStore={realEstateStore}
                   transactionStore={transactionStore}
+                  userStore={userAuthStore}
                   {...props}
                 />
               )}
