@@ -12,21 +12,21 @@ class UserAuthStore {
   }
 
   initAndLoginUsers() {
-    console.log("r");
-    fetch(api.getAllPersons()).then(response => response.json())
+    fetch(api.getAllPersons()).then(response => response.text())
       .then(data => {
-        if (!data.error) {
+        let persons = JSON.parse(data);
+        if (!persons.error) {
           let selectedUser;
-          for (let item of data) {
+          for (let item of persons) {
             if (!!item.givenName && item.givenName.toLowerCase().indexOf("sulev") > -1) {
               selectedUser = item;
               break;
             }
           }
-          if (!selectedUser && data.length > 0) {
-            selectedUser = data[this._getRndInteger(0, data.length-1)];
+          if (!selectedUser && persons.length > 0) {
+            selectedUser = persons[this._getRndInteger(0, persons.length-1)];
           }
-          this.users = data.filter(user => !!user.givenName);
+          this.users = persons.filter(user => !!user.givenName);
           this.userAuth = selectedUser;
         }
       });
