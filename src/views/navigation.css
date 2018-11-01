@@ -7,7 +7,7 @@
 }
 
 .nav-button {
-    z-index: 10;
+    z-index: 1000;
 }
 
 .logged-in {

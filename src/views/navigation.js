@@ -34,8 +34,8 @@ class Navigation extends Component {
     if (!userStore.userAuth) {
       return (
         <Button
-          intent="primary"
           className="nav-button"
+          minimal
           large
           style={{marginLeft: 30}}
           onClick={() => userStore.initAndLoginUsers()}>

@@ -3,20 +3,31 @@ import Registry from './views/registry';
 import {realEstateStore} from './stores/realEstate';
 import YloMap from './views/ylomap';
 import {Switch, Route, Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router';
 import FullDetails from './views/fullDetails';
 import './index.css';
 import NotFoundPage from './views/404';
+import logo from './assets/landregistry_logo.png';
 import {userAuthStore} from './stores/userAuth';
 import {transactionStore} from './stores/transaction';
 import OwnerChange from './views/ownerChange';
-import Navigation from './views/navigation';
+//import Navigation from './views/navigation';
 import Search from './views/registry/search';
 
 class App extends Component {
   render() {
     return (
       <Fragment>
-        <Navigation userStore={userAuthStore} estateStore={realEstateStore} />
+        {/*<Navigation userStore={userAuthStore} estateStore={realEstateStore} />*/}
+
+        <div className="top-bar">
+          <div
+            className="logo-container"
+            title="Back to search"
+            onClick={() => this.props.history.push('/search')}>
+            <img src={logo} height={40} alt="Logo" />
+          </div>
+        </div>
         <div className="body-container">
           <Switch>
             <Redirect exact from="/" to="/search" />
@@ -63,4 +74,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

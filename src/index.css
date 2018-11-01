@@ -2,7 +2,7 @@ body, html {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: calc(100% - 50px);
+    height: calc(100% - 20px);
 }
 
 .dropdown {
@@ -11,32 +11,34 @@ body, html {
 }
 ul {
     list-style-type: none;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
-    top:45px;
-    right:15px;
-    width: 195px;
+    bottom: 41px;
+    width: 300px;
+    overflow: auto;
     background-color: white;
-    font-weight:bold;
+    opacity: 0.9;
     position: absolute;
     text-align: center;
+    border-radius: 5px 5px 0 0;
     box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 3px 1px -2px rgba(0, 0, 0, 0.12);
-    z-index: 1;
 }
 li a {
     color: #000;
     text-decoration: none;
 }
 li {
-    padding: 8px 16px;
-    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 24px;
+    border-bottom: 1px solid #008C8C;
 }
 li:last-child {
     border-bottom: none;
 }
-li:hover {
+li:hover,
+.current-user {
     background-color: #e5e5e5;
-    color: dodgerblue;
+    color: #008C8C;
+    font-weight: bold;
     cursor: pointer;
 }
 .button{
@@ -68,6 +70,28 @@ li:hover {
 }
 
 .body-container {
-    margin-top: 50px;
-    height: calc(100% + 50px);
+    margin-top: 20px;
+    height: calc(100% + 20px);
+}
+
+.input-field {
+    margin-top: -15px;
+    background: rgba(255, 255, 255, 0.85) !important;
+    width: 300px;
+    text-overflow: ellipsis;
+    padding-right: 40px !important;
+}
+
+.logo-container {
+    background: #008C8C;
+    height: 70px;
+    padding: 20px 12px;
+    cursor: pointer;
+    position: relative;
+}
+
+@media screen and (max-height: 800px) {
+    ul {
+        max-height: 490px;
+    }
 }

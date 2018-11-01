@@ -11,11 +11,14 @@ class Results extends Component {
           <Card
             className="result-card"
             key={index}
-            onClick={() => this.props.store.fetchEstateDetails(item.id)}
+            onClick={() => {
+              this.props.store.fetchEstateDetails(item.id);
+              window.scroll({top: 0, left: 0, behavior: 'smooth'});
+            }}
             interactive
             elevation={Elevation.TWO}>
             <div style={{display: 'flex', alignItems: 'flex-end'}}>
-              <Icon icon="home" intent="primary" iconSize={30} style={{margin: '0 5px 5px 0'}} />
+              <Icon icon="home" iconSize={30} style={{margin: '0 5px 5px 0'}} />
               <h3 style={{marginBottom: 0}}>
                 {item.name ||
                   `${item.street} ${item.house}${item.apartment ? `${-item.apartment}` : ''}`}

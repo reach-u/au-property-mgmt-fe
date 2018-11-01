@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {Button} from '@blueprintjs/core';
 
 class UserAuthDetails extends Component {
   state = {
@@ -35,14 +34,21 @@ class UserAuthDetails extends Component {
   render() {
     return (
       <div className={this.props.className}>
-        <Button large minimal style={{marginLeft: 30}} onClick={this.showDropdownMenu}>
+        <button className="user-action" onClick={this.showDropdownMenu}>
           Logged in as {this.props.authstore.userName}
-        </Button>
+        </button>
 
         {this.state.displayMenu && (
           <ul>
             {this.props.authstore.users.map((object, i) => (
-              <li key={i} onClick={() => this.handleClick(object)}>
+              <li
+                key={i}
+                className={
+                  object.givenName + ' ' + object.familyName === this.props.authstore.userName
+                    ? 'current-user'
+                    : ''
+                }
+                onClick={() => this.handleClick(object)}>
                 <p onClick={() => this.handleClick(object)} style={{margin: 0}}>
                   {object.givenName + ' ' + object.familyName}
                 </p>

@@ -52,4 +52,8 @@ class MapView extends Component {
   };
 }
 
+MapView.defaultProps = {
+  coords: {lat: -4.04569, lon: 39.66366},
+};
+
 export default MapView;

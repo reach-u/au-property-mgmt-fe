@@ -4,7 +4,7 @@
         [row-1-start] "header map map"
         [row-2-start] "building property land"
         / 1fr 1fr 1fr;
-    padding: 20px 30px;
+    padding: 50px 30px;
 }
 
 .data-element {
@@ -91,6 +91,7 @@ h5 {
                 [row-4-start] "property"
                 [row-5-start] "land"
         / auto;
+        padding: 50px 0;
     }
     .header {
         padding: 40px 20px 0;

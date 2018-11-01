@@ -4,20 +4,21 @@ import api from '../config/API';
 class UserAuthStore {
   userAuth = null;
   users = [];
+  loading = false;
 
   static _getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
   initAndLoginUsers() {
-    console.log("r");
+    this.loading = true;
     fetch(api.getAllPersons())
       .then(response => response.json())
       .then(data => {
         if (!data.error) {
           let selectedUser;
           for (let item of data) {
-            if (!!item.givenName && item.givenName.toLowerCase().indexOf("sulev") > -1) {
+            if (!!item.givenName && item.givenName.toLowerCase().indexOf('sulev') > -1) {
               selectedUser = item;
               break;
             }
@@ -29,6 +30,7 @@ class UserAuthStore {
           }
           this.users = data.filter(user => !!user.givenName);
           this.userAuth = selectedUser;
+          this.loading = false;
         }
       });
   }
@@ -43,6 +45,7 @@ class UserAuthStore {
 }
 
 decorate(UserAuthStore, {
+  loading: observable,
   userAuth: observable,
   users: observable,
   initAndLoginUsers: action,

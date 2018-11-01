@@ -1,0 +1,20 @@
+$pt-intent-primary: #008C8C;
+$pt-link-color: #008C8C;
+$pt-icon-color: #008C8C;
+$pt-font-family: 'Open Sans', sans-serif !default;
+
+@import "~@blueprintjs/core/src/blueprint.scss";
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: $pt-intent-primary;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  overflow: visible;
+}
+

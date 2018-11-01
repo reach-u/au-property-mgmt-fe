@@ -36,16 +36,16 @@ const Details = ({store, history}) => {
           <strong>Property number:</strong> {store.detailsId}
         </p>
         <p>
-          <strong>Property type:</strong> {store.details.detailedData.propertyType}
+          <strong>Property type:</strong> {store.estateDetails.propertyType}
         </p>
         <p>
-          <strong>Property size:</strong> {store.details.detailedData.propertySize} m<sup>2</sup>
+          <strong>Property size:</strong> {store.estateDetails.propertySize} m<sup>2</sup>
         </p>
         <p>
-          <strong>Land number:</strong> {store.details.detailedData.landNumber}
+          <strong>Land number:</strong> {store.estateDetails.landNumber}
         </p>
         <p>
-          <strong>Land acreage:</strong> {store.details.detailedData.landAcreage} m<sup>2</sup>{' '}
+          <strong>Land acreage:</strong> {store.estateDetails.landAcreage} m<sup>2</sup>{' '}
         </p>
 
         <MapView coords={store.estateData.coordinates} />

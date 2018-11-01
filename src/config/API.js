@@ -11,12 +11,9 @@ export default {
     `au-property-mgmt-rest/api/1/priv/re/details/${transactionId}`,
   payTax: transactionId => `au-property-mgmt-rest/api/1/priv/re/pay_tax/${transactionId}`,
   person: id => `http://139.59.148.64/coco-api/persons/${id}`,
-  getAllPersons: function () {
-    return 'https://egov-demo-ss3.westeurope.cloudapp.azure.com/restapi/GOV/M-LAND/RE-REG?xRoadInstance=EGOV-EXAMPLE&memberClass=GOV&memberCode=M-HOMEAFFAIRS&subsystemCode=POP-REG&serviceCode=persons&serviceVersion=1&dateFrom=1900-01-01T00:00:00.440Z&dateTo=2018-10-30T23:59:59.440Z';
-  }
+  getAllPersons: function() {
+    return 'au-property-mgmt-rest/api/1/priv/proxy/persons';
+  },
   getTransactions: addressId =>
     `au-property-mgmt-rest/api/1/priv/re/details_by_address/${addressId}`,
-  getAllPersons: function() {
-    return 'http://africa.nortal.com/person-registry/persons?dateFrom=1900-10-27T08%3A56%3A24.315Z&dateTo=2018-10-27T08%3A56%3A24.315Z';
-  },
 };

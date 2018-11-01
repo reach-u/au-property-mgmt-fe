@@ -61,7 +61,6 @@ class Autocomplete extends Component {
       <ReactAutocomplete
         inputProps={{
           className: 'input-field bp3-input bp3-large bp3-intent-primary',
-          style: {width: '350px', zIndex: 9999999},
           placeholder: 'Search...',
         }}
         items={this.state.items}
