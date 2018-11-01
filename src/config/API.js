@@ -9,8 +9,11 @@ export default {
     `au-property-mgmt-rest/api/1/priv/re/sign_by_seller/${transactionId}`,
   transactionStatus: transactionId =>
     `au-property-mgmt-rest/api/1/priv/re/details/${transactionId}`,
+  payTax: transactionId => `au-property-mgmt-rest/api/1/priv/re/pay_tax/${transactionId}`,
   person: id => `http://139.59.148.64/coco-api/persons/${id}`,
-  getAllPersons: function () {
+  getAllPersons: function() {
     return 'au-property-mgmt-rest/api/1/priv/proxy/persons';
-  }
+  },
+  getTransactions: addressId =>
+    `au-property-mgmt-rest/api/1/priv/re/details_by_address/${addressId}`,
 };

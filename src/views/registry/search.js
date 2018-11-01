@@ -1,15 +1,18 @@
 import React from 'react';
-import {Button, InputGroup, Classes, FormGroup} from '@blueprintjs/core';
+import {Button, FormGroup, Spinner} from '@blueprintjs/core';
 import {observer} from 'mobx-react';
-import {FlexItem} from '../../components/styledComponents';
-import  AutoComplete from '../../components/AutoComplete';
-import  UserAuthDetails from '../../components/UserAuthDetails';
+import AutoComplete from '../../components/AutoComplete';
 import {realEstateStore} from '../../stores/realEstate';
+import background from '../../assets/img_background.jpg';
+import button from '../../assets/btn_login.png';
+import './search.css';
+import UserAuthDetails from '../../components/UserAuthDetails';
 
-const address = 'searchAddress';
-const property = 'propertyNumber';
-
-const Search = observer(({handleSearch, store, authstore}) => {
+const Search = ({store, authstore, history}) => {
+  const handleSearch = (searchObject, myProperty = false) => {
+    store.fetchEstates(searchObject, myProperty, authstore);
+    history.push('/results');
+  };
 
   const handleClick = () => {
     handleSearch(getValues());
@@ -18,70 +21,50 @@ const Search = observer(({handleSearch, store, authstore}) => {
   const getValues = () => {
     const value = document.querySelector('.input-field').value;
 
-    if (!value)
-      return;
+    if (!value) return;
 
     return value;
   };
 
-  const showMyProperties = () => {
-    handleSearch(null, true);
-  };
-
-  const style = () => {
-    const styles =
-      store.state === 'loaded'
-        ? {
-            display: 'flex',
-            width: '100%',
-            borderRadius: 0,
-            padding: '8px 4px 4px 4px',
-          }
-        : {
-            display: 'block',
-            width: 'auto',
-            borderRadius: '5px',
-            padding: 20,
-          };
-
-    return Object.assign(
-      {
-        alignItems: 'flex-end',
-        boxShadow:
-          '0px 1px 8px 0px rgba(0, 0, 0, 0.2),0px 3px 4px 0px rgba(0, 0, 0, 0.14),0px 3px 3px -2px rgba(0, 0, 0, 0.12)',
-      },
-      styles
-    );
+  const renderLogin = () => {
+    if (!authstore.userAuth) {
+      return (
+        <button className="log-in user-action" onClick={() => authstore.initAndLoginUsers()}>
+          {authstore.loading ? <Spinner size={20} intent="primary" /> : 'LOG IN'}
+        </button>
+      );
+    } else {
+      return (
+        <div className="user-container">
+          <button
+            className="user-action"
+            onClick={() => {
+              store.fetchEstates(null, true, authstore);
+              history.push('/results');
+            }}>
+            My properties
+          </button>
+          <UserAuthDetails authstore={authstore} className="nav-button" />
+        </div>
+      );
+    }
   };
 
   return (
-    <div style={style()}>
-      <FlexItem>
+    <div className="search-container">
+      <img className="background" alt="" src={background} />
+      <div className="search-box">
+        <h1 className="search-header">Find a property</h1>
         <FormGroup>
-          <AutoComplete store={realEstateStore}/>
+          <AutoComplete store={realEstateStore} />
         </FormGroup>
-      </FlexItem>
-      <FlexItem>
-        <Button
-          active
-          fill={store.estateCount === 0 && store.state !== 'loaded'}
-          intent="primary"
-          large
-          style={{marginBottom: 15}}
-          onClick={handleClick}>
-          Find real estates
+        <Button minimal className="search-button" title="Search" onClick={handleClick}>
+          <img alt="Search button" height="24px" src={button} />
         </Button>
-      </FlexItem>
-    <FlexItem style={{width: "calc(100% - 1000px)"}}>
-    </FlexItem>
-    <FlexItem className="my-properties">
-      <a className="my-properties bp3-large bp3-intent-primary" href="#" onClick={showMyProperties}>My properties</a>
-    </FlexItem>
-    <FlexItem>
-      {store.state === 'loaded' && <UserAuthDetails authstore={authstore} showMyProperties={showMyProperties} />}
-    </FlexItem>
+      </div>
+      {renderLogin()}
     </div>
   );
-});
+};
 
-export default Search;
+export default observer(Search);

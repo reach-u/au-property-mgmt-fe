@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
-//import L from 'leaflet';
 import {Map, TileLayer, Marker, Popup} from 'react-leaflet';
 import './ylomap.css';
 
-//const { Map, TileLayer, Marker, Popup } = window.ReactLeaflet;
-
-class YloMap extends React.Component {
+class YloMap extends Component {
   constructor() {
     super();
     this.state = {
@@ -19,15 +16,15 @@ class YloMap extends React.Component {
     const position = [this.state.lat, this.state.lng];
     return (
       <Map center={position} zoom={this.state.zoom}>
-        <TileLayer
-    
-          url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-        />
-      <Marker position={position}>
+        <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
+        <Marker position={position}>
           <Popup>
-            <span> Miski übervajalik info selle maja kohta <br/> lat: -4.04569 lng: 39.66366</span>
+            <span>
+              {' '}
+              Miski übervajalik info selle maja kohta <br /> lat: -4.04569 lng: 39.66366
+            </span>
           </Popup>
-        </Marker> 
+        </Marker>
       </Map>
     );
   }

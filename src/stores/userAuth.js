@@ -1,18 +1,19 @@
-import {decorate, observable} from 'mobx';
+import {decorate, observable, computed, action} from 'mobx';
 import api from '../config/API';
 
-
 class UserAuthStore {
-
   userAuth = null;
   users = [];
+  loading = false;
 
-  _getRndInteger (min, max) {
-    return Math.floor(Math.random() * (max - min) ) + min;
+  static _getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
   }
 
   initAndLoginUsers() {
-    fetch(api.getAllPersons()).then(response => response.text())
+    this.loading = true;
+    fetch(api.getAllPersons())
+      .then(response => response.json())
       .then(data => {
         let persons = JSON.parse(data);
         if (!persons.error) {
@@ -28,15 +29,27 @@ class UserAuthStore {
           }
           this.users = persons.filter(user => !!user.givenName);
           this.userAuth = selectedUser;
+          this.loading = false;
         }
       });
   }
 
+  get currentUser() {
+    return this.userAuth || {};
+  }
+
+  get userName() {
+    return this.userAuth ? `${this.userAuth.givenName} ${this.userAuth.familyName}` : 'John Doe';
+  }
 }
 
 decorate(UserAuthStore, {
+  loading: observable,
   userAuth: observable,
-  users: observable
+  users: observable,
+  initAndLoginUsers: action,
+  currentUser: computed,
+  userName: computed,
 });
 
 export const userAuthStore = new UserAuthStore();

@@ -1,0 +1,21 @@
+.card-container {
+    padding: 50px 20px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-grow: 2;
+}
+
+.result-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-evenly;
+    width: 250px;
+    height: 250px;
+    margin: 15px;
+}
+
+.non-ideal-search {
+    margin-top: 15%;
+}

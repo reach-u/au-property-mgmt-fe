@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {FlexItem} from "./styledComponents";
 
 class UserAuthDetails extends Component {
-
   state = {
     user: this.props.authstore.userAuth,
     users: this.props.authstore.users,
-    showMyProperties: this.props.showMyProperties,
-    displayMenu: false
+    displayMenu: false,
   };
 
   constructor(props) {
@@ -32,37 +29,35 @@ class UserAuthDetails extends Component {
 
   handleClick(user) {
     this.props.authstore.userAuth = user;
-    // this.props.showMyProperties();
   }
 
   render() {
-
     return (
-      <FlexItem className="dropdown" style={{background: "#0e5a8a"}}>
-        <div className="bp3-button bp3-active bp3-large bp3-intent-primary" onClick={this.showDropdownMenu}>
-          Logged in as { (this.props.authstore && this.props.authstore.userAuth) ?
-          this.props.authstore.userAuth.givenName + " " + this.props.authstore.userAuth.familyName : ""
-        }
-        </div>
+      <div className={this.props.className}>
+        <button className="user-action" onClick={this.showDropdownMenu}>
+          Logged in as {this.props.authstore.userName}
+        </button>
 
-        {this.state.displayMenu ? (
-            <ul>
-              {this.props.authstore.users.map((object, i) =>
-                <li key={i} onClick={() => this.handleClick(object)}>
-                  <a onClick={() => this.handleClick(object)}
-                     className="active" href="#">
-                    {object.givenName + " " + object.familyName}
-                  </a>
-                </li>)}
-            </ul>
-          ) :
-          (
-            null
-          )
-        }
-
-      </FlexItem>
-    )
+        {this.state.displayMenu && (
+          <ul>
+            {this.props.authstore.users.map((object, i) => (
+              <li
+                key={i}
+                className={
+                  object.givenName + ' ' + object.familyName === this.props.authstore.userName
+                    ? 'current-user'
+                    : ''
+                }
+                onClick={() => this.handleClick(object)}>
+                <p onClick={() => this.handleClick(object)} style={{margin: 0}}>
+                  {object.givenName + ' ' + object.familyName}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
   }
 }
 

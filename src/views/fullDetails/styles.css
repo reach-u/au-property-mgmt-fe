@@ -4,15 +4,7 @@
         [row-1-start] "header map map"
         [row-2-start] "building property land"
         / 1fr 1fr 1fr;
-    padding: 20px 30px;
-}
-
-.close-button {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    color: #888;
-    cursor: pointer;
+    padding: 50px 30px;
 }
 
 .data-element {
@@ -28,8 +20,11 @@ h2 {
     margin: 0;
 }
 
+h5 {
+    margin-bottom: 2px;
+}
+
 .header {
-    padding-top: 25px;
     grid-area: header;
     position: relative;
     display: flex;
@@ -96,6 +91,7 @@ h2 {
                 [row-4-start] "property"
                 [row-5-start] "land"
         / auto;
+        padding: 50px 0;
     }
     .header {
         padding: 40px 20px 0;
