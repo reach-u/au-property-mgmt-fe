@@ -1,0 +1,202 @@
+@import "../index";
+
+.logo {
+    height: 40px;
+}
+
+.logo-container {
+    background: $pt-intent-primary;
+    height: 80px;
+    padding: 28px 12px;
+    cursor: pointer;
+    position: relative;
+    border-radius: 0 0 5px 5px;
+}
+
+
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: $pt-intent-primary;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+}
+
+.user-action {
+  color: $pt-intent-primary;
+  font-size: 14pt;
+  border: 2px solid $pt-intent-primary;
+  border-radius: 5px;
+  opacity: 0.85;
+  cursor: pointer;
+  transition: 200ms;
+  height: 40px;
+  margin-top: 10px;
+  width: auto;
+  min-width: 104px;
+  padding: 0 28px;
+}
+.user-action:hover {
+  opacity: 1;
+}
+
+.logged-in-container {
+  position: fixed;
+  top: 20px;
+  width: 100%;
+  background: white;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  height: 55px;
+}
+
+.logged-out-icon {
+  color: $pt-intent-primary;
+  margin-left: 12px;
+}
+
+.logged-in-user {
+}
+
+.properties-button {
+  color: $pt-intent-primary;
+  border: none;
+  background: white;
+  margin-left: 16px;
+}
+
+.user-icon-small {
+  padding: 0;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  border: 2px solid $pt-intent-primary;
+  background: white;
+  color: $pt-intent-primary;
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 16px;
+}
+
+.user-icon-large {
+  background: white;
+  border: none;
+  font-size: 16px;
+  color: $pt-intent-primary;
+  cursor: pointer;
+  margin-right: 110px;
+}
+
+.user-container {
+  position: absolute;
+  bottom: 35px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.overlay-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.user-list {
+  width: 100%;
+  background: white;
+  opacity: 0.9;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  padding: 10px;
+  text-align: center;
+}
+
+.overlay-close {
+  width: 100%;
+  text-align: right;
+  background: #fff;
+  opacity: 0.9;
+  padding: 5px;
+  border-bottom: 1px solid $pt-intent-primary;
+  color: $pt-intent-primary;
+}
+
+
+@media screen and (min-width: 1200px) {
+  .logo {
+    height: 50px;
+  }
+
+  .logo-container {
+    height: 120px;
+    padding: 45px 14px;
+    margin-left: 100px;
+  }
+
+  .top-bar {
+    justify-content: flex-start;
+  }
+
+  .logged-in-container {
+    height: 80px;
+  }
+
+  .properties-button {
+    margin-left: 360px;
+    font-size: 16px;
+  }
+
+  .user-list {
+    width: 300px;
+    margin: 0;
+  }
+
+  .overlay-close {
+    width: 300px;
+    cursor: pointer;
+  }
+
+  .overlay-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .user-container {
+    top: 20px;
+    bottom: auto;
+    background: white;
+    height: 80px;
+    justify-content: flex-end;
+    padding: 0 120px;
+    flex-direction: row;
+  }
+
+  .user-action {
+    background: white;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+}

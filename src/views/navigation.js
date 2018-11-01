@@ -1,85 +1,56 @@
-import {Navbar, Button, Alignment} from '@blueprintjs/core';
-import React, {Component} from 'react';
-import {observer} from 'mobx-react';
-import UserAuthDetails from '../components/UserAuthDetails';
-import {Route} from 'react-router-dom';
+import React, {Component, Fragment} from 'react';
 import {withRouter} from 'react-router';
-import AutoComplete from '../components/AutoComplete';
-import './navigation.css';
+import './navigation.scss';
+import logo from '../assets/landregistry_logo.png';
+import {Spinner, Icon} from '@blueprintjs/core';
+import UserAuthDetails from '../components/UserAuthDetails';
+import {observer} from 'mobx-react';
 
 class Navigation extends Component {
   render() {
     return (
-      <Navbar fixedToTop className="nav-container">
-        <Navbar.Group>
-          <Button
-            large
-            minimal
-            intent={'primary'}
-            onClick={() => this.props.history.push('/search')}
-            className="nav-button">
-            Home
-          </Button>
-        </Navbar.Group>
-        <Navbar.Group className="nav-middle">
-          <Route render={props => this.renderSearch(props)} />
-        </Navbar.Group>
-        <Navbar.Group align={Alignment.RIGHT}>{this.renderLogin()}</Navbar.Group>
-      </Navbar>
+      <Fragment>
+        <div className="top-bar">
+          <div
+            className="logo-container"
+            title="Back to search"
+            onClick={() => this.props.history.push('/search')}>
+            <img src={logo} className="logo" alt="Logo" />
+          </div>
+        </div>
+        {this.renderLogin()}
+      </Fragment>
     );
   }
 
-  renderLogin() {
-    const {userStore} = this.props;
-    if (!userStore.userAuth) {
+  renderLogin = () => {
+    const {authstore, store, history} = this.props;
+    const isDesktop = window.innerWidth > 1200;
+
+    if (!authstore.userAuth) {
       return (
-        <Button
-          className="nav-button"
-          minimal
-          large
-          style={{marginLeft: 30}}
-          onClick={() => userStore.initAndLoginUsers()}>
-          Log in
-        </Button>
+        <div className="user-container" onClick={() => authstore.initAndLoginUsers()}>
+          <button className="user-action" onClick={() => authstore.initAndLoginUsers()}>
+            {authstore.loading ? <Spinner size={20} intent="primary" /> : 'LOG IN'}
+          </button>
+          {isDesktop && <Icon icon="log-in" iconSize={24} className="logged-out-icon" />}
+        </div>
       );
     } else {
       return (
-        <div className="nav-button logged-in">
-          <Button
-            minimal
-            intent="primary"
+        <div className="logged-in-container">
+          <button
+            className="properties-button"
             onClick={() => {
-              const {history, estateStore} = this.props;
-              estateStore.fetchEstates(null, true, userStore);
+              store.fetchEstates(null, true, authstore);
               history.push('/results');
             }}>
-            My properties
-          </Button>
-          <UserAuthDetails authstore={userStore} className="nav-button" />
+            {isDesktop ? 'My properties' : <Icon icon="menu" iconSize={30} />}
+          </button>
+          <UserAuthDetails authstore={authstore} className="nav-button" />
         </div>
       );
     }
-  }
-
-  renderSearch({location}) {
-    if (location.pathname.indexOf('/search') === -1) {
-      return (
-        <div>
-          <AutoComplete store={this.props.estateStore} />
-          <Button large onClick={this.handleSearchClick}>
-            Search
-          </Button>
-        </div>
-      );
-    }
-    return null;
-  }
-
-  handleSearchClick = () => {
-    const {estateStore, history} = this.props;
-    const value = document.querySelector('.input-field').value;
-    estateStore.fetchEstates(value);
-    history.push('/results');
   };
 }
 

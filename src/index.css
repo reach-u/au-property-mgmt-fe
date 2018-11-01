@@ -10,29 +10,15 @@ body, html {
     display: inline-block;
 }
 ul {
-    list-style-type: none;
-    margin: 0 auto;
-    padding: 0;
-    bottom: 41px;
-    width: 300px;
-    overflow: auto;
-    background-color: white;
-    opacity: 0.9;
-    position: absolute;
-    text-align: center;
-    border-radius: 5px 5px 0 0;
-    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+    list-style: none inside;
 }
 li a {
     color: #000;
     text-decoration: none;
 }
 li {
-    padding: 10px 24px;
+    padding: 0;
     border-bottom: 1px solid #008C8C;
-}
-li:last-child {
-    border-bottom: none;
 }
 li:hover,
 .current-user {
@@ -82,16 +68,5 @@ li:hover,
     padding-right: 40px !important;
 }
 
-.logo-container {
-    background: #008C8C;
-    height: 70px;
-    padding: 20px 12px;
-    cursor: pointer;
-    position: relative;
-}
-
 @media screen and (max-height: 800px) {
-    ul {
-        max-height: 490px;
-    }
 }

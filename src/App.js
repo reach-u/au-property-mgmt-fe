@@ -7,27 +7,17 @@ import {withRouter} from 'react-router';
 import FullDetails from './views/fullDetails';
 import './index.css';
 import NotFoundPage from './views/404';
-import logo from './assets/landregistry_logo.png';
 import {userAuthStore} from './stores/userAuth';
 import {transactionStore} from './stores/transaction';
 import OwnerChange from './views/ownerChange';
-//import Navigation from './views/navigation';
+import Navigation from './views/navigation';
 import Search from './views/registry/search';
 
 class App extends Component {
   render() {
     return (
       <Fragment>
-        {/*<Navigation userStore={userAuthStore} estateStore={realEstateStore} />*/}
-
-        <div className="top-bar">
-          <div
-            className="logo-container"
-            title="Back to search"
-            onClick={() => this.props.history.push('/search')}>
-            <img src={logo} height={40} alt="Logo" />
-          </div>
-        </div>
+        <Navigation store={realEstateStore} authstore={userAuthStore} />
         <div className="body-container">
           <Switch>
             <Redirect exact from="/" to="/search" />

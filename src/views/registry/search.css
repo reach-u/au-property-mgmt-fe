@@ -29,38 +29,8 @@
 
 .search-button {
     position: absolute;
-    top: 58px;
-    right: 0;
+    top: 60px;
+    right: 5px;
     background: rgba(255, 255, 255, 0.86);
 }
 
-.log-in {
-    position: absolute;
-    bottom: 35px;
-    height: 40px;
-    padding: 0 20px;
-}
-
-.user-action {
-    color: #008C8C;
-    font-size: 14pt;
-    border: 1px solid #008C8C;
-    border-radius: 4px;
-    opacity: 0.85;
-    cursor: pointer;
-    transition: 200ms;
-    height: 40px;
-    margin-top: 10px;
-    width: 300px;
-}
-.user-action:hover {
-    opacity: 1;
-}
-
-.user-container {
-    position: absolute;
-    bottom: 35px;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-}
