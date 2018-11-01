@@ -48,8 +48,8 @@ class UserAuthDetails extends Component {
             </span>
           ) : (
             <span>
-              {authstore.userAuth.givenName.substring(0, 1)}
-              {authstore.userAuth.familyName.substring(0, 1)}
+              {authstore.currentUser.givenName.substring(0, 1)}
+              {authstore.currentUser.familyName.substring(0, 1)}
             </span>
           )}
         </button>

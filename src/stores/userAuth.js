@@ -35,7 +35,12 @@ class UserAuthStore {
   }
 
   get currentUser() {
-    return this.userAuth || {};
+    return (
+      this.userAuth || {
+        givenName: 'John',
+        familyName: 'Doe',
+      }
+    );
   }
 
   get userName() {
