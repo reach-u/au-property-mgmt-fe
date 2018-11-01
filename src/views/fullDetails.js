@@ -112,10 +112,10 @@ class FullDetails extends Component {
 
   renderActionButton = () => {
     const {
-      estateStore: {loading},
+      estateStore: {loading, estateDetails},
       userStore: {userAuth},
     } = this.props;
-    if (userAuth) {
+    if (userAuth && parseInt(userAuth.code, 10) !== estateDetails.currentOwner) {
       const loader = loading ? Classes.SKELETON : '';
       return (
         <Button
