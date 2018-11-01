@@ -10,7 +10,7 @@ export default {
   transactionStatus: transactionId =>
     `au-property-mgmt-rest/api/1/priv/re/details/${transactionId}`,
   payTax: transactionId => `au-property-mgmt-rest/api/1/priv/re/pay_tax/${transactionId}`,
-  person: id => `http://139.59.148.64/coco-api/persons/${id}`,
+  person: id => `au-property-mgmt-rest/api/1/priv/proxy/persons/${id}`,
   getAllPersons: function() {
     return 'au-property-mgmt-rest/api/1/priv/proxy/persons';
   },
