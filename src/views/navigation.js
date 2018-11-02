@@ -14,8 +14,9 @@ class Navigation extends Component {
   };
 
   render() {
-    const {history, authstore, store} = this.props;
+    const {history, authstore, store, location} = this.props;
     const isDesktop = window.innerWidth > 1200;
+    const isHomePage = location.pathname === '/search';
 
     return (
       <Fragment>
@@ -27,7 +28,9 @@ class Navigation extends Component {
             <img src={logo} className="logo" alt="Logo" />
           </div>
         </div>
-        <Motion defaultStyle={{y: -200}} style={{y: spring(authstore.userAuth ? 0 : -200)}}>
+        <Motion
+          defaultStyle={{y: -200}}
+          style={{y: spring(authstore.userAuth || !isHomePage ? 0 : -200)}}>
           {style => (
             <div className="logged-in-container" style={{transform: `translateY(${style.y}px)`}}>
               <button className="properties-button" onClick={this.showOverlay}>
@@ -40,31 +43,70 @@ class Navigation extends Component {
                     <Icon icon="cross" iconSize={25} />
                   </span>
                   <Link to={'/results'}>Find a property</Link>
-                  <button
-                    className="menu-link"
-                    onClick={() => {
-                      store.fetchEstates(null, true, authstore);
-                      history.push('/results');
-                    }}>
-                    My properties
-                  </button>
+                  {!!authstore.userAuth && (
+                    <button
+                      className="menu-link"
+                      onClick={() => {
+                        store.fetchEstates(null, true, authstore);
+                        history.push('/results');
+                      }}>
+                      My properties
+                    </button>
+                  )}
+                  {!authstore.userAuth && (
+                    <button className="menu-link" onClick={() => authstore.initAndLoginUsers()}>
+                      Log in
+                    </button>
+                  )}
                 </div>
               </Overlay>
             </div>
           )}
         </Motion>
         <Motion
-          defaultStyle={{y: 0}}
-          style={{y: spring(authstore.userAuth ? (isDesktop ? -300 : 300) : 0)}}>
+          defaultStyle={{y: -200}}
+          style={{y: spring(isDesktop && authstore.userAuth ? 0 : -200)}}>
+          {style => (
+            <div style={{transform: `translateY(${style.y}px)`}} className="logged-in-container">
+              <div className="logged-in-actions">
+                <Link to="/results" style={{fontSize: '17px'}}>
+                  Find a property
+                </Link>
+                <button
+                  className="properties-button"
+                  onClick={() => {
+                    store.fetchEstates(null, true, authstore);
+                    history.push('/results');
+                  }}>
+                  My properties
+                </button>
+              </div>
+              <UserAuthDetails authstore={authstore} className="nav-button" />
+            </div>
+          )}
+        </Motion>
+        <Motion defaultStyle={{opacity: 0}} style={{opacity: spring(authstore.userAuth ? 0 : 1)}}>
           {style => (
             <div
-              className="user-container"
-              style={{transform: `translateY(${style.y}px)`}}
+              className={
+                isHomePage
+                  ? 'login-container'
+                  : isDesktop
+                    ? 'login-container-top'
+                    : 'login-container-hidden'
+              }
+              style={{
+                opacity: style.opacity,
+                pointerEvents: style.opacity === 0 ? 'none' : 'auto',
+              }}
               onClick={() => authstore.initAndLoginUsers()}>
-              <button className="user-action" onClick={() => authstore.initAndLoginUsers()}>
+              <button
+                className={
+                  isHomePage ? 'login-action' : isDesktop ? 'login-action-top' : 'login-action'
+                }
+                onClick={() => authstore.initAndLoginUsers()}>
                 LOG IN
               </button>
-              {isDesktop && <Icon icon="log-in" iconSize={24} className="logged-out-icon" />}
             </div>
           )}
         </Motion>
@@ -73,37 +115,9 @@ class Navigation extends Component {
             <ProgressBar intent="primary" />
           </div>
         )}
-
-        {this.renderDesktopNav()}
       </Fragment>
     );
   }
-
-  renderDesktopNav = () => {
-    const {authstore, store, history} = this.props;
-    const isDesktop = window.innerWidth > 1200;
-
-    if (isDesktop && authstore.userAuth) {
-      return (
-        <div className="logged-in-container">
-          <div className="logged-in-actions">
-            <Link to="/results">Find a property</Link>
-            <button
-              className="properties-button"
-              onClick={() => {
-                store.fetchEstates(null, true, authstore);
-                history.push('/results');
-              }}>
-              My properties
-            </button>
-          </div>
-          <UserAuthDetails authstore={authstore} className="nav-button" />
-        </div>
-      );
-    } else {
-      return null;
-    }
-  };
 
   hideOverlay = () => {
     this.setState({menuOpen: false}, () => {

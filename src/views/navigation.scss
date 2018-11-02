@@ -27,7 +27,7 @@
     overflow: visible;
 }
 
-.user-action {
+.login-action {
   color: $pt-intent-primary;
   font-size: 14pt;
   border: 2px solid $pt-intent-primary;
@@ -41,7 +41,7 @@
   min-width: 104px;
   padding: 0 28px;
 }
-.user-action:hover {
+.login-action:hover {
   opacity: 1;
 }
 
@@ -56,14 +56,6 @@
   justify-content: space-between;
   padding: 10px;
   height: 55px;
-}
-
-.logged-out-icon {
-  color: $pt-intent-primary;
-  margin-left: 12px;
-}
-
-.logged-in-user {
 }
 
 .logged-in-actions {
@@ -95,13 +87,13 @@
 .user-icon-large {
   background: white;
   border: none;
-  font-size: 16px;
+  font-size: 15px;
   color: $pt-intent-primary;
   cursor: pointer;
   margin-right: 110px;
 }
 
-.user-container {
+.login-container {
   position: absolute;
   bottom: 35px;
   z-index: 2;
@@ -111,6 +103,32 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.login-container-top {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 100px;
+  height: 55px;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1),0 3px 4px 0 rgba(0, 0, 0, 0.1),0 3px 3px -2px rgba(0, 0, 0, 0.1);
+}
+
+.login-container-hidden {
+  visibility: hidden;
+}
+
+.login-action-top {
+  font-size: 15px;
+  background: white;
+  color: $pt-intent-primary;
+  border: 1px solid $pt-intent-primary;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 20px;
 }
 
 .overlay-content {
@@ -174,13 +192,13 @@
 
 @media screen and (min-width: 1200px) {
   .logo {
-    height: 50px;
+    height: 40px;
   }
 
   .logo-container {
-    height: 120px;
-    padding: 45px 14px;
-    margin-left: 100px;
+    height: 87px;
+    padding: 27px 14px;
+    margin-left: 113px;
   }
 
   .top-bar {
@@ -188,12 +206,14 @@
   }
 
   .logged-in-container {
-    height: 80px;
+    height: 55px;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1),0 3px 4px 0 rgba(0, 0, 0, 0.1),0 3px 3px -2px rgba(0, 0, 0, 0.1);
   }
 
   .properties-button {
     margin-left: 30px;
-    font-size: 16px;
+    font-size: 17px;
+    color: #666;
   }
   .properties-button:hover {
     cursor: pointer;
@@ -223,21 +243,7 @@
     height: 100%;
   }
 
-  .user-container {
-    top: 20px;
-    bottom: auto;
-    background: white;
-    height: 80px;
-    justify-content: flex-end;
-    padding: 0 120px;
-    flex-direction: row;
-  }
-
-  .user-action {
-    background: white;
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    margin: 0;
+  .login-container {
+    bottom: 90px;
   }
 }

@@ -41,16 +41,20 @@ class UserAuthDetails extends Component {
         <button
           className={isDesktop ? 'user-icon-large' : 'user-icon-small'}
           title="Switch user"
-          onClick={this.showDropdownMenu}>
+          onClick={
+            authstore.userAuth ? this.showDropdownMenu : () => authstore.initAndLoginUsers()
+          }>
           {isDesktop ? (
             <span style={{display: 'flex', alignItems: 'center'}}>
               {authstore.userName} <Icon icon="user" style={{marginLeft: 10}} iconSize={30} />
             </span>
-          ) : (
+          ) : authstore.userAuth ? (
             <span>
               {authstore.currentUser.givenName.substring(0, 1)}
               {authstore.currentUser.familyName.substring(0, 1)}
             </span>
+          ) : (
+            <Icon icon="person" iconSize={18} />
           )}
         </button>
 
