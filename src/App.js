@@ -4,7 +4,6 @@ import {realEstateStore} from './stores/realEstate';
 import YloMap from './views/ylomap';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import {withRouter} from 'react-router';
-import FullDetails from './views/fullDetails';
 import './index.css';
 import NotFoundPage from './views/404';
 import {userAuthStore} from './stores/userAuth';
@@ -39,17 +38,6 @@ class App extends Component {
               render={props => (
                 <OwnerChange
                   store={realEstateStore}
-                  transactionStore={transactionStore}
-                  userStore={userAuthStore}
-                  {...props}
-                />
-              )}
-            />
-            <Route
-              path="/details/:id"
-              render={props => (
-                <FullDetails
-                  estateStore={realEstateStore}
                   transactionStore={transactionStore}
                   userStore={userAuthStore}
                   {...props}
