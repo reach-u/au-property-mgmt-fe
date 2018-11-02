@@ -1,0 +1,26 @@
+@import '../../index';
+
+.registry-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 65px 0 10px;
+  box-sizing: border-box;
+}
+
+.non-ideal-search {
+  margin-top: 150px;
+}
+
+.non-ideal-search span {
+  color: $pt-intent-primary;
+  opacity: 0.8;
+}
+
+@media screen and (min-width: 1200px) {
+  .registry-container {
+    width: 50%;
+    margin: 100px 120px 0;
+    align-items: flex-start;
+  }
+}

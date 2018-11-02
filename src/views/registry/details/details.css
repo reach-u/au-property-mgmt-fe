@@ -1,7 +1,71 @@
-.details-container {
-    background: #008C8C08;
-    position: relative;
-    box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+.details-card {
+    position: fixed;
+    right: 100px;
+    top: 150px;
+    z-index: 100;
+    width: 600px;
+    border: none !important;
+}
+
+.details-main {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.details-secondary-address {
+    font-weight: 300;
+    font-size: 15px;
+}
+
+.overview-grid {
+    display: grid;
+    margin-top: 30px;
+    grid-template:
+    [row1-start] "property-detail-number property-detail-number-value property-image" [row1-end]
+    [row2-start]  "property-detail-type property-detail-type-value property-image" [row2-end]
+    [row3-start] "property-detail-size property-detail-size-value property-image" [row3-end]
+    / 1fr 1fr 1fr;
+}
+
+.property-detail-number {
+    grid-area: property-detail-number;
+    font-weight: 600;
+}
+
+.property-detail-type {
+    grid-area: property-detail-type;
+    font-weight: 600;
+}
+
+.property-detail-size {
+    grid-area: property-detail-size;
+    font-weight: 600;
+}
+
+.property-detail-number-value {
+    grid-area: property-detail-number-value;
+}
+
+.property-detail-type-value {
+    grid-area: property-detail-type-value;
+}
+
+.property-details-size-value {
+    grid-area: property-detail-size-value;
+}
+
+.property-image {
+    grid-area: property-image;
+    width: 80px;
+    height: 80px;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1),0 3px 4px 0 rgba(0, 0, 0, 0.1),0 3px 3px -2px rgba(0, 0, 0, 0.1);
+}
+
+.detail-icon {
+    color: #008C8C;
+    opacity: 0.6;
+    vertical-align: middle;
+    margin-right: 2px;
 }
 
 .details-text {
@@ -14,11 +78,6 @@
     right: 10px;
 }
 
-.details-header {
-    display: flex;
-    align-items: center;
-}
-
 .img-container {
     margin-top: 60px;
     overflow: hidden;
@@ -27,9 +86,4 @@
 .streetuImage {
     display: block;
     margin: -23% 0;
-}
-
-.registry-container {
-    height: 100%;
-    display: flex;
 }

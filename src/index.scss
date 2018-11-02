@@ -5,4 +5,10 @@ $pt-font-family: 'Open Sans', sans-serif !default;
 
 @import "~@blueprintjs/core/src/blueprint.scss";
 
+input::placeholder {
+  color: $pt-intent-primary;
+}
 
+h3 {
+  color: $pt-intent-primary;
+}

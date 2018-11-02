@@ -2,15 +2,17 @@ import React, {Fragment} from 'react';
 import {observer} from 'mobx-react';
 import Results from './registry/results';
 import {NonIdealState} from '@blueprintjs/core';
-import './registry/details/details.css';
+import './registry/registry.scss';
 import Details from './registry/details';
+import Autocomplete from '../components/AutoComplete';
 
 const Registry = observer(({realEstateStore}) => {
   return (
     <Fragment>
       <div className="registry-container">
+        <Autocomplete store={realEstateStore} className="registry-search" />
         {realEstateStore.dataAvailable && <Results store={realEstateStore} />}
-        {realEstateStore.detailsAvailable && <Details store={realEstateStore} />}
+        {/*realEstateStore.detailsAvailable && <Details store={realEstateStore} />*/}
         {realEstateStore.noResults && (
           <NonIdealState
             icon="search"
@@ -20,6 +22,7 @@ const Registry = observer(({realEstateStore}) => {
           />
         )}
       </div>
+      <Details store={realEstateStore} />
     </Fragment>
   );
 });

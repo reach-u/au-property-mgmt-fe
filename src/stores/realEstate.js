@@ -80,9 +80,7 @@ class RealEstateStore {
 
   get detailedAddress() {
     const estate = this.details || {};
-    return `${estate.street}, ${estate.house}${estate.apartment ? `-${estate.apartment}` : ''}, ${
-      estate.county
-    }, ${estate.country}`;
+    return `${estate.street} ${estate.house}${estate.apartment ? `-${estate.apartment}` : ''}`;
   }
 
   get estateData() {

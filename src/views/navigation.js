@@ -30,7 +30,7 @@ class Navigation extends Component {
         </div>
         <Motion
           defaultStyle={{y: -200}}
-          style={{y: spring(authstore.userAuth || !isHomePage ? 0 : -200)}}>
+          style={{y: spring(!isDesktop && (authstore.userAuth || !isHomePage) ? 0 : -200)}}>
           {style => (
             <div className="logged-in-container" style={{transform: `translateY(${style.y}px)`}}>
               <button className="properties-button" onClick={this.showOverlay}>

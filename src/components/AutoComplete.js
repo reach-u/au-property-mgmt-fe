@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import ReactAutocomplete from 'react-autocomplete';
 import api from '../config/API';
 import {withRouter} from 'react-router';
+import {Button} from '@blueprintjs/core';
+import '../views/registry/search.css';
 
 class Autocomplete extends Component {
   constructor(props) {
@@ -56,34 +58,61 @@ class Autocomplete extends Component {
     this.setItems(e.target.value);
   }
 
+  handleSearch = (searchObject, myProperty = false) => {
+    const {store, authstore, history} = this.props;
+    store.fetchEstates(searchObject, myProperty, authstore);
+    history.push('/results');
+  };
+
+  handleClick = () => {
+    this.handleSearch(this.getValues());
+  };
+
+  getValues = () => {
+    const value = document.querySelector('.input-field').value;
+
+    if (!value) return;
+
+    return value;
+  };
+
   render() {
     return (
-      <ReactAutocomplete
-        inputProps={{
-          className: 'input-field bp3-input bp3-large bp3-intent-primary',
-          placeholder: 'Search...',
-        }}
-        items={this.state.items}
-        getItemValue={item => item.label}
-        renderItem={(item, highlighted) => (
-          <div key={item.id} style={{backgroundColor: highlighted ? '#eee' : 'transparent'}}>
-            {item.label}
-          </div>
-        )}
-        value={this.state.value}
-        onChange={e => this.handleChange(e)}
-        onSelect={value => this.onSelect({value})}
-        menuStyle={{
-          borderRadius: '3px',
-          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
-          background: 'rgba(255, 255, 255, 0.9)',
-          padding: '0 0',
-          fontSize: '90%',
-          position: 'fixed',
-          overflow: 'auto',
-          maxHeight: '30%', // TODO: don't cheat, let it flow to the bottom
-        }}
-      />
+      <div className={`search-box ${this.props.className || ''}`}>
+        <ReactAutocomplete
+          inputProps={{
+            className: 'input-field bp3-input bp3-large bp3-intent-primary',
+            placeholder: 'Property number or address',
+          }}
+          items={this.state.items}
+          getItemValue={item => item.label}
+          renderItem={(item, highlighted) => (
+            <div key={item.id} style={{backgroundColor: highlighted ? '#eee' : 'transparent'}}>
+              {item.label}
+            </div>
+          )}
+          value={this.state.value}
+          onChange={e => this.handleChange(e)}
+          onSelect={value => this.onSelect({value})}
+          menuStyle={{
+            borderRadius: '3px',
+            boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+            background: 'rgba(255, 255, 255, 0.9)',
+            padding: '0 0',
+            fontSize: '90%',
+            position: 'fixed',
+            overflow: 'auto',
+            maxHeight: '30%', // TODO: don't cheat, let it flow to the bottom
+          }}
+        />
+        <Button
+          minimal
+          className="search-button"
+          title="Search"
+          icon="search"
+          onClick={this.handleClick}
+        />
+      </div>
     );
   }
 }

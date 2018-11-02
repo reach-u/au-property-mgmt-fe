@@ -106,14 +106,16 @@
 }
 
 .login-container-top {
-  position: absolute;
+  position: fixed;
   top: 20px;
   width: 100%;
+  background: white;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 0 100px;
   height: 55px;
+  z-index: 3;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1),0 3px 4px 0 rgba(0, 0, 0, 0.1),0 3px 3px -2px rgba(0, 0, 0, 0.1);
 }
 
