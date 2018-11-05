@@ -14,3 +14,16 @@ export const humanReadable = input => {
 const isUpper = input => {
   return input >= 'A' && input <= 'Z';
 };
+
+export const sortAlphabetically = (a, b) => {
+  const initialA = a.givenName.substring(0, 1).toLowerCase();
+  const initialB = b.givenName.substring(0, 1).toLowerCase();
+  if (initialA > initialB) {
+    return 1;
+  }
+  if (initialB > initialA) {
+    return -1;
+  } else {
+    return 0;
+  }
+};

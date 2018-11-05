@@ -5,12 +5,16 @@ import YloMap from './views/ylomap';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import {withRouter} from 'react-router';
 import './index.css';
+import './views/navigation.scss';
 import NotFoundPage from './views/404';
 import {userAuthStore} from './stores/userAuth';
 import {transactionStore} from './stores/transaction';
 import OwnerChange from './views/ownerChange';
 import Navigation from './views/navigation';
 import Search from './views/registry/search';
+import {Motion, spring} from 'react-motion';
+import Details from './views/registry/details';
+import {observer} from 'mobx-react';
 
 class App extends Component {
   render() {
@@ -46,10 +50,21 @@ class App extends Component {
             />
             <Route path="/:id" component={NotFoundPage} />
           </Switch>
+          <Motion
+            defaultStyle={{x: 2000}}
+            style={{x: spring(realEstateStore.detailsVisible ? 0 : 2000)}}>
+            {style => (
+              <div
+                style={{transform: `translateX(${style.x}px)`}}
+                className="details-animation-container">
+                <Details store={realEstateStore} authstore={userAuthStore} />
+              </div>
+            )}
+          </Motion>
         </div>
       </Fragment>
     );
   }
 }
 
-export default withRouter(App);
+export default withRouter(observer(App));

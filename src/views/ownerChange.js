@@ -1,50 +1,101 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {Button, Icon} from '@blueprintjs/core';
+import {Button, Icon, Overlay} from '@blueprintjs/core';
 import './ownerChange/styles.css';
+import info from '../assets/info.png';
+import * as Classes from '@blueprintjs/core/lib/esm/common/classes';
 
 class OwnerChange extends Component {
+  state = {
+    newOwner: 'Choose new owner',
+    displayMenu: false,
+  };
+
   render() {
     const {id} = this.props.match.params;
     const {store, userStore, history} = this.props;
+    const {newOwner, displayMenu} = this.state;
 
     return (
       <div className="owner-container">
         <div className="container-card">
-          <Button
-            style={{marginBottom: 30, alignSelf: 'flex-start'}}
-            minimal
-            icon="arrow-left"
-            onClick={() => history.goBack()}>
-            Back
-          </Button>
           <h3>Ownership change for property no. {id}</h3>
-          <h3>
-            {store.detailedAddress} / {store.estateDetails.propertyType},{' '}
-            {store.estateDetails.propertySize} m<sup>2</sup>{' '}
-            <Button minimal intent="primary" rightIcon="share" onClick={this.handleDetailsClick}>
-              See all details
-            </Button>
-          </h3>
+          <div className="main-address">
+            {store.detailedAddress}
+            <div title="Show details" onClick={this.handleDetailsClick}>
+              <img src={info} alt="show details" className="icon-img" />
+            </div>
+          </div>
+          <div className="secondary-address">
+            {store.estateDetails.propertyType}, {store.estateDetails.propertySize} m<sup>2</sup>
+          </div>
 
           {this.renderPaymentButton()}
 
           <div className="actions">
             <div className="owners">
               <h5>Current owner</h5>
-              <h1>{store.ownerName}</h1>
+              <h3 className="owner-name">
+                {this.props.userStore.getUsernameById(store.estateDetails.currentOwner)}
+              </h3>
               {this.renderCurrentOwnerAction()}
             </div>
 
-            <Icon icon="arrow-right" iconSize={24} />
+            <Icon icon="chevron-right" iconSize={28} className="action-icon" />
 
             <div className="owners">
               <h5>New owner</h5>
-              <h1>{userStore.userName}</h1>
+              <h3
+                className="owner-name"
+                style={{cursor: 'pointer'}}
+                title="Click to choose new owner"
+                onClick={() => this.setState({displayMenu: true})}>
+                {newOwner}
+              </h3>
               {this.renderNewOwnerAction()}
             </div>
           </div>
+          <button className="cancel-transaction" onClick={() => history.goBack()}>
+            Cancel
+          </button>
         </div>
+        <Overlay isOpen={displayMenu} className={Classes.OVERLAY_SCROLL_CONTAINER}>
+          <div className="overlay-content">
+            <span className="overlay-close">
+              <Icon
+                icon="cross"
+                iconSize={25}
+                onClick={() => this.setState({displayMenu: false})}
+              />
+            </span>
+            <ul className="user-list">
+              {userStore.users
+                .filter(
+                  user => parseInt(user.code, 10) !== parseInt(userStore.currentUser.code, 10)
+                )
+                .map((object, i) => (
+                  <li
+                    key={i}
+                    className={
+                      object.givenName + ' ' + object.familyName === newOwner
+                        ? 'current-user list-item'
+                        : 'list-item'
+                    }
+                    onClick={() =>
+                      this.handleNewOwnerClick(`${object.givenName} ${object.familyName}`)
+                    }>
+                    <p
+                      onClick={() =>
+                        this.handleNewOwnerClick(`${object.givenName} ${object.familyName}`)
+                      }
+                      style={{margin: 0}}>
+                      {object.givenName + ' ' + object.familyName}
+                    </p>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </Overlay>
       </div>
     );
   }
@@ -68,7 +119,13 @@ class OwnerChange extends Component {
   }
 
   handleDetailsClick = () => {
-    this.props.history.push(`/details/${this.props.match.params.id}`);
+    this.props.store.detailsVisible = true;
+  };
+
+  handleNewOwnerClick = newOwner => {
+    this.setState({newOwner}, () => {
+      this.setState({displayMenu: false});
+    });
   };
 
   renderCurrentOwnerAction = () => {
@@ -115,9 +172,11 @@ class OwnerChange extends Component {
   renderPaymentButton = () => {
     const {
       transactionStore: {transactionId, transactionStatus, payTax, loading, startTransaction},
-      userStore: {userAuth},
+      userStore: {users},
       match: {params},
     } = this.props;
+    const newOwnerChosen = this.state.newOwner !== 'Choose new owner';
+
     if (transactionId) {
       return (
         <Button
@@ -154,8 +213,16 @@ class OwnerChange extends Component {
           className="payment-button"
           large
           intent="primary"
-          onClick={() => startTransaction(userAuth.code, params.id)}>
-          Begin ownership change
+          minimal={!newOwnerChosen}
+          disabled={!newOwnerChosen}
+          onClick={() =>
+            startTransaction(
+              users.find(user => `${user.givenName} ${user.familyName}` === this.state.newOwner)
+                .code,
+              params.id
+            )
+          }>
+          {newOwnerChosen ? 'Begin ownership change' : 'Choose new owner to start transaction'}
         </Button>
       );
     }

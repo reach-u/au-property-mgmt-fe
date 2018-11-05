@@ -10,10 +10,11 @@ export default {
   transactionStatus: transactionId =>
     `au-property-mgmt-rest/api/1/priv/re/details/${transactionId}`,
   payTax: transactionId => `au-property-mgmt-rest/api/1/priv/re/pay_tax/${transactionId}`,
-  person: id => `au-property-mgmt-rest/api/1/priv/proxy/persons/${id}`,
   getAllPersons: function() {
     return 'au-property-mgmt-rest/api/1/priv/proxy/persons';
   },
   getTransactions: addressId =>
     `au-property-mgmt-rest/api/1/priv/re/details_by_address/${addressId}`,
+  getPersonsTransactions: personId =>
+    `au-property-mgmt-rest/api/1/priv/re/details_by_person/${personId}`,
 };

@@ -1,17 +1,12 @@
-import {observable, computed, action, decorate, when} from 'mobx';
+import {observable, computed, action, decorate} from 'mobx';
 import api from '../config/API';
 
 class RealEstateStore {
-  constructor() {
-    when(() => this.estateDetails.currentOwner, () => this.fetchOwnerData());
-  }
-
   estates = [];
   state = 'not_loaded';
   details = null;
   detailsId = null;
-  fullDetails = false;
-  ownerDetails = {};
+  detailsVisible = false;
   loading = false;
   query = '';
 
@@ -43,17 +38,7 @@ class RealEstateStore {
       .then(data => {
         this.details = data;
         this.loading = false;
-      })
-      .catch(() => (this.loading = false));
-  }
-
-  fetchOwnerData() {
-    this.loading = true;
-    fetch(api.person(this.estateDetails.currentOwner))
-      .then(res => res.json())
-      .then(data => {
-        this.ownerDetails = data;
-        this.loading = false;
+        this.detailsVisible = true;
       })
       .catch(() => (this.loading = false));
   }
@@ -98,12 +83,6 @@ class RealEstateStore {
       : 'No mortgage';
   }
 
-  get ownerName() {
-    const {currentOwner} = this.estateDetails;
-    const {firstName, lastName} = this.ownerDetails;
-    return firstName || lastName ? `${firstName || ''} ${lastName || ''}` : currentOwner;
-  }
-
   get previousOwnerData() {
     const {previousOwner} = this.estateDetails;
     return previousOwner ? `Previously owned by ${previousOwner}` : 'No previous owner';
@@ -113,27 +92,30 @@ class RealEstateStore {
     this.details = null;
     this.detailsId = null;
   }
+
+  closeDetailsModal() {
+    this.detailsVisible = false;
+  }
 }
 
 decorate(RealEstateStore, {
+  closeDetailsModal: action,
   dataAvailable: computed,
   detailedAddress: computed,
   details: observable,
   detailsAvailable: computed,
   detailsId: observable,
+  detailsVisible: observable,
   estateCount: computed,
   estateData: computed,
   estateDetails: computed,
   estates: observable,
   fetchEstateDetails: action,
   fetchEstates: action,
-  fetchOwnerData: action,
   fullDetails: observable,
   loading: observable,
   mortgageData: computed,
   noResults: computed,
-  ownerDetails: observable,
-  ownerName: computed,
   previousOwnerData: computed,
   query: observable,
   resetDetails: action,

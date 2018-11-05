@@ -1,9 +1,15 @@
-import {decorate, observable, computed, action} from 'mobx';
+import {decorate, observable, computed, action, when} from 'mobx';
 import api from '../config/API';
+import {sortAlphabetically} from '../utils/string';
 
 class UserAuthStore {
+  constructor() {
+    when(() => this.userAuth, () => this.fetchUserTransactions());
+  }
+
   userAuth = null;
   users = [];
+  userTransactions = [];
   loading = false;
 
   static _getRndInteger(min, max) {
@@ -12,7 +18,7 @@ class UserAuthStore {
 
   initAndLoginUsers() {
     this.loading = true;
-    fetch(api.getAllPersons())
+    fetch(`${window.location.origin}/${api.getAllPersons()}`)
       .then(response => response.json())
       .then(data => {
         let persons = data;
@@ -27,11 +33,22 @@ class UserAuthStore {
           if (!selectedUser && persons.length > 0) {
             selectedUser = persons[this._getRndInteger(0, persons.length - 1)];
           }
-          this.users = persons.filter(user => !!user.givenName);
+          this.users = persons.filter(user => !!user.givenName).sort(sortAlphabetically);
           this.userAuth = selectedUser;
           this.loading = false;
         }
       });
+  }
+
+  getUsernameById(id = 0) {
+    const user = this.users.find(user => user.code.toString() === id.toString()) || {};
+    return `${user.givenName} ${user.familyName}`;
+  }
+
+  fetchUserTransactions() {
+    fetch(`${window.location.origin}/${api.getPersonsTransactions(this.userAuth.code)}`)
+      .then(response => response.json())
+      .then(data => (this.userTransactions = data));
   }
 
   get currentUser() {
@@ -53,6 +70,8 @@ class UserAuthStore {
 }
 
 decorate(UserAuthStore, {
+  fetchUserTransactions: action,
+  getUsernameById: action,
   loading: observable,
   userAuth: observable,
   users: observable,
@@ -60,6 +79,7 @@ decorate(UserAuthStore, {
   currentUser: computed,
   userName: computed,
   userId: computed,
+  userTransactions: observable,
 });
 
 export const userAuthStore = new UserAuthStore();
