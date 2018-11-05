@@ -60,7 +60,6 @@ class Details extends Component {
                 {' '}
                 {estateDetails.propertySize} m<sup>2</sup>
               </p>
-              <img src={pic} alt="" className="property-image" />
             </div>
             <Divider />
             <div className="building-container">
@@ -80,15 +79,6 @@ class Details extends Component {
                 <img src={check} alt="" className="check-icon" /> {estateDetails.waterSupply} water
                 supply, {estateDetails.sewerType} sewage
               </p>
-              <div className="map-container">
-                <div
-                  className="map-overlay"
-                  onClick={() => this.setState({overlayOpen: true})}
-                  title="Show large map">
-                  Show fullscreen
-                </div>
-                <MapView coords={coordinates} />
-              </div>
             </div>
             <Divider />
             <h3>Registration</h3>
@@ -126,6 +116,18 @@ class Details extends Component {
                 </button>
               )}
             </div>
+          </div>
+          <div className="media-container">
+            <div className="map-container">
+              <div
+                className="map-overlay"
+                onClick={() => this.setState({overlayOpen: true})}
+                title="Show large map">
+                Click to show fullscreen
+              </div>
+              <MapView coords={coordinates} />
+            </div>
+            <img src={pic} alt="" className="property-image" />
           </div>
           <Overlay isOpen={this.state.overlayOpen} onClose={this.closeMap}>
             <div className="map-in-overlay">

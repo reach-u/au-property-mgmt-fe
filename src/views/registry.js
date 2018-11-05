@@ -24,8 +24,8 @@ const Registry = observer(({realEstateStore, authstore}) => {
         )}
       </div>
       <Motion
-        defaultStyle={{x: 1000}}
-        style={{x: spring(realEstateStore.detailsAvailable ? 0 : 1000)}}>
+        defaultStyle={{x: 2000}}
+        style={{x: spring(realEstateStore.detailsAvailable ? 0 : 2000)}}>
         {style => (
           <div
             style={{transform: `translateX(${style.x}px)`}}
