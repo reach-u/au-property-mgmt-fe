@@ -55,7 +55,7 @@ h5 {
 }
 
 .map {
-    height: 300px;
+    height: inherit !important;
 }
 
 .map-button {
@@ -72,6 +72,12 @@ h5 {
 }
 .map-button:hover{
     background: #f4f4f4;
+}
+
+.close-button {
+    right: 10px;
+    left: auto;
+    padding: 4px 6px;
 }
 
 .property-type {
