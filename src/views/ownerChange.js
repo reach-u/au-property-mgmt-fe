@@ -35,7 +35,9 @@ class OwnerChange extends Component {
           <div className="actions">
             <div className="owners">
               <h5>Current owner</h5>
-              <h3 className="owner-name">{store.ownerName}</h3>
+              <h3 className="owner-name">
+                {this.props.userStore.getUsernameById(store.estateDetails.currentOwner)}
+              </h3>
               {this.renderCurrentOwnerAction()}
             </div>
 

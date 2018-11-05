@@ -83,7 +83,7 @@ class Details extends Component {
             <Divider />
             <h3>Registration</h3>
             <p className="details-main">
-              Owned by {ownerName} since{' '}
+              Owned by {this.props.authstore.getUsernameById(estateDetails.currentOwner)} since{' '}
               {formatDate(estateDetails.lastOwnerChangeDate || new Date())}
             </p>
             <p>

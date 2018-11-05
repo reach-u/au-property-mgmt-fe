@@ -35,6 +35,11 @@ class UserAuthStore {
       });
   }
 
+  getUsernameById(id) {
+    const user = this.users.find(user => user.code.toString() === id.toString()) || {};
+    return `${user.givenName} ${user.familyName}`;
+  }
+
   get currentUser() {
     return (
       this.userAuth || {
@@ -54,6 +59,7 @@ class UserAuthStore {
 }
 
 decorate(UserAuthStore, {
+  getUsernameById: action,
   loading: observable,
   userAuth: observable,
   users: observable,
