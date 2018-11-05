@@ -42,7 +42,7 @@ class Details extends Component {
               icon="cross"
               className="details-close"
               title="Close"
-              onClick={() => this.props.store.resetDetails()}
+              onClick={() => this.props.store.closeDetailsModal()}
             />
             <div className="overview-grid">
               <p className="property-detail-number">
@@ -109,9 +109,7 @@ class Details extends Component {
             </p>
             <div className="button-container">
               {userId === estateDetails.currentOwner && (
-                <button
-                  className="owner-change-button"
-                  onClick={() => this.props.history.push(`/owner-change/${detailsId}`)}>
+                <button className="owner-change-button" onClick={this.handleOwnershipClick}>
                   Change ownership
                 </button>
               )}
@@ -141,6 +139,15 @@ class Details extends Component {
 
   closeMap = () => {
     this.setState({overlayOpen: false});
+  };
+
+  handleOwnershipClick = () => {
+    const {
+      store: {detailsId},
+      history,
+    } = this.props;
+    this.props.store.closeDetailsModal();
+    history.push(`/owner-change/${detailsId}`);
   };
 }
 

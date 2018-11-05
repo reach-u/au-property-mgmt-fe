@@ -1,5 +1,6 @@
 import {decorate, observable, computed, action} from 'mobx';
 import api from '../config/API';
+import {sortAlphabetically} from '../utils/string';
 
 class UserAuthStore {
   userAuth = null;
@@ -12,7 +13,7 @@ class UserAuthStore {
 
   initAndLoginUsers() {
     this.loading = true;
-    fetch(api.getAllPersons())
+    fetch(`${window.location.origin}/${api.getAllPersons()}`)
       .then(response => response.json())
       .then(data => {
         let persons = data;
@@ -27,7 +28,7 @@ class UserAuthStore {
           if (!selectedUser && persons.length > 0) {
             selectedUser = persons[this._getRndInteger(0, persons.length - 1)];
           }
-          this.users = persons.filter(user => !!user.givenName);
+          this.users = persons.filter(user => !!user.givenName).sort(sortAlphabetically);
           this.userAuth = selectedUser;
           this.loading = false;
         }

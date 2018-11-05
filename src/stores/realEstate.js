@@ -10,7 +10,7 @@ class RealEstateStore {
   state = 'not_loaded';
   details = null;
   detailsId = null;
-  fullDetails = false;
+  detailsVisible = false;
   ownerDetails = {};
   loading = false;
   query = '';
@@ -43,13 +43,14 @@ class RealEstateStore {
       .then(data => {
         this.details = data;
         this.loading = false;
+        this.detailsVisible = true;
       })
       .catch(() => (this.loading = false));
   }
 
   fetchOwnerData() {
     this.loading = true;
-    fetch(api.person(this.estateDetails.currentOwner))
+    fetch(`${window.location.origin}/${api.person(this.estateDetails.currentOwner)}`)
       .then(res => res.json())
       .then(data => {
         this.ownerDetails = data;
@@ -113,14 +114,20 @@ class RealEstateStore {
     this.details = null;
     this.detailsId = null;
   }
+
+  closeDetailsModal() {
+    this.detailsVisible = false;
+  }
 }
 
 decorate(RealEstateStore, {
+  closeDetailsModal: action,
   dataAvailable: computed,
   detailedAddress: computed,
   details: observable,
   detailsAvailable: computed,
   detailsId: observable,
+  detailsVisible: observable,
   estateCount: computed,
   estateData: computed,
   estateDetails: computed,

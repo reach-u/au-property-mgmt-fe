@@ -15,16 +15,65 @@
     align-items: flex-start;
 }
 
+.main-address {
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    margin: 10px 0;
+}
+
+.icon-img {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.secondary-address {
+    font-size: 18px;
+    font-weight: 300;
+}
+
 .owners {
-    margin: 0 40px;
+    margin: 0;
+}
+
+h5 {
+    font-size: 15px;
+}
+
+.owner-name {
+    font-size: 24px;
+    font-weight: 400;
+    margin-top: 0;
+}
+
+.action-icon {
+    color: #888;
+    margin: 0 30px;
 }
 
 .actions {
-    padding: 30px 0 0;
+    padding: 0;
     display: flex;
     align-items: center;
 }
 
 .payment-button {
-    margin: 20px auto;
+    margin: 20px 0;
+}
+
+.cancel-transaction {
+    margin-top: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    background: white;
+    color: #008C8C;
+    border: 1px solid #008C8C;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 20px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+    transition: 200ms;
+}
+.cancel-transaction:hover {
+    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.2),0px 3px 4px 0px rgba(0, 0, 0, 0.14),0px 3px 3px -2px rgba(0, 0, 0, 0.12);
 }

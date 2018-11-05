@@ -3,9 +3,9 @@ import {observer} from 'mobx-react';
 import Results from './registry/results';
 import {NonIdealState} from '@blueprintjs/core';
 import './registry/registry.scss';
-import Details from './registry/details';
+// import Details from './registry/details';
 import Autocomplete from '../components/AutoComplete';
-import {Motion, spring} from 'react-motion';
+// import {Motion, spring} from 'react-motion';
 
 const Registry = observer(({realEstateStore, authstore}) => {
   return (
@@ -23,17 +23,6 @@ const Registry = observer(({realEstateStore, authstore}) => {
           />
         )}
       </div>
-      <Motion
-        defaultStyle={{x: 2000}}
-        style={{x: spring(realEstateStore.detailsAvailable ? 0 : 2000)}}>
-        {style => (
-          <div
-            style={{transform: `translateX(${style.x}px)`}}
-            className="details-animation-container">
-            <Details store={realEstateStore} authstore={authstore} />
-          </div>
-        )}
-      </Motion>
     </Fragment>
   );
 });
