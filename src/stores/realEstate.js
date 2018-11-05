@@ -113,10 +113,6 @@ class RealEstateStore {
     this.details = null;
     this.detailsId = null;
   }
-
-  toggleFullDetails() {
-    this.fullDetails = !this.fullDetails;
-  }
 }
 
 decorate(RealEstateStore, {
@@ -143,7 +139,6 @@ decorate(RealEstateStore, {
   resetDetails: action,
   setQuery: action,
   state: observable,
-  toggleFullDetails: action,
 });
 
 export const realEstateStore = new RealEstateStore();

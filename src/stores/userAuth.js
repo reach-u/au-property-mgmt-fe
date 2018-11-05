@@ -46,6 +46,10 @@ class UserAuthStore {
   get userName() {
     return this.userAuth ? `${this.userAuth.givenName} ${this.userAuth.familyName}` : 'John Doe';
   }
+
+  get userId() {
+    return this.userAuth ? parseInt(this.userAuth.code, 10) : 0;
+  }
 }
 
 decorate(UserAuthStore, {
@@ -55,6 +59,7 @@ decorate(UserAuthStore, {
   initAndLoginUsers: action,
   currentUser: computed,
   userName: computed,
+  userId: computed,
 });
 
 export const userAuthStore = new UserAuthStore();

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {Button, Card, Elevation, Icon} from '@blueprintjs/core';
+import {Button, Icon} from '@blueprintjs/core';
 import './ownerChange/styles.css';
 
 class OwnerChange extends Component {
@@ -10,7 +10,7 @@ class OwnerChange extends Component {
 
     return (
       <div className="owner-container">
-        <Card elevation={Elevation.TWO} className="container-card">
+        <div className="container-card">
           <Button
             style={{marginBottom: 30, alignSelf: 'flex-start'}}
             minimal
@@ -18,7 +18,7 @@ class OwnerChange extends Component {
             onClick={() => history.goBack()}>
             Back
           </Button>
-          <h1>Ownership change for property no. {id}</h1>
+          <h3>Ownership change for property no. {id}</h3>
           <h3>
             {store.detailedAddress} / {store.estateDetails.propertyType},{' '}
             {store.estateDetails.propertySize} m<sup>2</sup>{' '}
@@ -44,7 +44,7 @@ class OwnerChange extends Component {
               {this.renderNewOwnerAction()}
             </div>
           </div>
-        </Card>
+        </div>
       </div>
     );
   }

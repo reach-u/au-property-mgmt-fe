@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import MapView from '../fullDetails/map';
 import {Button, Card, Elevation, Divider, Overlay} from '@blueprintjs/core';
 import './details/details.css';
@@ -22,16 +22,17 @@ class Details extends Component {
       mortgageData,
       previousOwnerData,
       detailedAddress,
-      resetDetails,
       detailsId,
     } = this.props.store;
+    const {userId} = this.props.authstore;
+    const isDesktop = window.innerWidth > 1200;
 
     return (
-      <Fragment>
-        <Card elevation={Elevation.THREE} className="details-card">
+      <div className="card-backdrop">
+        <Card elevation={isDesktop ? Elevation.THREE : Elevation.ZERO} className="details-card">
           <div className="details-text">
             <div className="details-header">
-              <p className="details-main">{detailedAddress}</p>
+              <p className="details-header">{detailedAddress}</p>
               <p className="details-secondary-address">
                 {house}, {street}, {county}, {country}
               </p>
@@ -41,7 +42,7 @@ class Details extends Component {
               icon="cross"
               className="details-close"
               title="Close"
-              onClick={() => resetDetails()}
+              onClick={() => this.props.store.resetDetails()}
             />
             <div className="overview-grid">
               <p className="property-detail-number">
@@ -69,7 +70,7 @@ class Details extends Component {
               </p>
               <p>
                 <img src={check} alt="" className="check-icon" /> Certificate of occupancy (
-                {formatDate(estateDetails.certificateOfOccupancy)})
+                {formatDate(estateDetails.certificateOfOccupancy || new Date())})
               </p>
               <p>
                 <img src={check} alt="" className="check-icon" /> Total height{' '}
@@ -92,7 +93,8 @@ class Details extends Component {
             <Divider />
             <h3>Registration</h3>
             <p className="details-main">
-              Owned by {ownerName} since {formatDate(estateDetails.lastOwnerChangeDate)}
+              Owned by {ownerName} since{' '}
+              {formatDate(estateDetails.lastOwnerChangeDate || new Date())}
             </p>
             <p>
               <img src={check} alt="" className="check-icon" /> {mortgageData}
@@ -107,7 +109,7 @@ class Details extends Component {
             </p>
             <p>
               <img src={check} alt="" className="check-icon" /> Measured by {estateDetails.surveyor}{' '}
-              on {formatDate(estateDetails.landMeasurementDate)}
+              on {formatDate(estateDetails.landMeasurementDate || new Date())}
             </p>
             <p>
               {!!estateDetails.landLimitations1 && (
@@ -115,6 +117,15 @@ class Details extends Component {
               )}{' '}
               {estateDetails.landLimitations1}
             </p>
+            <div className="button-container">
+              {userId === estateDetails.currentOwner && (
+                <button
+                  className="owner-change-button"
+                  onClick={() => this.props.history.push(`/owner-change/${detailsId}`)}>
+                  Change ownership
+                </button>
+              )}
+            </div>
           </div>
           <Overlay isOpen={this.state.overlayOpen} onClose={this.closeMap}>
             <div className="map-in-overlay">
@@ -122,7 +133,7 @@ class Details extends Component {
             </div>
           </Overlay>
         </Card>
-      </Fragment>
+      </div>
     );
   }
 
