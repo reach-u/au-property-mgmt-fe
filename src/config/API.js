@@ -15,4 +15,6 @@ export default {
   },
   getTransactions: addressId =>
     `au-property-mgmt-rest/api/1/priv/re/details_by_address/${addressId}`,
+  getPersonsTransactions: personId =>
+    `au-property-mgmt-rest/api/1/priv/re/details_by_person/${personId}`,
 };

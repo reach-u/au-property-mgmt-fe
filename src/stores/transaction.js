@@ -42,7 +42,7 @@ class TransactionStore {
     }`;
     fetch(url, {method: 'POST'})
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => (this.currentTransaction = data));
   };
 
   payTax = () => {

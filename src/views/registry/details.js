@@ -18,7 +18,6 @@ class Details extends Component {
     const {
       estateDetails,
       estateData: {house, street, county, country, coordinates},
-      ownerName,
       mortgageData,
       previousOwnerData,
       detailedAddress,
