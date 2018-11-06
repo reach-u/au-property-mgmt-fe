@@ -30,7 +30,7 @@ class RealEstateStore {
       .catch(() => (this.loading = false));
   }
 
-  fetchEstateDetails(id) {
+  fetchEstateDetails(id, showModal = true) {
     this.loading = true;
     this.detailsId = id;
     fetch(`${window.location.origin}/${api.details(id)}`)
@@ -38,7 +38,7 @@ class RealEstateStore {
       .then(data => {
         this.details = data;
         this.loading = false;
-        this.detailsVisible = true;
+        this.detailsVisible = showModal;
       })
       .catch(() => (this.loading = false));
   }

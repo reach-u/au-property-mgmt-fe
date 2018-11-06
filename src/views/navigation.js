@@ -48,11 +48,12 @@ class Navigation extends Component {
                       className="menu-link"
                       onClick={() => {
                         store.fetchEstates(null, true, authstore);
-                        history.push('/results');
+                        history.push('/properties');
                       }}>
                       My properties
                     </button>
                   )}
+                  {!!authstore.userAuth && <Link to="/transactions">My transactions</Link>}
                   {!authstore.userAuth && (
                     <button className="menu-link" onClick={() => authstore.initAndLoginUsers()}>
                       Log in
@@ -76,10 +77,13 @@ class Navigation extends Component {
                   className="properties-button"
                   onClick={() => {
                     store.fetchEstates(null, true, authstore);
-                    history.push('/results');
+                    history.push('/properties');
                   }}>
                   My properties
                 </button>
+                <Link to="/transactions" style={{fontSize: '17px'}}>
+                  My transactions
+                </Link>
               </div>
               <UserAuthDetails authstore={authstore} className="nav-button" />
             </div>

@@ -15,9 +15,13 @@ import Search from './views/registry/search';
 import {Motion, spring} from 'react-motion';
 import Details from './views/registry/details';
 import {observer} from 'mobx-react';
+import Transactions from './views/transactions';
+import UserProperties from './views/userProperties';
 
 class App extends Component {
   render() {
+    const isLoggedIn = !!userAuthStore.userAuth;
+
     return (
       <Fragment>
         <Navigation store={realEstateStore} authstore={userAuthStore} />
@@ -37,17 +41,37 @@ class App extends Component {
               )}
             />
             <Route path="/testmap" render={() => <YloMap />} />
-            <Route
-              path="/owner-change/:id"
-              render={props => (
-                <OwnerChange
-                  store={realEstateStore}
-                  transactionStore={transactionStore}
-                  userStore={userAuthStore}
-                  {...props}
-                />
-              )}
-            />
+            {isLoggedIn ? (
+              <Route
+                path="/owner-change/:id"
+                render={props => (
+                  <OwnerChange
+                    store={realEstateStore}
+                    transactionStore={transactionStore}
+                    userStore={userAuthStore}
+                    {...props}
+                  />
+                )}
+              />
+            ) : (
+              <Redirect to="/search" />
+            )}
+            {isLoggedIn ? (
+              <Route
+                path="/properties"
+                render={() => <UserProperties store={realEstateStore} authstore={userAuthStore} />}
+              />
+            ) : (
+              <Redirect to="/search" />
+            )}
+            {isLoggedIn ? (
+              <Route
+                path="/transactions"
+                render={props => <Transactions authstore={userAuthStore} {...props} />}
+              />
+            ) : (
+              <Redirect to="/search" />
+            )}
             <Route path="/:id" component={NotFoundPage} />
           </Switch>
           <Motion

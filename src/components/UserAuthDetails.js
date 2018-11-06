@@ -29,7 +29,7 @@ class UserAuthDetails extends Component {
   }
 
   handleClick(user) {
-    this.props.authstore.userAuth = user;
+    this.props.authstore.changeUser(user);
   }
 
   render() {

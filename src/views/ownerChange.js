@@ -13,8 +13,12 @@ class OwnerChange extends Component {
 
   render() {
     const {id} = this.props.match.params;
-    const {store, userStore, history} = this.props;
+    const {store, userStore, history, transactionStore} = this.props;
     const {newOwner, displayMenu} = this.state;
+    const isOwner =
+      parseInt(store.estateDetails.currentOwner, 10) === userStore.userId &&
+      transactionStore.currentTransaction &&
+      !transactionStore.currentTransaction.buyerIdCode;
 
     return (
       <div className="owner-container">
@@ -47,9 +51,17 @@ class OwnerChange extends Component {
               <h5>New owner</h5>
               <h3
                 className="owner-name"
-                style={{cursor: 'pointer'}}
-                title="Click to choose new owner"
-                onClick={() => this.setState({displayMenu: true})}>
+                style={{
+                  cursor: isOwner ? 'pointer' : 'default',
+                  textDecoration: isOwner ? 'underline' : 'none',
+                }}
+                title={isOwner ? 'Click to choose new owner' : null}
+                onClick={() => {
+                  if (!isOwner) {
+                    return;
+                  }
+                  this.setState({displayMenu: true});
+                }}>
                 {newOwner}
               </h3>
               {this.renderNewOwnerAction()}
@@ -108,13 +120,26 @@ class OwnerChange extends Component {
       transactionStore,
     } = this.props;
     if (!store.details) {
-      store.fetchEstateDetails(params.id);
+      store.fetchEstateDetails(params.id, false);
     }
     if (!userStore.userAuth) {
       userStore.initAndLoginUsers();
     }
     if (!transactionStore.transactionId) {
       transactionStore.fetchPropertyTransactions(params.id);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {transactionStore, userStore} = this.props;
+    if (
+      transactionStore.currentTransaction &&
+      userStore.getUsernameById(transactionStore.currentTransaction.buyerIdCode) !==
+        prevState.newOwner
+    ) {
+      this.setState({
+        newOwner: userStore.getUsernameById(transactionStore.currentTransaction.buyerIdCode),
+      });
     }
   }
 

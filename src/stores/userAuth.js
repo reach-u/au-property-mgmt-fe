@@ -1,10 +1,10 @@
-import {decorate, observable, computed, action, when} from 'mobx';
+import {decorate, observable, computed, action, reaction} from 'mobx';
 import api from '../config/API';
 import {sortAlphabetically} from '../utils/string';
 
 class UserAuthStore {
   constructor() {
-    when(() => this.userAuth, () => this.fetchUserTransactions());
+    reaction(() => this.userAuth, () => this.fetchUserTransactions());
   }
 
   userAuth = null;
@@ -41,14 +41,22 @@ class UserAuthStore {
   }
 
   getUsernameById(id = 0) {
-    const user = this.users.find(user => user.code.toString() === id.toString()) || {};
+    const user = this.users.find(user => user.code.toString() === id.toString()) || {
+      givenName: 'John',
+      familyName: 'Doe',
+    };
     return `${user.givenName} ${user.familyName}`;
   }
 
   fetchUserTransactions() {
     fetch(`${window.location.origin}/${api.getPersonsTransactions(this.userAuth.code)}`)
       .then(response => response.json())
-      .then(data => (this.userTransactions = data));
+      .then(data => (this.userTransactions = data.filter(transaction => !transaction.signedByAll)));
+  }
+
+  changeUser(user) {
+    this.userAuth = null;
+    this.userAuth = user;
   }
 
   get currentUser() {
@@ -70,6 +78,7 @@ class UserAuthStore {
 }
 
 decorate(UserAuthStore, {
+  changeUser: action,
   fetchUserTransactions: action,
   getUsernameById: action,
   loading: observable,
