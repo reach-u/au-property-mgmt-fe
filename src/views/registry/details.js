@@ -17,7 +17,7 @@ class Details extends Component {
   render() {
     const {
       estateDetails,
-      estateData: {house, street, county, country, coordinates},
+      estateData: {house, street, county, country, coordinates, streetuUrl},
       detailedAddress,
       detailsId,
     } = this.props.store;
@@ -130,7 +130,15 @@ class Details extends Component {
               </div>
               <MapView coords={coordinates} cadastry={estateDetails.cadastre} />
             </div>
-            <img src={pic} alt="" className="property-image" />
+            {!!streetuUrl && (
+              <iframe
+                title="EyeVi street view"
+                src={streetuUrl}
+                //scrolling="no"
+                className="property-image"
+              />
+            )}
+            {!streetuUrl && <img src={pic} alt="" className="property-image" />}
           </div>
           <Overlay isOpen={this.state.overlayOpen} onClose={this.closeMap}>
             <div className="map-in-overlay">

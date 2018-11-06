@@ -13,6 +13,7 @@ class RealEstateStore {
 
   fetchEstates(query, onlyMyProperties = false, authStore) {
     this.loading = true;
+    this.detailsVisible = false;
     query = !!onlyMyProperties ? '' : query;
     let userId = authStore && authStore.userAuth ? authStore.userAuth.code : '';
     let apiSelection = !!onlyMyProperties ? api.myEstates(userId) : api.estates(query);
