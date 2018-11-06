@@ -16,9 +16,10 @@ class OwnerChange extends Component {
     const {store, userStore, history, transactionStore} = this.props;
     const {newOwner, displayMenu} = this.state;
     const isOwner =
-      parseInt(store.estateDetails.currentOwner, 10) === userStore.userId &&
-      transactionStore.currentTransaction &&
-      !transactionStore.currentTransaction.buyerIdCode;
+      (parseInt(store.estateDetails.currentOwner, 10) === userStore.userId &&
+        (transactionStore.currentTransaction &&
+          !transactionStore.currentTransaction.buyerIdCode)) ||
+      !transactionStore.currentTransaction;
 
     return (
       <div className="owner-container">

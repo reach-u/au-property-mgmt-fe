@@ -19,6 +19,10 @@ import Transactions from './views/transactions';
 import UserProperties from './views/userProperties';
 
 class App extends Component {
+  state = {
+    userId: null,
+  };
+
   render() {
     const isLoggedIn = !!userAuthStore.userAuth;
 
@@ -88,6 +92,17 @@ class App extends Component {
         </div>
       </Fragment>
     );
+  }
+
+  componentDidUpdate() {
+    if (
+      userAuthStore.userId !== this.state.userId &&
+      this.props.location.pathname === '/properties'
+    ) {
+      this.setState({userId: userAuthStore.userId}, () => {
+        realEstateStore.fetchEstates(null, true, userAuthStore);
+      });
+    }
   }
 }
 
