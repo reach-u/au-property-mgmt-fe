@@ -128,7 +128,12 @@ class Details extends Component {
           </div>
           <Overlay isOpen={this.state.overlayOpen} onClose={this.closeMap}>
             <div className="map-in-overlay">
-              <MapView coords={coordinates} cadastry={estateDetails.cadastre} isLargeMap={true} handleClose={this.closeMap} />
+              <MapView
+                coords={coordinates}
+                cadastry={estateDetails.cadastre}
+                isLargeMap={true}
+                handleClose={this.closeMap}
+              />
             </div>
           </Overlay>
         </Card>

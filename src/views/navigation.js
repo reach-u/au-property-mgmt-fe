@@ -17,6 +17,10 @@ class Navigation extends Component {
     const {history, authstore, store, location} = this.props;
     const isDesktop = window.innerWidth > 1200;
     const isHomePage = location.pathname === '/search';
+    const isSearch = location.pathname === '/results';
+    const isProperties = location.pathname === '/properties';
+    const isTransactions = location.pathname === '/transactions';
+    const activeTransactions = authstore.userTransactions.length > 0;
 
     return (
       <Fragment>
@@ -33,9 +37,12 @@ class Navigation extends Component {
           style={{y: spring(!isDesktop && (authstore.userAuth || !isHomePage) ? 0 : -200)}}>
           {style => (
             <div className="logged-in-container" style={{transform: `translateY(${style.y}px)`}}>
-              <button className="properties-button" onClick={this.showOverlay}>
-                MENU
-              </button>
+              <div style={{display: 'flex', justifyContent: 'center'}}>
+                <button className="properties-button" onClick={this.showOverlay}>
+                  MENU
+                </button>
+                {activeTransactions && <div className="transaction-notification-small" />}
+              </div>
               <UserAuthDetails authstore={authstore} className="nav-button" />
               <Overlay isOpen={this.state.menuOpen}>
                 <div className="mobile-menu">
@@ -53,7 +60,16 @@ class Navigation extends Component {
                       My properties
                     </button>
                   )}
-                  {!!authstore.userAuth && <Link to="/transactions">My transactions</Link>}
+                  {!!authstore.userAuth && (
+                    <div style={{display: 'flex', justifyContent: 'center', marginTop: 32}}>
+                      <Link to="/transactions">My transactions</Link>
+                      {activeTransactions && (
+                        <div className="transaction-notification">
+                          {authstore.userTransactions.length}
+                        </div>
+                      )}
+                    </div>
+                  )}
                   {!authstore.userAuth && (
                     <button className="menu-link" onClick={() => authstore.initAndLoginUsers()}>
                       Log in
@@ -70,20 +86,32 @@ class Navigation extends Component {
           {style => (
             <div style={{transform: `translateY(${style.y}px)`}} className="logged-in-container">
               <div className="logged-in-actions">
-                <Link to="/results" style={{fontSize: '17px'}}>
+                <Link to="/results" style={{fontSize: '17px', fontWeight: isSearch ? 600 : 300}}>
                   Find a property
                 </Link>
                 <button
                   className="properties-button"
+                  style={{fontWeight: isProperties ? 600 : 300}}
                   onClick={() => {
                     store.fetchEstates(null, true, authstore);
                     history.push('/properties');
                   }}>
                   My properties
                 </button>
-                <Link to="/transactions" style={{fontSize: '17px'}}>
+                <Link
+                  to="/transactions"
+                  style={{
+                    fontSize: '17px',
+                    marginLeft: '30px',
+                    fontWeight: isTransactions ? 600 : 300,
+                  }}>
                   My transactions
                 </Link>
+                {activeTransactions && (
+                  <div className="transaction-notification">
+                    {authstore.userTransactions.length}
+                  </div>
+                )}
               </div>
               <UserAuthDetails authstore={authstore} className="nav-button" />
             </div>
