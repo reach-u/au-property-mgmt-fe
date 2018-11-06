@@ -128,7 +128,7 @@ class Details extends Component {
                 title="Show large map">
                 Click to show fullscreen
               </div>
-              <MapView coords={coordinates} />
+              <MapView coords={coordinates} cadastry={estateDetails.cadastre} />
             </div>
             <img src={pic} alt="" className="property-image" />
           </div>
