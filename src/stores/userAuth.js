@@ -49,9 +49,13 @@ class UserAuthStore {
   }
 
   fetchUserTransactions() {
+    this.loading = true;
     fetch(`${window.location.origin}/${api.getPersonsTransactions(this.userAuth.code)}`)
       .then(response => response.json())
-      .then(data => (this.userTransactions = data.filter(transaction => !transaction.signedByAll)));
+      .then(data => {
+        this.userTransactions = data.filter(transaction => !transaction.signedByAll);
+        this.loading = false;
+      });
   }
 
   changeUser(user) {

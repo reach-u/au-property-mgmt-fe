@@ -3,6 +3,7 @@ import api from '../config/API';
 
 class RealEstateStore {
   estates = [];
+  userEstates = [];
   state = 'not_loaded';
   details = null;
   detailsId = null;
@@ -21,16 +22,24 @@ class RealEstateStore {
       .then(data => {
         if (data.error) {
           this.estates = [];
-        } else {
+          this.state = 'loaded';
+        } else if (!onlyMyProperties) {
           this.estates = data;
+          this.state = 'loaded';
+        } else {
+          this.userEstates = data;
         }
-        this.state = 'loaded';
+
         this.loading = false;
       })
       .catch(() => (this.loading = false));
   }
 
   fetchEstateDetails(id, showModal = true) {
+    if (id === this.detailsId) {
+      this.detailsVisible = showModal;
+      return;
+    }
     this.loading = true;
     this.detailsId = id;
     fetch(`${window.location.origin}/${api.details(id)}`)
@@ -107,6 +116,7 @@ decorate(RealEstateStore, {
   resetDetails: action,
   setQuery: action,
   state: observable,
+  userEstates: observable,
 });
 
 export const realEstateStore = new RealEstateStore();

@@ -2,7 +2,7 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import * as Classes from '@blueprintjs/core/lib/esm/common/classes';
 import school from '../assets/baseline-school-24px.svg';
-import {Icon, NonIdealState} from '@blueprintjs/core';
+import {Icon, NonIdealState, ProgressBar} from '@blueprintjs/core';
 import info from '../assets/info.png';
 import './registry/results.css';
 import './registry/registry.scss';
@@ -55,6 +55,12 @@ const Transactions = ({authstore, history}) => {
             ))}
           </tbody>
         </table>
+      </div>
+    );
+  } else if (authstore.loading) {
+    return (
+      <div style={{position: 'fixed', bottom: 0, left: 0, width: '100%', zIndex: 2000}}>
+        <ProgressBar intent="primary" />
       </div>
     );
   } else {
