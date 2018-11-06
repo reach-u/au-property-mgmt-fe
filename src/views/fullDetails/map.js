@@ -19,7 +19,6 @@ class MapView extends Component {
   componentDidUpdate(prevProps) {
     const {
       coords: {lat, lon},
-      cadastry,
     } = this.props;
     const {
       coords: {lat: prevLat, lon: prevLon},
@@ -27,8 +26,8 @@ class MapView extends Component {
     if (lat && lon && (prevLat !== lat || prevLon !== lon)) {
       this.setState({lat, lon});
     }
-    if (prevProps.cadastry !== cadastry) {
-      this.setState({cadastry});
+    if (this.props.cadastry && prevProps.cadastry !== this.props.cadastry) {
+      this.setState({cadastry: this.props.cadastry});
     }
   }
 
