@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Map, TileLayer, Marker} from 'react-leaflet';
+import {Map, TileLayer, Marker, Polygon} from 'react-leaflet';
 import './styles.css';
 import {Icon} from '@blueprintjs/core';
 
@@ -12,6 +12,7 @@ class MapView extends Component {
   state = {
     lat: this.props.coords ? this.props.coords.lat || -4.04569 : -4.04569,
     lon: this.props.coords ? this.props.coords.lon || 39.66366 : 39.66366,
+    cadastry: this.props.cadastry ? this.props.cadastry : [],
     zoom: 17,
   };
 
@@ -42,6 +43,7 @@ class MapView extends Component {
           ref={this.map}
           className="map">
           <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
+          <Polygon positions={this.state.cadastry} color="blue" />
           <Marker position={position} />
         </Map>
         {isLargeMap && (
