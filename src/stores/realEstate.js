@@ -76,18 +76,6 @@ class RealEstateStore {
     return this.estateData.detailedData || {};
   }
 
-  get mortgageData() {
-    const {mortgageSize, mortgageSubject} = this.estateDetails;
-    return mortgageSize || mortgageSubject
-      ? `Mortgage ${mortgageSize}$ (${mortgageSubject})`
-      : 'No mortgage';
-  }
-
-  get previousOwnerData() {
-    const {previousOwner} = this.estateDetails;
-    return previousOwner ? `Previously owned by ${previousOwner}` : 'No previous owner';
-  }
-
   resetDetails() {
     this.details = null;
     this.detailsId = null;
@@ -114,9 +102,7 @@ decorate(RealEstateStore, {
   fetchEstates: action,
   fullDetails: observable,
   loading: observable,
-  mortgageData: computed,
   noResults: computed,
-  previousOwnerData: computed,
   query: observable,
   resetDetails: action,
   setQuery: action,

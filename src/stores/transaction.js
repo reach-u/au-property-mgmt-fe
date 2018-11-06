@@ -16,10 +16,10 @@ class TransactionStore {
     fetch(`${window.location.origin}/${api.getTransactions(addressId)}`)
       .then(response => response.json())
       .then(data => {
-        this.transactionList = data;
-        if (data.length > 0) {
-          this.transactionId = data[0].transactionId;
-          this.transactionStatus = data[0].paid ? 'paid' : 'unpaid';
+        this.transactionList = data.filter(transaction => !transaction.signedByAll);
+        if (this.transactionList.length > 0) {
+          this.transactionId = this.transactionList[0].transactionId;
+          this.transactionStatus = this.transactionList[0].paid ? 'paid' : 'unpaid';
         }
       });
   }

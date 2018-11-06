@@ -18,13 +18,19 @@ class Details extends Component {
     const {
       estateDetails,
       estateData: {house, street, county, country, coordinates},
-      mortgageData,
-      previousOwnerData,
       detailedAddress,
       detailsId,
     } = this.props.store;
     const {userId} = this.props.authstore;
     const isDesktop = window.innerWidth > 1200;
+    const mortgageData = estateDetails.mortgageSize
+      ? `Mortgage ${estateDetails.mortgageSize}$ (${this.props.authstore.getUsernameById(
+          estateDetails.mortgageSubject || 0
+        )})`
+      : 'No mortgage';
+    const previousOwnerData = estateDetails.previousOwner
+      ? `Previously owned by ${this.props.authstore.getUsernameById(estateDetails.previousOwner)}`
+      : 'No previous owner';
 
     return (
       <div className="card-backdrop">
