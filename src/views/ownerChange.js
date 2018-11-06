@@ -4,10 +4,11 @@ import {Button, Icon, Overlay} from '@blueprintjs/core';
 import './ownerChange/styles.css';
 import info from '../assets/info.png';
 import * as Classes from '@blueprintjs/core/lib/esm/common/classes';
+import check from '../assets/check.png';
 
 class OwnerChange extends Component {
   state = {
-    newOwner: 'Choose new owner',
+    newOwner: 'Choose owner',
     displayMenu: false,
   };
 
@@ -24,7 +25,7 @@ class OwnerChange extends Component {
     return (
       <div className="owner-container">
         <div className="container-card">
-          <h3>Ownership change for property no. {id}</h3>
+          <h3>Ownership change for property {id}</h3>
           <div className="main-address">
             {store.detailedAddress}
             <div title="Show details" onClick={this.handleDetailsClick}>
@@ -46,7 +47,7 @@ class OwnerChange extends Component {
               {this.renderCurrentOwnerAction()}
             </div>
 
-            <Icon icon="chevron-right" iconSize={28} className="action-icon" />
+            <Icon icon={'chevron-right'} iconSize={30} className="action-icon" />
 
             <div className="owners">
               <h5>New owner</h5>
@@ -69,7 +70,7 @@ class OwnerChange extends Component {
             </div>
           </div>
           <button className="cancel-transaction" onClick={() => history.goBack()}>
-            Cancel
+            Back
           </button>
         </div>
         <Overlay isOpen={displayMenu} className={Classes.OVERLAY_SCROLL_CONTAINER}>
@@ -159,19 +160,33 @@ class OwnerChange extends Component {
     const {currentUser} = this.props.userStore;
     const {transactionDetails, signTransaction} = this.props.transactionStore;
     if (estateDetails.currentOwner === parseInt(currentUser.code, 10)) {
-      if (!transactionDetails.signedBySeller) {
+      if (!transactionDetails.signedBySeller && transactionDetails.paid) {
         return (
-          <Button intent={'success'} onClick={() => signTransaction('seller')}>
-            Sign contract
-          </Button>
+          <button className="sign-contract-button" onClick={() => signTransaction('seller')}>
+            SIGN CONTRACT
+          </button>
         );
+      } else if (this.state.newOwner === 'Choose owner') {
+        return null;
+      } else if (!transactionDetails.paid) {
+        return <p>State tax unpaid</p>;
       } else {
-        return <p>Signed</p>;
+        return (
+          <p>
+            <img src={check} alt="" className="check-icon" /> Signed
+          </p>
+        );
       }
+    } else if (this.state.newOwner === 'Choose owner') {
+      return null;
     } else if (!transactionDetails.signedBySeller) {
       return <p>Waiting for signature</p>;
     } else {
-      return <p>Signed</p>;
+      return (
+        <p>
+          <img src={check} alt="" className="check-icon" /> Signed
+        </p>
+      );
     }
   };
 
@@ -179,19 +194,31 @@ class OwnerChange extends Component {
     const {currentUser} = this.props.userStore;
     const {transactionDetails, signTransaction} = this.props.transactionStore;
     if (transactionDetails.buyerIdCode === parseInt(currentUser.code, 10)) {
-      if (!transactionDetails.signedByBuyer) {
+      if (!transactionDetails.signedByBuyer && transactionDetails.paid) {
         return (
-          <Button intent={'success'} onClick={() => signTransaction('buyer')}>
-            Sign contract
-          </Button>
+          <button className="sign-contract-button" onClick={() => signTransaction('buyer')}>
+            SIGN CONTRACT
+          </button>
         );
+      } else if (!transactionDetails.paid) {
+        return <p>State tax unpaid</p>;
       } else {
-        return <p>Signed</p>;
+        return (
+          <p>
+            <img src={check} alt="" className="check-icon" /> Signed
+          </p>
+        );
       }
+    } else if (this.state.newOwner === 'Choose owner') {
+      return null;
     } else if (!transactionDetails.signedByBuyer) {
       return <p>Waiting for signature</p>;
     } else {
-      return <p>Signed</p>;
+      return (
+        <p>
+          <img src={check} alt="" className="check-icon" /> Signed
+        </p>
+      );
     }
   };
 
@@ -201,7 +228,7 @@ class OwnerChange extends Component {
       userStore: {users},
       match: {params},
     } = this.props;
-    const newOwnerChosen = this.state.newOwner !== 'Choose new owner';
+    const newOwnerChosen = this.state.newOwner !== 'Choose owner';
 
     if (transactionId) {
       return (

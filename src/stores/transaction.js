@@ -1,9 +1,10 @@
 import api from '../config/API';
-import {decorate, observable, action, computed, when} from 'mobx';
+import {decorate, observable, action, computed, when, reaction} from 'mobx';
 
 class TransactionStore {
   constructor() {
     when(() => this.transactionId, () => this.fetchTransaction());
+    reaction(() => this.transactionStatus, () => this.fetchTransaction());
   }
 
   transactionList = [];
@@ -37,12 +38,20 @@ class TransactionStore {
   }
 
   signTransaction = role => {
+    this.loading = true;
     const url = `${window.location.origin}/${
       role === 'buyer' ? api.signBuyer(this.transactionId) : api.signSeller(this.transactionId)
     }`;
-    fetch(url, {method: 'POST'})
-      .then(response => response.json())
-      .then(data => (this.currentTransaction = data));
+    setTimeout(() => {
+      fetch(url, {method: 'POST'})
+        .then(response => response.json())
+        .then(data => {
+          this.currentTransaction = data.signedByAll ? null : data;
+          this.transactionStatus = data.signedByAll ? 'unpaid' : this.transactionStatus;
+          this.transactionId = data.signedByAll ? null : this.transactionId;
+          this.loading = false;
+        });
+    }, 1500);
   };
 
   payTax = () => {
