@@ -13,7 +13,7 @@ class MapView extends Component {
     lat: this.props.coords ? this.props.coords.lat || -4.04569 : -4.04569,
     lon: this.props.coords ? this.props.coords.lon || 39.66366 : 39.66366,
     cadastry: this.props.cadastry ? this.props.cadastry : [],
-    zoom: 17,
+    zoom: this.props.zoom || 17,
   };
 
   componentDidUpdate(prevProps) {
@@ -33,7 +33,7 @@ class MapView extends Component {
 
   render() {
     const position = [this.state.lat, this.state.lon];
-    const {isLargeMap = false} = this.props;
+    const {isLargeMap = false, showMarker = true} = this.props;
 
     return (
       <div style={{position: 'relative', zIndex: 1, height: 'inherit'}}>
@@ -47,7 +47,7 @@ class MapView extends Component {
           className="map">
           <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
           <Polygon positions={this.state.cadastry} color="blue" />
-          <Marker position={position} />
+          {showMarker && <Marker position={position} />}
         </Map>
         {isLargeMap && (
           <button className="map-button" title="Back to property" onClick={this.handleClick}>

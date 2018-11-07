@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import MapView from '../fullDetails/map';
 import {Button, Card, Elevation, Divider, Overlay} from '@blueprintjs/core';
 import './details/details.css';
@@ -128,7 +128,12 @@ class Details extends Component {
                 title="Show large map">
                 Click to show fullscreen
               </div>
-              <MapView coords={coordinates} cadastry={estateDetails.cadastre} />
+              <MapView
+                zoom={isDesktop ? 16.5 : 14.4}
+                coords={coordinates}
+                cadastry={estateDetails.cadastre}
+                showMarker={isDesktop}
+              />
             </div>
             {!!streetuUrl && (
               <div className="iframe-container">
