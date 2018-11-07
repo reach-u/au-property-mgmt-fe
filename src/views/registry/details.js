@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import MapView from '../fullDetails/map';
 import {Button, Card, Elevation, Divider, Overlay} from '@blueprintjs/core';
 import './details/details.css';
@@ -131,12 +131,19 @@ class Details extends Component {
               <MapView coords={coordinates} cadastry={estateDetails.cadastre} />
             </div>
             {!!streetuUrl && (
-              <iframe
-                title="EyeVi street view"
-                src={streetuUrl}
-                //scrolling="no"
-                className="property-image"
-              />
+              <div className="iframe-container">
+                <a href={streetuUrl} target="_blank" rel="noopener noreferrer">
+                  <div title="EyeVi street view" className="iframe-overlay">
+                    Click to open in new tab
+                  </div>
+                </a>
+                <iframe
+                  title="EyeVi street view"
+                  src={streetuUrl}
+                  scrolling="no"
+                  className="property-image"
+                />
+              </div>
             )}
             {!streetuUrl && <img src={pic} alt="" className="property-image" />}
           </div>
