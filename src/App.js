@@ -17,6 +17,7 @@ import Details from './views/registry/details';
 import {observer} from 'mobx-react';
 import Transactions from './views/transactions';
 import UserProperties from './views/userProperties';
+import Help from './views/help';
 
 class App extends Component {
   state = {
@@ -38,6 +39,7 @@ class App extends Component {
                 <Search {...props} store={realEstateStore} authstore={userAuthStore} />
               )}
             />
+            <Route path="/help" component={Help} />
             <Route
               path="/results"
               render={props => (

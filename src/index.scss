@@ -12,3 +12,20 @@ input::placeholder {
 h3 {
   color: $pt-intent-primary;
 }
+
+.help-container {
+  max-width: 600px;
+  margin: 90px auto 30px;
+  padding: 0 15px;
+  text-align: justify;
+}
+
+.help-container h3 {
+  text-align: center;
+}
+
+@media screen and (min-width: 1200px) {
+  .help-container {
+    margin-top: 130px;
+  }
+}

@@ -20,6 +20,7 @@ class Navigation extends Component {
     const isSearch = location.pathname === '/results';
     const isProperties = location.pathname === '/properties';
     const isTransactions = location.pathname === '/transactions';
+    const isHelp = location.pathname === '/help';
     const activeTransactions = authstore.userTransactions.length > 0;
 
     return (
@@ -75,6 +76,9 @@ class Navigation extends Component {
                       Log in
                     </button>
                   )}
+                  <Link to="/help" style={{marginTop: 32}}>
+                    Help
+                  </Link>
                 </div>
               </Overlay>
             </div>
@@ -112,6 +116,15 @@ class Navigation extends Component {
                     {authstore.userTransactions.length}
                   </div>
                 )}
+                <Link
+                  to="/help"
+                  style={{
+                    fontSize: '17px',
+                    marginLeft: '30px',
+                    fontWeight: isHelp ? 600 : 300,
+                  }}>
+                  Help
+                </Link>
               </div>
               <UserAuthDetails authstore={authstore} className="nav-button" />
             </div>
