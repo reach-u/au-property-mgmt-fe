@@ -90,12 +90,15 @@ class Navigation extends Component {
           {style => (
             <div style={{transform: `translateY(${style.y}px)`}} className="logged-in-container">
               <div className="logged-in-actions">
-                <Link to="/results" style={{fontSize: '17px', fontWeight: isSearch ? 600 : 300}}>
+                <Link
+                  to="/results"
+                  className="properties-button"
+                  style={{textDecoration: isSearch ? 'underline' : 'none'}}>
                   Find a property
                 </Link>
                 <button
                   className="properties-button"
-                  style={{fontWeight: isProperties ? 600 : 300}}
+                  style={{textDecoration: isProperties ? 'underline' : 'none'}}
                   onClick={() => {
                     store.fetchEstates(null, true, authstore);
                     history.push('/properties');
@@ -104,10 +107,9 @@ class Navigation extends Component {
                 </button>
                 <Link
                   to="/transactions"
+                  className="properties-button"
                   style={{
-                    fontSize: '17px',
-                    marginLeft: '30px',
-                    fontWeight: isTransactions ? 600 : 300,
+                    textDecoration: isTransactions ? 'underline' : 'none',
                   }}>
                   My transactions
                 </Link>
@@ -118,10 +120,9 @@ class Navigation extends Component {
                 )}
                 <Link
                   to="/help"
+                  className="properties-button"
                   style={{
-                    fontSize: '17px',
-                    marginLeft: '30px',
-                    fontWeight: isHelp ? 600 : 300,
+                    textDecoration: isHelp ? 'underline' : 'none',
                   }}>
                   Help
                 </Link>
@@ -143,8 +144,7 @@ class Navigation extends Component {
               style={{
                 opacity: style.opacity,
                 pointerEvents: style.opacity === 0 ? 'none' : 'auto',
-              }}
-              onClick={() => authstore.initAndLoginUsers()}>
+              }}>
               <button
                 className={
                   isHomePage ? 'login-action' : isDesktop ? 'login-action-top' : 'login-action'

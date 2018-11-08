@@ -87,7 +87,9 @@ class Autocomplete extends Component {
           items={this.state.items}
           getItemValue={item => item.label}
           renderItem={(item, highlighted) => (
-            <div key={item.id} style={{backgroundColor: highlighted ? '#eee' : 'transparent'}}>
+            <div
+              key={item.id}
+              style={{backgroundColor: highlighted ? '#eee' : 'transparent', padding: '1px 8px'}}>
               {item.label}
             </div>
           )}

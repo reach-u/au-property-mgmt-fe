@@ -8,19 +8,46 @@
   box-sizing: border-box;
 }
 
-.non-ideal-search {
-  margin-top: 150px;
-}
-
-.non-ideal-search span {
-  color: $pt-intent-primary;
-  opacity: 0.8;
-}
-
 @media screen and (min-width: 1200px) {
   .registry-container {
-    width: 50%;
-    margin: 100px 120px 0;
-    align-items: flex-start;
+    padding: 0;
+    margin: 110px 115px 0;
+    justify-content: flex-start;
+    height: 100%;
+    width: calc(100% - 230px);
+    box-sizing: initial;
+  }
+
+  .content-container {
+     display: flex;
+     width: 100%;
+     height: 100%;
+     position: relative;
+     overflow: hidden;
+   }
+
+  .results-map-container {
+    width: 100%;
+    height: inherit;
+  }
+
+  .table-container {
+    width: 100%;
+    height: inherit;
+    overflow: auto;
+    margin-right: 30px;
+  }
+
+  .popup-click-content {
+    height: 100%;
+    width: 100%;
+  }
+
+  .leaflet-popup-content {
+    margin: 5px 8px;
+    cursor: pointer;
+  }
+  .leaflet-popup-content:hover {
+    text-decoration: underline;
   }
 }

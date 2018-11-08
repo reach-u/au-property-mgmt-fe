@@ -18,6 +18,7 @@
 .search-box {
     z-index: 2;
     position: relative;
+    margin-bottom: 30px;
 }
 
 .search-header {
@@ -27,10 +28,28 @@
     font-weight: 400;
 }
 
+.input-field {
+    background: rgba(255, 255, 255, 0.85) !important;
+    width: 300px;
+    text-overflow: ellipsis;
+    padding-right: 40px !important;
+}
+
 .search-button {
     position: absolute;
-    top: -11px;
-    right: 6px;
+    top: 5px;
+    right: 5px;
     background: rgba(255, 255, 255, 0.86);
+}
+
+@media screen and (min-width: 1200px) {
+    .search-button {
+        top: 0;
+        right: 0;
+    }
+
+    .input-field {
+        padding-right: 50px !important;
+    }
 }
 

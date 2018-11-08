@@ -85,7 +85,7 @@ class App extends Component {
             style={{x: spring(realEstateStore.detailsVisible ? 0 : 2000)}}>
             {style => (
               <div
-                style={{transform: `translateX(${style.x}px)`}}
+                style={{transform: `translateX(${style.x}px)`, zIndex: 1000}}
                 className="details-animation-container">
                 <Details store={realEstateStore} authstore={userAuthStore} />
               </div>

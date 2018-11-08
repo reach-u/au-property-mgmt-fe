@@ -1,7 +1,10 @@
 .results-table {
-    margin: 30px 0;
     width: 100%;
     border-bottom: 1px solid #ddd;
+}
+
+td {
+    vertical-align: middle !important;
 }
 
 .table-icon {
@@ -11,11 +14,13 @@
 .table-important {
     font-weight: 600;
     grid-area: table-important;
+    margin: 0;
 }
 
 .table-light {
     font-weight: 300;
     grid-area: table-light;
+    margin: 5px 0 0;
 }
 
 td:first-child {
@@ -34,6 +39,15 @@ tr:nth-child(odd) td {
         / auto;
 }
 
+.non-ideal-search {
+    margin-top: 150px;
+}
+
+.non-ideal-search span {
+    color: #008C8C;
+    opacity: 0.8;
+}
+
 @media screen and (min-width: 1200px) {
     .main-details {
         grid-template-rows: auto;
@@ -42,6 +56,10 @@ tr:nth-child(odd) td {
     }
 
     .table-important {
-        margin-right: 80px;
+        margin: 0;
+    }
+
+    .non-ideal-search {
+        margin: 0;
     }
 }
