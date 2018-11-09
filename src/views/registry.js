@@ -64,6 +64,11 @@ class Registry extends Component {
     if (this.map.current && !this.state.mapRef) {
       this.setState({mapRef: 'loaded'});
     }
+    const query = new URL(document.location).searchParams.get('q');
+    if (query) {
+      this.props.realEstateStore.setQuery(query);
+      this.props.realEstateStore.fetchEstates(query);
+    }
   }
 
   handleTableRowHover = (event, rowItem) => {

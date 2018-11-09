@@ -9,7 +9,6 @@ class Autocomplete extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: this.props.store.query,
       items: [],
     };
   }
@@ -49,19 +48,18 @@ class Autocomplete extends Component {
     this.setState({value: e.value});
     this.props.store.setQuery(e.value);
     this.props.store.fetchEstates(e.value);
-    this.props.history.push('/results');
+    this.props.history.push(`/results?q=${e.value}`);
   }
 
   handleChange(e) {
     this.props.store.setQuery(e.target.value);
-    this.setState({value: e.target.value});
     this.setItems(e.target.value);
   }
 
   handleSearch = (searchObject, myProperty = false) => {
     const {store, authstore, history} = this.props;
     store.fetchEstates(searchObject, myProperty, authstore);
-    history.push('/results');
+    history.push(`/results?q=${searchObject}`);
   };
 
   handleClick = () => {
@@ -93,7 +91,7 @@ class Autocomplete extends Component {
               {item.label}
             </div>
           )}
-          value={this.state.value}
+          value={this.props.store.query}
           onChange={e => this.handleChange(e)}
           onSelect={value => this.onSelect({value})}
           menuStyle={{

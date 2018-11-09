@@ -37,6 +37,7 @@
 
 .search-button {
     position: absolute;
+    box-sizing: border-box;
     top: 5px;
     right: 5px;
     background: rgba(255, 255, 255, 0.86);
@@ -44,8 +45,8 @@
 
 @media screen and (min-width: 1200px) {
     .search-button {
-        top: 0;
-        right: 0;
+        top: 4px;
+        right: 5px;
     }
 
     .input-field {
