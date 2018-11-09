@@ -118,14 +118,10 @@ class OwnerChange extends Component {
     const {
       store,
       match: {params},
-      userStore,
       transactionStore,
     } = this.props;
     if (!store.details) {
       store.fetchEstateDetails(params.id, false);
-    }
-    if (!userStore.userAuth) {
-      userStore.initAndLoginUsers();
     }
     if (!transactionStore.transactionId) {
       transactionStore.fetchPropertyTransactions(params.id);

@@ -96,6 +96,10 @@ class App extends Component {
     );
   }
 
+  componentDidMount() {
+    userAuthStore.initAndLoginUsers();
+  }
+
   componentDidUpdate() {
     if (
       userAuthStore.userId !== this.state.userId &&

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import {Icon, Overlay, Classes} from '@blueprintjs/core';
+import '../views/navigation.scss';
 
 class UserAuthDetails extends Component {
   state = {
@@ -30,6 +31,7 @@ class UserAuthDetails extends Component {
 
   handleClick(user) {
     this.props.authstore.changeUser(user);
+    this.props.onLogin();
   }
 
   render() {
@@ -41,13 +43,15 @@ class UserAuthDetails extends Component {
         <button
           className={isDesktop ? 'user-icon-large' : 'user-icon-small'}
           title="Switch user"
-          onClick={
-            authstore.userAuth ? this.showDropdownMenu : () => authstore.initAndLoginUsers()
-          }>
+          onClick={this.showDropdownMenu}>
           {isDesktop ? (
-            <span style={{display: 'flex', alignItems: 'center'}}>
-              {authstore.userName} <Icon icon="user" style={{marginLeft: 10}} iconSize={30} />
-            </span>
+            authstore.userAuth ? (
+              <span style={{display: 'flex', alignItems: 'center'}}>
+                {authstore.userName} <Icon icon="user" style={{marginLeft: 10}} iconSize={30} />
+              </span>
+            ) : (
+              <span>LOG IN</span>
+            )
           ) : authstore.userAuth ? (
             <span>
               {authstore.currentUser.givenName.substring(0, 1)}
@@ -58,7 +62,9 @@ class UserAuthDetails extends Component {
           )}
         </button>
 
-        <Overlay isOpen={this.state.displayMenu} className={Classes.OVERLAY_SCROLL_CONTAINER}>
+        <Overlay
+          isOpen={this.state.displayMenu || this.props.loginOpen}
+          className={Classes.OVERLAY_SCROLL_CONTAINER}>
           <div className="overlay-content">
             <span className="overlay-close">
               <Icon icon="cross" iconSize={25} />
@@ -78,9 +84,12 @@ class UserAuthDetails extends Component {
                   </p>
                 </li>
               ))}
-              <li className="list-item" onClick={() => window.location.reload()}>
-                <span style={{margin: '0 4px'}}>LOG OUT</span> <Icon icon="log-out" iconSize={11} />
-              </li>
+              {!!authstore.userAuth && (
+                <li className="list-item" onClick={() => window.location.reload()}>
+                  <span style={{margin: '0 4px'}}>LOG OUT</span>{' '}
+                  <Icon icon="log-out" iconSize={11} />
+                </li>
+              )}
             </ul>
           </div>
         </Overlay>

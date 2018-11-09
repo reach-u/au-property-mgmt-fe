@@ -21,22 +21,10 @@ class UserAuthStore {
     fetch(`${window.location.origin}/${api.getAllPersons()}`)
       .then(response => response.json())
       .then(data => {
-        let persons = data;
-        if (!persons.error) {
-          let selectedUser;
-          for (let item of persons) {
-            if (!!item.givenName && item.givenName.toLowerCase().indexOf('sulev') > -1) {
-              selectedUser = item;
-              break;
-            }
-          }
-          if (!selectedUser && persons.length > 0) {
-            selectedUser = persons[this._getRndInteger(0, persons.length - 1)];
-          }
-          this.users = persons.filter(user => !!user.givenName).sort(sortAlphabetically);
-          this.userAuth = selectedUser;
-          this.loading = false;
+        if (!data.error) {
+          this.users = data.filter(user => !!user.givenName).sort(sortAlphabetically);
         }
+        this.loading = false;
       });
   }
 

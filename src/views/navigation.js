@@ -11,6 +11,7 @@ import {Motion, spring} from 'react-motion';
 class Navigation extends Component {
   state = {
     menuOpen: false,
+    promptLogin: false,
   };
 
   render() {
@@ -127,7 +128,12 @@ class Navigation extends Component {
                   Help
                 </Link>
               </div>
-              <UserAuthDetails authstore={authstore} className="nav-button" />
+              <UserAuthDetails
+                authstore={authstore}
+                className="nav-button"
+                loginOpen={this.state.promptLogin}
+                onLogin={this.hideLogin}
+              />
             </div>
           )}
         </Motion>
@@ -149,7 +155,7 @@ class Navigation extends Component {
                 className={
                   isHomePage ? 'login-action' : isDesktop ? 'login-action-top' : 'login-action'
                 }
-                onClick={() => authstore.initAndLoginUsers()}>
+                onClick={() => this.setState({promptLogin: true})}>
                 LOG IN
               </button>
             </div>
@@ -174,6 +180,10 @@ class Navigation extends Component {
     this.setState({menuOpen: true}, () => {
       document.addEventListener('click', this.hideOverlay);
     });
+  };
+
+  hideLogin = () => {
+    this.setState({promptLogin: false});
   };
 }
 
