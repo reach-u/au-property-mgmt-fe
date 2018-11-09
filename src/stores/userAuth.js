@@ -12,10 +12,6 @@ class UserAuthStore {
   userTransactions = [];
   loading = false;
 
-  static _getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-
   initAndLoginUsers() {
     this.loading = true;
     fetch(`${window.location.origin}/${api.getAllPersons()}`)

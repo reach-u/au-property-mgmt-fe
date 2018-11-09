@@ -32,7 +32,7 @@ class Registry extends Component {
               realEstateStore.dataAvailable && (
                 <div className="results-map-container">
                   <Map ref={this.map} center={[-4.04569, 39.66366]} zoom={15.3} className="map">
-                    <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
+                    <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png" />
                   </Map>
                 </div>
               )}
@@ -49,11 +49,20 @@ class Registry extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.props.realEstateStore.state === 'not_loaded' && this.state.mapRef) {
+      this.setState({mapRef: null});
+    }
     if (this.map.current && !prevState.mapRef) {
       this.setState({mapRef: 'loaded'});
     }
     if (!prevState.mapRef && this.state.mapRef) {
       this.createPopups();
+    }
+  }
+
+  componentDidMount() {
+    if (this.map.current && !this.state.mapRef) {
+      this.setState({mapRef: 'loaded'});
     }
   }
 
