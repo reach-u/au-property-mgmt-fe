@@ -94,12 +94,12 @@ class Navigation extends Component {
                 <Link
                   to="/results"
                   className="properties-button"
-                  style={{textDecoration: isSearch ? 'underline' : 'none'}}>
+                  style={{borderColor: isSearch ? '#008C8C' : 'white'}}>
                   Find a property
                 </Link>
                 <button
                   className="properties-button"
-                  style={{textDecoration: isProperties ? 'underline' : 'none'}}
+                  style={{borderColor: isProperties ? '#008C8C' : 'white'}}
                   onClick={() => {
                     store.fetchEstates(null, true, authstore);
                     history.push('/properties');
@@ -110,7 +110,7 @@ class Navigation extends Component {
                   to="/transactions"
                   className="properties-button"
                   style={{
-                    textDecoration: isTransactions ? 'underline' : 'none',
+                    borderColor: isTransactions ? '#008C8C' : 'white',
                   }}>
                   My transactions
                 </Link>
@@ -123,7 +123,7 @@ class Navigation extends Component {
                   to="/help"
                   className="properties-button"
                   style={{
-                    textDecoration: isHelp ? 'underline' : 'none',
+                    borderColor: isHelp ? '#008C8C' : 'white',
                   }}>
                   Help
                 </Link>

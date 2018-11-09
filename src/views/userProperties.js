@@ -13,7 +13,7 @@ const UserProperties = ({store}) => {
   if (hasEstates) {
     return (
       <Fragment>
-        <div className="registry-container">
+        <div className="registry-container user-properties">
           <table
             className={[Classes.HTML_TABLE_STRIPED, Classes.HTML_TABLE, 'results-table'].join(' ')}>
             <tbody>
