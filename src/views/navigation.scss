@@ -187,6 +187,10 @@
   background: transparent;
   color: $pt-intent-primary;
 }
+.menu-link:focus {
+  outline: none;
+  text-decoration: underline;
+}
 
 .menu-close {
   position: absolute;

@@ -45,7 +45,12 @@ class Navigation extends Component {
                 </button>
                 {activeTransactions && <div className="transaction-notification-small" />}
               </div>
-              <UserAuthDetails authstore={authstore} className="nav-button" />
+              <UserAuthDetails
+                authstore={authstore}
+                loginOpen={this.state.promptLogin}
+                onLogin={this.hideLogin}
+                className="nav-button"
+              />
               <Overlay isOpen={this.state.menuOpen}>
                 <div className="mobile-menu">
                   <span className="menu-close">
@@ -71,11 +76,6 @@ class Navigation extends Component {
                         </div>
                       )}
                     </div>
-                  )}
-                  {!authstore.userAuth && (
-                    <button className="menu-link" onClick={() => authstore.initAndLoginUsers()}>
-                      Log in
-                    </button>
                   )}
                   <Link to="/help" style={{marginTop: 32}}>
                     Help
