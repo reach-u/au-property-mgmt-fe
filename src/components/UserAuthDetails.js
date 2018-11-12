@@ -18,14 +18,16 @@ class UserAuthDetails extends Component {
 
   showDropdownMenu(event) {
     event.preventDefault();
-    this.setState({displayMenu: true}, () => {
-      document.addEventListener('click', this.hideDropdownMenu);
-    });
+    console.log('click');
+    setTimeout(() => {
+      console.log('show');
+      this.setState({displayMenu: true});
+    }, 1000);
   }
 
   hideDropdownMenu() {
     this.setState({displayMenu: false}, () => {
-      document.removeEventListener('click', this.hideDropdownMenu);
+      this.props.onLogin();
     });
   }
 
@@ -66,7 +68,7 @@ class UserAuthDetails extends Component {
           isOpen={this.state.displayMenu || this.props.loginOpen}
           className={Classes.OVERLAY_SCROLL_CONTAINER}>
           <div className="overlay-content">
-            <span className="overlay-close">
+            <span className="overlay-close" onClick={this.hideDropdownMenu} title="Cancel">
               <Icon icon="cross" iconSize={25} />
             </span>
             <ul className="user-list">

@@ -155,7 +155,7 @@ class Navigation extends Component {
                 className={
                   isHomePage ? 'login-action' : isDesktop ? 'login-action-top' : 'login-action'
                 }
-                onClick={() => this.setState({promptLogin: true})}>
+                onClick={this.showLogin}>
                 LOG IN
               </button>
             </div>
@@ -180,6 +180,14 @@ class Navigation extends Component {
     this.setState({menuOpen: true}, () => {
       document.addEventListener('click', this.hideOverlay);
     });
+  };
+
+  showLogin = () => {
+    this.props.authstore.loading = true;
+    setTimeout(() => {
+      this.setState({promptLogin: true});
+      this.props.authstore.loading = false;
+    }, 800);
   };
 
   hideLogin = () => {

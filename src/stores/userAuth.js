@@ -13,14 +13,12 @@ class UserAuthStore {
   loading = false;
 
   initAndLoginUsers() {
-    this.loading = true;
     fetch(`${window.location.origin}/${api.getAllPersons()}`)
       .then(response => response.json())
       .then(data => {
         if (!data.error) {
           this.users = data.filter(user => !!user.givenName).sort(sortAlphabetically);
         }
-        this.loading = false;
       });
   }
 
@@ -43,8 +41,12 @@ class UserAuthStore {
   }
 
   changeUser(user) {
-    this.userAuth = null;
-    this.userAuth = user;
+    this.loading = true;
+    setTimeout(() => {
+      this.userAuth = null;
+      this.userAuth = user;
+      this.loading = false;
+    }, 600);
   }
 
   get currentUser() {

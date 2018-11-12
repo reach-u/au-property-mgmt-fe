@@ -26,6 +26,7 @@ const Help = () => {
       </p>
       <iframe
         className="youtube"
+        title="Toto - Africa"
         src="https://www.youtube.com/embed/FTQbiNvZqaY"
         frameBorder="0"
         allowFullScreen
