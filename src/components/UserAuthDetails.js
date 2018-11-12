@@ -18,11 +18,9 @@ class UserAuthDetails extends Component {
 
   showDropdownMenu(event) {
     event.preventDefault();
-    console.log('click');
     setTimeout(() => {
-      console.log('show');
       this.setState({displayMenu: true});
-    }, 1000);
+    }, 800);
   }
 
   hideDropdownMenu() {
