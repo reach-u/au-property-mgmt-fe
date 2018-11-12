@@ -20,7 +20,12 @@ class TransactionStore {
         this.transactionList = data.filter(transaction => !transaction.signedByAll);
         if (this.transactionList.length > 0) {
           this.transactionId = this.transactionList[0].transactionId;
-          this.transactionStatus = this.transactionList[0].paid ? 'paid' : 'unpaid';
+          this.transactionStatus = this.transactionList[0].paid
+            ? this.transactionList[0].signedByAll
+              ? 'complete'
+              : 'paid'
+            : 'unpaid';
+          this.currentTransaction = this.transactionList[0];
         }
       });
   }
@@ -31,11 +36,16 @@ class TransactionStore {
       .then(data => (this.transactionId = data.transactionId));
   };
 
-  fetchTransaction() {
+  fetchTransaction = () => {
+    this.loading = true;
     fetch(`${window.location.origin}/${api.transactionStatus(this.transactionId)}`)
       .then(response => response.json())
-      .then(data => (this.currentTransaction = data));
-  }
+      .then(data => {
+        this.currentTransaction = data;
+        this.transactionStatus = data.paid ? (data.signedByAll ? 'complete' : 'paid') : 'unpaid';
+        this.loading = false;
+      });
+  };
 
   signTransaction = role => {
     this.loading = true;
@@ -46,9 +56,8 @@ class TransactionStore {
       fetch(url, {method: 'POST'})
         .then(response => response.json())
         .then(data => {
-          this.currentTransaction = data.signedByAll ? null : data;
-          this.transactionStatus = data.signedByAll ? 'unpaid' : this.transactionStatus;
-          this.transactionId = data.signedByAll ? null : this.transactionId;
+          this.currentTransaction = data;
+          this.transactionStatus = data.signedByAll ? 'complete' : this.transactionStatus;
           this.loading = false;
         });
     }, 1500);

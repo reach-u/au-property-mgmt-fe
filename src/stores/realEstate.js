@@ -29,7 +29,7 @@ class RealEstateStore {
           this.estates = data.sort((a, b) => a.id - b.id);
           this.state = 'loaded';
         } else {
-          this.userEstates = data;
+          this.userEstates = data.sort((a, b) => a.id - b.id);
         }
 
         this.loading = false;

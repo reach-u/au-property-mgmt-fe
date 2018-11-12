@@ -120,12 +120,9 @@ class OwnerChange extends Component {
       match: {params},
       transactionStore,
     } = this.props;
-    if (!store.details) {
-      store.fetchEstateDetails(params.id, false);
-    }
-    if (!transactionStore.transactionId) {
-      transactionStore.fetchPropertyTransactions(params.id);
-    }
+
+    store.fetchEstateDetails(params.id, false);
+    transactionStore.fetchPropertyTransactions(params.id);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -154,17 +151,22 @@ class OwnerChange extends Component {
   renderCurrentOwnerAction = () => {
     const {estateDetails} = this.props.store;
     const {currentUser} = this.props.userStore;
-    const {transactionDetails, signTransaction} = this.props.transactionStore;
+    const {transactionStore} = this.props;
     if (estateDetails.currentOwner === parseInt(currentUser.code, 10)) {
-      if (!transactionDetails.signedBySeller && transactionDetails.paid) {
+      if (
+        !transactionStore.transactionDetails.signedBySeller &&
+        transactionStore.transactionDetails.paid
+      ) {
         return (
-          <button className="sign-contract-button" onClick={() => signTransaction('seller')}>
+          <button
+            className="sign-contract-button"
+            onClick={() => transactionStore.signTransaction('seller')}>
             SIGN CONTRACT
           </button>
         );
       } else if (this.state.newOwner === 'Choose owner') {
         return null;
-      } else if (!transactionDetails.paid) {
+      } else if (!transactionStore.transactionDetails.paid) {
         return <p>State tax unpaid</p>;
       } else {
         return (
@@ -175,7 +177,7 @@ class OwnerChange extends Component {
       }
     } else if (this.state.newOwner === 'Choose owner') {
       return null;
-    } else if (!transactionDetails.signedBySeller) {
+    } else if (!transactionStore.transactionDetails.signedBySeller) {
       return <p>Waiting for signature</p>;
     } else {
       return (
@@ -220,11 +222,10 @@ class OwnerChange extends Component {
 
   renderPaymentButton = () => {
     const {
-      transactionStore: {transactionId, transactionStatus, payTax, loading, startTransaction},
-      userStore: {users},
-      match: {params},
+      transactionStore: {transactionId, transactionStatus, loading, payTax},
     } = this.props;
     const newOwnerChosen = this.state.newOwner !== 'Choose owner';
+    const successStatus = transactionStatus === 'paid' || transactionStatus === 'complete';
 
     if (transactionId) {
       return (
@@ -246,14 +247,16 @@ class OwnerChange extends Component {
                 ? 'error'
                 : 'tick-circle'
           }
-          minimal={transactionStatus === 'paid'}
-          disabled={transactionStatus === 'paid'}
+          minimal={successStatus}
+          disabled={successStatus}
           onClick={() => payTax()}>
           {transactionStatus === 'unpaid'
             ? 'Pay state tax'
             : transactionStatus === 'error'
               ? 'Payment failed, try again'
-              : 'State tax paid'}
+              : transactionStatus === 'complete'
+                ? 'Transaction complete'
+                : 'State tax paid'}
         </Button>
       );
     } else {
@@ -264,17 +267,24 @@ class OwnerChange extends Component {
           intent="primary"
           minimal={!newOwnerChosen}
           disabled={!newOwnerChosen}
-          onClick={() =>
-            startTransaction(
-              users.find(user => `${user.givenName} ${user.familyName}` === this.state.newOwner)
-                .code,
-              params.id
-            )
-          }>
+          onClick={this.handleTransactionStart}>
           {newOwnerChosen ? 'Begin ownership change' : 'Choose new owner to start transaction'}
         </Button>
       );
     }
+  };
+
+  handleTransactionStart = async () => {
+    const {
+      transactionStore: {startTransaction},
+      userStore: {users},
+      match: {params},
+    } = this.props;
+    await startTransaction(
+      users.find(user => `${user.givenName} ${user.familyName}` === this.state.newOwner).code,
+      params.id
+    );
+    setTimeout(() => this.props.userStore.fetchUserTransactions(), 2000);
   };
 }
 

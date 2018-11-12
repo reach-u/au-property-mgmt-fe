@@ -222,16 +222,18 @@
 
 .transaction-notification {
   color: white;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   background: $pt-intent-primary;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  height: 20px;
-  width: 20px;
-  transform: translate(2px, -5px);
+  height: 16px;
+  width: 16px;
+  margin-right: 3px;
+  transform: translate(2px, 0px);
+  transition: 100ms;
 }
 
 .transaction-notification-small {
@@ -288,6 +290,15 @@
   }
   .properties-button:focus {
     outline: none;
+  }
+
+  .transaction-notification {
+    transform: translate(2px, -10px);
+  }
+
+  .properties-button:hover .transaction-notification {
+    color: #008C8C;
+    background: white;
   }
 
   a {

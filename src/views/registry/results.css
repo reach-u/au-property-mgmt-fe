@@ -24,6 +24,10 @@ td {
     margin: 5px 0 0;
 }
 
+.transaction-parties {
+    margin: 5px 0 0;
+}
+
 td:first-child {
     padding: 5px 0 5px 20px !important;
     vertical-align: bottom !important;
@@ -79,5 +83,17 @@ tr:nth-child(odd) td {
 
     .results-table {
         margin-bottom: 30px;
+    }
+
+    .user-properties-tr td:first-child {
+        border-left: 3px solid transparent;
+        transition: 80ms;
+    }
+    .user-properties-tr:hover td:first-child {
+        border-left: 3px solid #008C8C;
+    }
+
+    .transaction-table {
+
     }
 }

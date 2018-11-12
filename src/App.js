@@ -18,6 +18,7 @@ import {observer} from 'mobx-react';
 import Transactions from './views/transactions';
 import UserProperties from './views/userProperties';
 import Help from './views/help';
+import Transaction from './views/singleTransaction';
 
 class App extends Component {
   state = {
@@ -74,6 +75,21 @@ class App extends Component {
               <Route
                 path="/transactions"
                 render={props => <Transactions authstore={userAuthStore} {...props} />}
+              />
+            ) : (
+              <Redirect to="/search" />
+            )}
+            {isLoggedIn ? (
+              <Route
+                path="/transaction/:id"
+                render={props => (
+                  <Transaction
+                    store={realEstateStore}
+                    transactionStore={transactionStore}
+                    userStore={userAuthStore}
+                    {...props}
+                  />
+                )}
               />
             ) : (
               <Redirect to="/search" />

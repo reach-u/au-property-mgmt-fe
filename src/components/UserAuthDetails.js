@@ -18,9 +18,7 @@ class UserAuthDetails extends Component {
 
   showDropdownMenu(event) {
     event.preventDefault();
-    setTimeout(() => {
-      this.setState({displayMenu: true});
-    }, 800);
+    this.setState({displayMenu: true});
   }
 
   hideDropdownMenu() {
@@ -31,7 +29,7 @@ class UserAuthDetails extends Component {
 
   handleClick(user) {
     this.props.authstore.changeUser(user);
-    this.props.onLogin();
+    this.hideDropdownMenu();
   }
 
   render() {

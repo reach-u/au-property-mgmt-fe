@@ -22,7 +22,7 @@ class Navigation extends Component {
     const isProperties = location.pathname === '/properties';
     const isTransactions = location.pathname === '/transactions';
     const isHelp = location.pathname === '/help';
-    const activeTransactions = authstore.userTransactions.length > 0;
+    const activeTransactions = authstore.pendingTransactions.length > 0;
 
     return (
       <Fragment>
@@ -72,7 +72,7 @@ class Navigation extends Component {
                       <Link to="/transactions">My transactions</Link>
                       {activeTransactions && (
                         <div className="transaction-notification">
-                          {authstore.userTransactions.length}
+                          {authstore.pendingTransactions.length}
                         </div>
                       )}
                     </div>
@@ -109,16 +109,22 @@ class Navigation extends Component {
                 <Link
                   to="/transactions"
                   className="properties-button"
+                  title={
+                    activeTransactions
+                      ? `${authstore.pendingTransactions.length} pending transactions`
+                      : 'No pending transactions'
+                  }
                   style={{
                     borderColor: isTransactions ? '#008C8C' : 'white',
                   }}>
                   My transactions
+                  {activeTransactions && (
+                    <div className="transaction-notification">
+                      {authstore.pendingTransactions.length}
+                    </div>
+                  )}
                 </Link>
-                {activeTransactions && (
-                  <div className="transaction-notification">
-                    {authstore.userTransactions.length}
-                  </div>
-                )}
+
                 <Link
                   to="/help"
                   className="properties-button"
@@ -187,7 +193,7 @@ class Navigation extends Component {
     setTimeout(() => {
       this.setState({promptLogin: true});
       this.props.authstore.loading = false;
-    }, 800);
+    }, 500);
   };
 
   hideLogin = () => {

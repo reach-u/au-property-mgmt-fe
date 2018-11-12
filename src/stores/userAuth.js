@@ -32,10 +32,18 @@ class UserAuthStore {
 
   fetchUserTransactions() {
     this.loading = true;
-    fetch(`${window.location.origin}/${api.getPersonsTransactions(this.userAuth.code)}`)
+    fetch(`${window.location.origin}/${api.getPersonsTransactions(this.userId)}`)
       .then(response => response.json())
       .then(data => {
-        this.userTransactions = data.filter(transaction => !transaction.signedByAll);
+        this.userTransactions = data.sort((a, b) => {
+          if (a.signedByAll > b.signedByAll) {
+            return 1;
+          }
+          if (b.signedByAll > a.signedByAll) {
+            return -1;
+          }
+          return 0;
+        });
         this.loading = false;
       });
   }
@@ -65,6 +73,10 @@ class UserAuthStore {
   get userId() {
     return this.userAuth ? parseInt(this.userAuth.code, 10) : 0;
   }
+
+  get pendingTransactions() {
+    return this.userTransactions.filter(item => !item.signedByAll);
+  }
 }
 
 decorate(UserAuthStore, {
@@ -76,6 +88,7 @@ decorate(UserAuthStore, {
   users: observable,
   initAndLoginUsers: action,
   currentUser: computed,
+  pendingTransactions: computed,
   userName: computed,
   userId: computed,
   userTransactions: observable,

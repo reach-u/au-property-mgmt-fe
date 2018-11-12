@@ -18,7 +18,7 @@ const UserProperties = ({store}) => {
             className={[Classes.HTML_TABLE_STRIPED, Classes.HTML_TABLE, 'results-table'].join(' ')}>
             <tbody>
               {store.userEstates.map((item, index) => (
-                <tr key={index}>
+                <tr key={index} className="user-properties-tr">
                   <td title={item.detailedData.buildingType}>
                     {item.detailedData.buildingType === 'School' ? (
                       <img src={school} alt="School" />
