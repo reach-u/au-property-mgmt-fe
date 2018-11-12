@@ -142,14 +142,12 @@ class Details extends Component {
                     Click to open in new tab
                   </div>
                 </a>
-                {/*
                 <iframe
                   title="EyeVi street view"
                   src={streetuUrl}
                   scrolling="no"
                   className="property-image"
                 />
-                */}
               </div>
             )}
             {!streetuUrl && <img src={pic} alt="" className="property-image" />}

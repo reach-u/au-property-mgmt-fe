@@ -30,7 +30,6 @@ td {
 
 td:first-child {
     padding: 5px 0 5px 20px !important;
-    vertical-align: bottom !important;
 }
 
 td:last-child div img {
@@ -75,6 +74,7 @@ tr:nth-child(odd) td {
 
     tr td:first-child {
         border-left: 3px solid transparent;
+        vertical-align: bottom !important;
         transition: 80ms;
     }
     .active td:first-child {

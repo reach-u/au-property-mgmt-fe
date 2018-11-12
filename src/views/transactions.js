@@ -11,6 +11,9 @@ class Transactions extends Component {
   render() {
     const {authstore, history} = this.props;
     const activeTransactions = authstore.userTransactions.length > 0;
+    const isDesktop = window.innerWidth > 1200;
+    const completeText = isDesktop ? 'Transaction complete' : 'Complete';
+    const pendingText = isDesktop ? 'Transaction in progress' : 'In progress';
 
     if (activeTransactions) {
       return (
@@ -24,7 +27,18 @@ class Transactions extends Component {
             ].join(' ')}>
             <tbody>
               {authstore.userTransactions.map((item, index) => (
-                <tr key={index} className="user-properties-tr">
+                <tr
+                  key={index}
+                  className="user-properties-tr"
+                  onClick={() => {
+                    if (isDesktop) {
+                      return;
+                    }
+                    const url = item.signedByAll
+                      ? `/transaction/${item.transactionId}`
+                      : `/owner-change/${item.address.id}`;
+                    history.push(url);
+                  }}>
                   <td title={item.address.detailedData.buildingType}>
                     {item.address.detailedData.buildingType === 'School' ? (
                       <img src={school} alt="School" />
@@ -42,17 +56,24 @@ class Transactions extends Component {
                     </p>
                   </td>
                   <td>
-                    <p className="transaction-parties">
-                      {authstore.getUsernameById(item.sellerIdCode)}{' '}
-                      <Icon
-                        icon="chevron-right"
-                        style={{verticalAlign: 'text-bottom', color: '#888'}}
-                      />{' '}
-                      {authstore.getUsernameById(item.buyerIdCode)}{' '}
-                    </p>
-                  </td>
-                  <td style={{fontWeight: item.signedByAll ? 400 : 600}}>
-                    {item.signedByAll ? 'Transaction complete' : 'Transaction in progress'}
+                    <div className="main-details">
+                      <p className="transaction-parties">
+                        {authstore.getUsernameById(item.sellerIdCode)}{' '}
+                        <Icon
+                          icon="chevron-right"
+                          style={{verticalAlign: 'text-bottom', color: '#888'}}
+                        />{' '}
+                        {authstore.getUsernameById(item.buyerIdCode)}{' '}
+                      </p>
+                      <p
+                        style={{
+                          fontWeight: item.signedByAll ? 400 : 600,
+                          alignSelf: 'center',
+                          margin: 0,
+                        }}>
+                        {item.signedByAll ? completeText : pendingText}
+                      </p>
+                    </div>
                   </td>
                   <td>
                     <div
