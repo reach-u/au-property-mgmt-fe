@@ -94,6 +94,11 @@
   cursor: pointer;
   margin-right: 110px;
   height: 100%;
+  text-decoration: none;
+  transition: 200ms;
+}
+.user-icon-large:hover {
+  text-decoration: underline;
 }
 
 .login-container {
@@ -263,9 +268,8 @@
   .properties-button {
     margin-left: 30px;
     font-size: 17px;
-    background: linear-gradient(to bottom, #008C8C 0%, #008C8C 100%) repeat-x 0 100%;
-    background-size: 0 0;
-    transition: background-size 200ms, color 200ms;
+    background: #008C8C00;
+    transition: 100ms;
     padding: 4px;
     height: 100%;
     display: flex;
@@ -274,8 +278,8 @@
   }
   .properties-button:hover {
     cursor: pointer;
-    background-size: 1px 70px;
     color: white;
+    background: #008C8C;
     border-color: #008C8C !important;
   }
   .properties-button:focus {
