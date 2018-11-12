@@ -13,6 +13,7 @@ class Registry extends Component {
     this.map = React.createRef();
     this.state = {
       mapRef: null,
+      activeEstate: null,
     };
   }
 
@@ -26,7 +27,11 @@ class Registry extends Component {
           <Autocomplete store={realEstateStore} className="registry-search" />
           <div className="content-container">
             <div className="table-container">
-              <Results store={realEstateStore} onHover={this.handleTableRowHover} />
+              <Results
+                store={realEstateStore}
+                onHover={this.handleTableRowHover}
+                activeRow={this.state.activeEstate}
+              />
             </div>
             {isDesktop &&
               realEstateStore.dataAvailable && (
@@ -64,7 +69,9 @@ class Registry extends Component {
     if (this.map.current && !this.state.mapRef) {
       this.setState({mapRef: 'loaded'});
     }
+
     const query = new URL(document.location).searchParams.get('q');
+
     if (query) {
       this.props.realEstateStore.setQuery(query);
       this.props.realEstateStore.fetchEstates(query);
@@ -72,6 +79,8 @@ class Registry extends Component {
   }
 
   handleTableRowHover = (event, rowItem) => {
+    this.setState({activeEstate: event.type === 'mouseover' ? rowItem.id : null});
+
     if (this.state.mapRef) {
       this.map.current.leafletElement.eachLayer(layer => {
         if (layer instanceof L.Popup) {
@@ -96,23 +105,23 @@ class Registry extends Component {
 
   createPopups = () => {
     this.props.realEstateStore.estates.map(estate => {
-      const content = this.createPopupContent(estate);
       const popup = L.popup({
         closeButton: false,
         autoClose: false,
         closeOnEscapeKey: false,
         closeOnClick: false,
         className: estate.id,
-      })
-        .setLatLng([estate.coordinates.lat, estate.coordinates.lon])
-        .setContent(content);
+      }).setLatLng([estate.coordinates.lat, estate.coordinates.lon]);
+      const content = this.createPopupContent(estate, popup);
+
+      popup.setContent(content);
       this.map.current.leafletElement.addLayer(popup);
 
       return estate;
     });
   };
 
-  createPopupContent = estate => {
+  createPopupContent = (estate, popupLayer) => {
     const content = L.DomUtil.create('div', 'popup-click-content');
     content.innerHTML = `<div class="${estate.id}">${estate.street} ${estate.house}${
       estate.apartment ? `-${estate.apartment}` : ''
@@ -120,6 +129,13 @@ class Registry extends Component {
     content.title = 'Click for details';
     content.addEventListener('click', e => {
       this.props.realEstateStore.fetchEstateDetails(e.target.className);
+    });
+    content.addEventListener('mouseover', () => {
+      popupLayer.bringToFront();
+      this.setState({activeEstate: estate.id});
+    });
+    content.addEventListener('mouseout', () => {
+      this.setState({activeEstate: null});
     });
 
     return content;

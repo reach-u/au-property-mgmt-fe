@@ -7,7 +7,7 @@ import './results.css';
 
 class Results extends Component {
   render() {
-    const {store, onHover} = this.props;
+    const {store, onHover, activeRow} = this.props;
     const isDesktop = window.innerWidth > 1200;
 
     if (store.dataAvailable) {
@@ -24,6 +24,7 @@ class Results extends Component {
                   }
                   store.fetchEstateDetails(item.id);
                 }}
+                className={item.id === activeRow ? 'active' : ''}
                 onMouseOut={event => onHover(event, item)}
                 onMouseOver={event => onHover(event, item)}>
                 <td title={item.detailedData.buildingType}>
