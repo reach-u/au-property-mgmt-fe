@@ -26,7 +26,7 @@ class RealEstateStore {
           this.estates = [];
           this.state = 'loaded';
         } else if (!onlyMyProperties) {
-          this.estates = data;
+          this.estates = data.sort((a, b) => a.id - b.id);
           this.state = 'loaded';
         } else {
           this.userEstates = data;

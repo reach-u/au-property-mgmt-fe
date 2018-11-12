@@ -5,6 +5,7 @@
 
 td {
     vertical-align: middle !important;
+    padding: 6px !important;
 }
 
 .table-icon {
@@ -24,7 +25,12 @@ td {
 }
 
 td:first-child {
-    padding: 11px 0 11px 20px !important;
+    padding: 5px 0 5px 20px !important;
+    vertical-align: bottom !important;
+}
+
+td:last-child div img {
+    vertical-align: middle;
 }
 
 tr:nth-child(odd) td {
@@ -69,5 +75,9 @@ tr:nth-child(odd) td {
     }
     .active td:first-child {
         border-left: 3px solid #008C8C;
+    }
+
+    .results-table {
+        margin-bottom: 30px;
     }
 }
