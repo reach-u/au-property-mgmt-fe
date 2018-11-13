@@ -1,11 +1,14 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component, Fragment, lazy, Suspense} from 'react';
 import {observer} from 'mobx-react';
 import Results from './registry/results';
 import {ProgressBar} from '@blueprintjs/core';
 import './registry/registry.scss';
 import Autocomplete from '../components/AutoComplete';
-import {Map, TileLayer} from 'react-leaflet';
 import L from 'leaflet';
+import {loading} from '../App';
+
+const Map = lazy(() => import('./fullDetails/leaflet-map'));
+const TileLayer = lazy(() => import('./fullDetails/leaflet-tilelayer'));
 
 class Registry extends Component {
   constructor(props) {
@@ -35,11 +38,13 @@ class Registry extends Component {
             </div>
             {isDesktop &&
               realEstateStore.dataAvailable && (
-                <div className="results-map-container">
-                  <Map ref={this.map} center={[-4.04569, 39.66366]} zoom={15.3} className="map">
-                    <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png" />
-                  </Map>
-                </div>
+                <Suspense fallback={loading}>
+                  <div className="results-map-container">
+                    <Map ref={this.map} center={[-4.04569, 39.66366]} zoom={15.3} className="map">
+                      <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png" />
+                    </Map>
+                  </div>
+                </Suspense>
               )}
           </div>
 

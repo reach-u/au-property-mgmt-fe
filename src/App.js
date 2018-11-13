@@ -5,6 +5,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import {withRouter} from 'react-router';
 import './index.css';
 import './views/navigation.scss';
+import {Spinner} from '@blueprintjs/core';
 import {userAuthStore} from './stores/userAuth';
 import {transactionStore} from './stores/transaction';
 import {Motion, spring} from 'react-motion';
@@ -20,7 +21,18 @@ const UserProperties = lazy(() => import('./views/userProperties'));
 const Help = lazy(() => import('./views/help'));
 const Transaction = lazy(() => import('./views/singleTransaction'));
 
-const loading = <div>Loading...</div>;
+export const loading = (
+  <div
+    style={{
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+    <Spinner intent="primary" />
+  </div>
+);
 
 class App extends Component {
   state = {
