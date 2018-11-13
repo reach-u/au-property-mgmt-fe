@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {Button, Icon, Overlay} from '@blueprintjs/core';
+import {Icon, Overlay, Spinner} from '@blueprintjs/core';
 import './ownerChange/styles.css';
 import info from '../assets/info.png';
 import * as Classes from '@blueprintjs/core/lib/esm/common/classes';
 import check from '../assets/check.png';
 
+const newOwnerPlaceholder = 'Not selected';
+
 class OwnerChange extends Component {
   state = {
-    newOwner: 'Choose owner',
+    newOwner: newOwnerPlaceholder,
     displayMenu: false,
   };
 
@@ -16,11 +18,11 @@ class OwnerChange extends Component {
     const {id} = this.props.match.params;
     const {store, userStore, history, transactionStore} = this.props;
     const {newOwner, displayMenu} = this.state;
-    const isOwner =
+    /*const isOwner =
       (parseInt(store.estateDetails.currentOwner, 10) === userStore.userId &&
         (transactionStore.currentTransaction &&
           !transactionStore.currentTransaction.buyerIdCode)) ||
-      !transactionStore.currentTransaction;
+      !transactionStore.currentTransaction;*/
 
     return (
       <div className="owner-container">
@@ -36,7 +38,7 @@ class OwnerChange extends Component {
             {store.estateDetails.propertyType}, {store.estateDetails.propertySize} m<sup>2</sup>
           </div>
 
-          {this.renderPaymentButton()}
+          {this.renderUserAction()}
 
           <div className="actions">
             <div className="owners">
@@ -44,29 +46,13 @@ class OwnerChange extends Component {
               <h3 className="owner-name">
                 {this.props.userStore.getUsernameById(store.estateDetails.currentOwner)}
               </h3>
-              {this.renderCurrentOwnerAction()}
             </div>
 
             <Icon icon={'chevron-right'} iconSize={30} className="action-icon" />
 
             <div className="owners">
               <h5>New owner</h5>
-              <h3
-                className="owner-name"
-                style={{
-                  cursor: isOwner ? 'pointer' : 'default',
-                  textDecoration: isOwner ? 'underline' : 'none',
-                }}
-                title={isOwner ? 'Click to choose new owner' : null}
-                onClick={() => {
-                  if (!isOwner) {
-                    return;
-                  }
-                  this.setState({displayMenu: true});
-                }}>
-                {newOwner}
-              </h3>
-              {this.renderNewOwnerAction()}
+              <h3 className="owner-name">{newOwner}</h3>
             </div>
           </div>
           <button className="cancel-transaction" onClick={() => history.goBack()}>
@@ -138,6 +124,10 @@ class OwnerChange extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.transactionStore.clearTransaction();
+  }
+
   handleDetailsClick = () => {
     this.props.store.detailsVisible = true;
   };
@@ -148,128 +138,96 @@ class OwnerChange extends Component {
     });
   };
 
-  renderCurrentOwnerAction = () => {
-    const {estateDetails} = this.props.store;
-    const {currentUser} = this.props.userStore;
-    const {transactionStore} = this.props;
-    if (estateDetails.currentOwner === parseInt(currentUser.code, 10)) {
-      if (
-        !transactionStore.transactionDetails.signedBySeller &&
-        transactionStore.transactionDetails.paid
-      ) {
-        return (
-          <button
-            className="sign-contract-button"
-            onClick={() => transactionStore.signTransaction('seller')}>
-            SIGN CONTRACT
-          </button>
-        );
-      } else if (this.state.newOwner === 'Choose owner') {
-        return null;
-      } else if (!transactionStore.transactionDetails.paid) {
-        return <p>State tax unpaid</p>;
-      } else {
-        return (
-          <p>
-            <img src={check} alt="" className="check-icon" /> Signed
-          </p>
-        );
-      }
-    } else if (this.state.newOwner === 'Choose owner') {
-      return null;
-    } else if (!transactionStore.transactionDetails.signedBySeller) {
-      return <p>Waiting for signature</p>;
-    } else {
-      return (
-        <p>
-          <img src={check} alt="" className="check-icon" /> Signed
-        </p>
-      );
-    }
-  };
-
-  renderNewOwnerAction = () => {
-    const {currentUser} = this.props.userStore;
-    const {transactionDetails, signTransaction} = this.props.transactionStore;
-    if (transactionDetails.buyerIdCode === parseInt(currentUser.code, 10)) {
-      if (!transactionDetails.signedByBuyer && transactionDetails.paid) {
-        return (
-          <button className="sign-contract-button" onClick={() => signTransaction('buyer')}>
-            SIGN CONTRACT
-          </button>
-        );
-      } else if (!transactionDetails.paid) {
-        return <p>State tax unpaid</p>;
-      } else {
-        return (
-          <p>
-            <img src={check} alt="" className="check-icon" /> Signed
-          </p>
-        );
-      }
-    } else if (this.state.newOwner === 'Choose owner') {
-      return null;
-    } else if (!transactionDetails.signedByBuyer) {
-      return <p>Waiting for signature</p>;
-    } else {
-      return (
-        <p>
-          <img src={check} alt="" className="check-icon" /> Signed
-        </p>
-      );
-    }
-  };
-
-  renderPaymentButton = () => {
+  renderUserAction = () => {
     const {
-      transactionStore: {transactionId, transactionStatus, loading, payTax},
+      transactionStore,
+      transactionStore: {transactionId, transactionStatus, loading, payTax, transactionDetails},
+      userStore: {currentUser, getUsernameById},
     } = this.props;
-    const newOwnerChosen = this.state.newOwner !== 'Choose owner';
-    const successStatus = transactionStatus === 'paid' || transactionStatus === 'complete';
+    const newOwnerChosen = this.state.newOwner !== newOwnerPlaceholder;
+    const userIsSeller = transactionDetails.sellerIdCode === parseInt(currentUser.code, 10);
+    const userIsBuyer = transactionDetails.buyerIdCode === parseInt(currentUser.code, 10);
 
     if (transactionId) {
+      if (transactionStatus !== 'unpaid') {
+        if (
+          (userIsSeller && !transactionDetails.signedBySeller) ||
+          (userIsBuyer && !transactionDetails.signedByBuyer)
+        ) {
+          return (
+            <button
+              className="payment-button"
+              onClick={() => transactionStore.signTransaction(userIsSeller ? 'seller' : 'buyer')}>
+              SIGN CONTRACT{' '}
+              {loading ? <Spinner className="loading-spinner" size={16} /> : <Icon icon="edit" />}
+            </button>
+          );
+        } else {
+          return (
+            <ul className="transaction-overview">
+              <li>
+                <img src={check} alt="" /> State tax paid
+              </li>
+              <li>
+                {transactionDetails.signedBySeller ? (
+                  <img src={check} alt="" />
+                ) : (
+                  <Icon icon="delete" />
+                )}{' '}
+                {transactionDetails.signedBySeller ? 'Signed by' : 'Not signed by'}{' '}
+                {getUsernameById(transactionDetails.sellerIdCode)}
+              </li>
+              <li>
+                {transactionDetails.signedByBuyer ? (
+                  <img src={check} alt="" />
+                ) : (
+                  <Icon icon="delete" />
+                )}{' '}
+                {transactionDetails.signedByBuyer ? 'Signed by' : 'Not signed by'}{' '}
+                {getUsernameById(transactionDetails.buyerIdCode)}
+              </li>
+              <li>
+                {transactionDetails.signedByAll ? (
+                  <img src={check} alt="" />
+                ) : (
+                  <Icon icon="delete" />
+                )}{' '}
+                {transactionDetails.signedByAll
+                  ? 'Transaction complete'
+                  : 'Transaction not complete'}
+              </li>
+            </ul>
+          );
+        }
+      } else {
+        return (
+          <button className="payment-button" onClick={() => payTax()}>
+            {transactionStatus === 'unpaid' ? 'PAY STATE TAX' : 'RETRY'}
+            {loading ? (
+              <Spinner className="loading-spinner" size={18} />
+            ) : (
+              <Icon icon={transactionStatus === 'unpaid' ? 'dollar' : 'refresh'} />
+            )}
+          </button>
+        );
+      }
+    } else if (newOwnerChosen) {
       return (
-        <Button
-          intent={
-            transactionStatus === 'unpaid'
-              ? 'primary'
-              : transactionStatus === 'error'
-                ? 'error'
-                : 'success'
-          }
-          className="payment-button"
-          large
-          loading={loading}
-          icon={
-            transactionStatus === 'unpaid'
-              ? 'dollar'
-              : transactionStatus === 'error'
-                ? 'error'
-                : 'tick-circle'
-          }
-          minimal={successStatus}
-          disabled={successStatus}
-          onClick={() => payTax()}>
-          {transactionStatus === 'unpaid'
-            ? 'Pay state tax'
-            : transactionStatus === 'error'
-              ? 'Payment failed, try again'
-              : transactionStatus === 'complete'
-                ? 'Transaction complete'
-                : 'State tax paid'}
-        </Button>
+        <button className="payment-button" onClick={this.handleTransactionStart}>
+          BEGIN TRANSACTION{' '}
+          {loading ? (
+            <Spinner className="loading-spinner" size={18} />
+          ) : (
+            <Icon icon="circle-arrow-right" />
+          )}
+        </button>
       );
     } else {
       return (
-        <Button
-          className="payment-button"
-          large
-          intent="primary"
-          minimal={!newOwnerChosen}
-          disabled={!newOwnerChosen}
-          onClick={this.handleTransactionStart}>
-          {newOwnerChosen ? 'Begin ownership change' : 'Choose new owner to start transaction'}
-        </Button>
+        <button className="payment-button" onClick={() => this.setState({displayMenu: true})}>
+          SELECT NEW OWNER{' '}
+          {loading ? <Spinner className="loading-spinner" size={18} /> : <Icon icon="plus" />}
+        </button>
       );
     }
   };

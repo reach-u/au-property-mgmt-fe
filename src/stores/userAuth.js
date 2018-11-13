@@ -22,13 +22,13 @@ class UserAuthStore {
       });
   }
 
-  getUsernameById(id = 0) {
+  getUsernameById = (id = 0) => {
     const user = this.users.find(user => user.code.toString() === id.toString()) || {
       givenName: 'John',
       familyName: 'Doe',
     };
     return `${user.givenName} ${user.familyName}`;
-  }
+  };
 
   fetchUserTransactions() {
     this.loading = true;

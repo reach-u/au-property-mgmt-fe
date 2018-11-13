@@ -18,7 +18,7 @@ class TransactionStore {
       .then(response => response.json())
       .then(data => {
         this.transactionList = data.filter(transaction => !transaction.signedByAll);
-        if (this.transactionList.length > 0) {
+        if (this.transactionList.length > 0 && !this.transactionList[0].signedByAll) {
           this.transactionId = this.transactionList[0].transactionId;
           this.transactionStatus = this.transactionList[0].paid
             ? this.transactionList[0].signedByAll
@@ -26,6 +26,8 @@ class TransactionStore {
               : 'paid'
             : 'unpaid';
           this.currentTransaction = this.transactionList[0];
+        } else {
+          this.clearTransaction();
         }
       });
   }
@@ -38,13 +40,25 @@ class TransactionStore {
 
   fetchTransaction = () => {
     this.loading = true;
-    fetch(`${window.location.origin}/${api.transactionStatus(this.transactionId)}`)
-      .then(response => response.json())
-      .then(data => {
-        this.currentTransaction = data;
-        this.transactionStatus = data.paid ? (data.signedByAll ? 'complete' : 'paid') : 'unpaid';
-        this.loading = false;
-      });
+    if (this.transactionId) {
+      fetch(`${window.location.origin}/${api.transactionStatus(this.transactionId)}`)
+        .then(response => response.json())
+        .then(data => {
+          this.currentTransaction = data;
+          this.transactionStatus = data.paid ? (data.signedByAll ? 'complete' : 'paid') : 'unpaid';
+          this.loading = false;
+        });
+    } else {
+      this.loading = false;
+      this.clearTransaction();
+      return null;
+    }
+  };
+
+  clearTransaction = () => {
+    this.currentTransaction = null;
+    this.transactionStatus = 'unpaid';
+    this.transactionId = null;
   };
 
   signTransaction = role => {
@@ -84,6 +98,7 @@ class TransactionStore {
 }
 
 decorate(TransactionStore, {
+  clearTransaction: action,
   currentTransaction: observable,
   fetchPropertyTransactions: action,
   fetchTransaction: action,

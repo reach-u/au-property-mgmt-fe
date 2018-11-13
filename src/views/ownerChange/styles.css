@@ -17,6 +17,11 @@
     align-items: stretch;
 }
 
+.container-card h3 {
+    font-size: 18px;
+    font-weight: 400;
+}
+
 .main-address {
     font-size: 20px;
     font-weight: 600;
@@ -58,17 +63,67 @@ h5 {
     padding: 0;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .payment-button {
     margin: 40px 0;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.1pt;
     align-self: center;
-    text-align: center !important;
+    display: flex;
+    align-items: center;
+    background: #008C8C;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2),0 1px 1px 0 rgba(0, 0, 0, 0.14),0 2px 1px -1px rgba(0, 0, 0, 0.12);
+    transition: 200ms;
+    cursor: pointer;
+}
+.payment-button:hover {
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),0px 4px 5px 0px rgba(0, 0, 0, 0.14),0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 
-.check-icon {
-    width: 17px;
-    height: 17px;
+.payment-button span {
+    margin-left: 12px;
+}
+
+.loading-spinner {
+    margin-left: 12px;
+}
+
+.loading-spinner .bp3-spinner-head {
+    stroke: white;
+}
+
+.loading-spinner .bp3-spinner-track {
+    stroke: rgba(255, 255, 255, 0.2);
+}
+
+.transaction-overview {
+    padding: 0;
+    margin: 30px auto;
+    opacity: 0.8;
+}
+
+.transaction-overview li {
+    border: none;
+    margin-top: 8px;
+}
+
+.transaction-overview img {
+    width: 18px;
+    height: 18px;
+    vertical-align: text-bottom;
+}
+
+.transaction-overview span {
+    color: #EE4B5C;
+    width: 18px;
+    height: 18px;
     vertical-align: text-bottom;
 }
 
@@ -107,11 +162,15 @@ h5 {
 
 @media screen and (min-width: 1200px) {
     .owner-container {
-        margin: 0 360px;
+        margin: 0 180px;
         padding: 0;
-        align-items: flex-start;
+        align-items: center;
         width: calc(100% - 360px);
         font-size: 100%;
+    }
+
+    .container-card h3 {
+        font-size: 24px;
     }
 
     .cancel-transaction {
@@ -133,5 +192,9 @@ h5 {
 
     .action-icon {
         display: block;
+    }
+
+    .transaction-overview {
+        margin: 30px 0;
     }
 }
