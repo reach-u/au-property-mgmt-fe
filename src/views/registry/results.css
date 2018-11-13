@@ -92,8 +92,4 @@ tr:nth-child(odd) td {
     .user-properties-tr:hover td:first-child {
         border-left: 3px solid #008C8C;
     }
-
-    .transaction-table {
-
-    }
 }

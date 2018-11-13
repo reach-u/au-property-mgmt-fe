@@ -4,7 +4,6 @@ import {Button, Card, Elevation, Divider, Overlay} from '@blueprintjs/core';
 import './details/details.css';
 import {withRouter} from 'react-router';
 import {observer} from 'mobx-react';
-import pic from './details/101651211.png';
 import check from '../../assets/check.png';
 import warning from '../../assets/warning.png';
 import {formatDate} from '../../utils/date';
@@ -135,22 +134,20 @@ class Details extends Component {
                 showMarker={isDesktop}
               />
             </div>
-            {!!streetuUrl && (
-              <div className="iframe-container">
-                <a href={streetuUrl} target="_blank" rel="noopener noreferrer">
-                  <div title="EyeVi street view" className="iframe-overlay">
-                    Click to open in new tab
-                  </div>
-                </a>
-                <iframe
-                  title="EyeVi street view"
-                  src={streetuUrl}
-                  scrolling="no"
-                  className="property-image"
-                />
-              </div>
-            )}
-            {!streetuUrl && <img src={pic} alt="" className="property-image" />}
+
+            <div className="iframe-container">
+              <a href={streetuUrl} target="_blank" rel="noopener noreferrer">
+                <div title="EyeVi street view" className="iframe-overlay">
+                  Click to open in new tab
+                </div>
+              </a>
+              <img
+                src={`${
+                  window.location.origin
+                }/au-property-mgmt-rest/api/1/priv/thumbnail/${detailsId || 0}`}
+                alt="Property street view"
+              />
+            </div>
           </div>
           <Overlay isOpen={this.state.overlayOpen} onClose={this.closeMap}>
             <div className="map-in-overlay">

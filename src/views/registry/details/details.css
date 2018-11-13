@@ -129,6 +129,15 @@
     padding: 0;
 }
 
+.iframe-container img {
+    position: absolute;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),0px 4px 5px 0px rgba(0, 0, 0, 0.14),0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    height: 70px;
+    width: auto;
+    top: 115px;
+    right: 20px;
+}
+
 .iframe-container a {
     color: white;
     font-size: 12px;
@@ -282,6 +291,12 @@
 
     .iframe-container a {
         font-size: 20px;
+    }
+
+    .iframe-container img {
+        height: auto;
+        position: initial;
+        margin: 0 30px;
     }
 
     .iframe-overlay {
