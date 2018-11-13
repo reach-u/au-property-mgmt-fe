@@ -50,6 +50,7 @@ class Navigation extends Component {
                 loginOpen={this.state.promptLogin}
                 onLogin={this.hideLogin}
                 className="nav-button"
+                store={store}
               />
               <Overlay isOpen={this.state.menuOpen}>
                 <div className="mobile-menu">
@@ -139,6 +140,7 @@ class Navigation extends Component {
                 className="nav-button"
                 loginOpen={this.state.promptLogin}
                 onLogin={this.hideLogin}
+                store={store}
               />
             </div>
           )}
@@ -183,6 +185,7 @@ class Navigation extends Component {
   };
 
   showOverlay = () => {
+    this.props.store.detailsVisible = false;
     this.setState({menuOpen: true}, () => {
       document.addEventListener('click', this.hideOverlay);
     });
@@ -190,6 +193,7 @@ class Navigation extends Component {
 
   showLogin = () => {
     this.props.authstore.loading = true;
+    this.props.store.detailsVisible = false;
     setTimeout(() => {
       this.setState({promptLogin: true});
       this.props.authstore.loading = false;

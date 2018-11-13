@@ -10,27 +10,22 @@ class UserAuthDetails extends Component {
     displayMenu: false,
   };
 
-  constructor(props) {
-    super(props);
-    this.showDropdownMenu = this.showDropdownMenu.bind(this);
-    this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
-  }
-
-  showDropdownMenu(event) {
+  showDropdownMenu = event => {
     event.preventDefault();
+    this.props.store.detailsVisible = false;
     this.setState({displayMenu: true});
-  }
+  };
 
-  hideDropdownMenu() {
+  hideDropdownMenu = () => {
     this.setState({displayMenu: false}, () => {
       this.props.onLogin();
     });
-  }
+  };
 
-  handleClick(user) {
+  handleClick = user => {
     this.props.authstore.changeUser(user);
     this.hideDropdownMenu();
-  }
+  };
 
   render() {
     const {className, authstore} = this.props;
