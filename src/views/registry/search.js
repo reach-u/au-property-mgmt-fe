@@ -2,7 +2,7 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import AutoComplete from '../../components/AutoComplete';
 import {realEstateStore} from '../../stores/realEstate';
-import background from '../../assets/img_background.jpg';
+import background from '../../assets/taust_02.jpeg';
 import './search.css';
 
 const Search = ({store, authstore}) => {

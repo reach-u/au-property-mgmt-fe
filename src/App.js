@@ -102,7 +102,7 @@ class App extends Component {
                   path="/transactions"
                   render={props => (
                     <Suspense fallback={loading}>
-                      <Transactions authstore={userAuthStore} {...props} />
+                      <Transactions authstore={userAuthStore} store={realEstateStore} {...props} />
                     </Suspense>
                   )}
                 />

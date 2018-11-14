@@ -57,6 +57,14 @@ tr:nth-child(odd) td {
     opacity: 0.8;
 }
 
+.details-link {
+    color: #008C8C;
+    cursor: pointer;
+}
+.details-link:hover {
+    text-decoration: underline;
+}
+
 @media screen and (min-width: 1200px) {
     .main-details {
         grid-template-rows: auto;

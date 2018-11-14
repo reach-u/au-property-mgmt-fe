@@ -9,7 +9,7 @@ import './registry/registry.scss';
 
 class Transactions extends Component {
   render() {
-    const {authstore, history} = this.props;
+    const {authstore, history, store} = this.props;
     const activeTransactions = authstore.userTransactions.length > 0;
     const isDesktop = window.innerWidth > 1200;
     const completeText = isDesktop ? 'Transaction complete' : 'Complete';
@@ -49,11 +49,19 @@ class Transactions extends Component {
                     )}
                   </td>
                   <td>
-                    <p className="table-important">
-                      {`${item.address.street} ${item.address.house}${
-                        item.address.apartment ? `-${item.address.apartment}` : ''
-                      }`}
-                    </p>
+                    <div style={{display: 'flex'}}>
+                      <p className="table-important">
+                        {`${item.address.street} ${item.address.house}${
+                          item.address.apartment ? `-${item.address.apartment}` : ''
+                        }`}
+                      </p>
+                      <div
+                        title="Property details"
+                        style={{cursor: 'pointer', margin: '2px 0 0 8px'}}
+                        onClick={() => store.fetchEstateDetails(item.address.id)}>
+                        <img src={info} alt="Transaction details" />
+                      </div>
+                    </div>
                   </td>
                   <td>
                     <div className="main-details">
@@ -78,14 +86,14 @@ class Transactions extends Component {
                   <td>
                     <div
                       title="Transaction details"
-                      style={{cursor: 'pointer'}}
+                      className="details-link"
                       onClick={() => {
                         const url = item.signedByAll
                           ? `/transaction/${item.transactionId}`
                           : `/owner-change/${item.address.id}`;
                         history.push(url);
                       }}>
-                      <img src={info} alt="Transaction details" />
+                      Details
                     </div>
                   </td>
                 </tr>
