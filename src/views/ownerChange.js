@@ -23,6 +23,11 @@ class OwnerChange extends Component {
       transactionStore: {transactionDetails},
     } = this.props;
     const {newOwner, displayMenu} = this.state;
+    const userActionsComplete =
+      (transactionDetails.sellerIdCode === parseInt(userStore.currentUser.code, 10) &&
+        transactionDetails.signedBySeller) ||
+      (transactionDetails.buyerIdCode === parseInt(userStore.currentUser.code, 10) &&
+        transactionDetails.signedByBuyer);
 
     return (
       <div className="owner-container">
@@ -74,7 +79,9 @@ class OwnerChange extends Component {
             </ul>
           )}
 
-          {this.renderUserAction()}
+          <div className="action-button-container" style={{height: userActionsComplete ? 0 : 120}}>
+            {this.renderUserAction()}
+          </div>
 
           <div className="actions">
             <div className="owners">

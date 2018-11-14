@@ -16,6 +16,7 @@
     align-items: stretch;
     flex-wrap: wrap;
     overflow: auto;
+    margin: 90px auto 10px;
 }
 
 .container-card h3 {
@@ -28,6 +29,12 @@
     font-weight: 600;
     display: flex;
     margin: 10px 0;
+}
+
+.action-button-container {
+    display:flex;
+    justify-content: center;
+    transition: 300ms;
 }
 
 .icon-img {
