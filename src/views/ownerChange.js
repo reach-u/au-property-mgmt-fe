@@ -16,7 +16,12 @@ class OwnerChange extends Component {
 
   render() {
     const {id} = this.props.match.params;
-    const {store, userStore, history} = this.props;
+    const {
+      store,
+      userStore,
+      history,
+      transactionStore: {transactionDetails},
+    } = this.props;
     const {newOwner, displayMenu} = this.state;
 
     return (
@@ -32,6 +37,42 @@ class OwnerChange extends Component {
           <div className="secondary-address">
             {store.estateDetails.propertyType}, {store.estateDetails.propertySize} m<sup>2</sup>
           </div>
+          {!!transactionDetails.startedDate && (
+            <ul className="transaction-overview">
+              <li>
+                {transactionDetails.paid ? <img src={check} alt="" /> : <Icon icon="delete" />}{' '}
+                {transactionDetails.paid ? 'State tax paid' : 'State tax not paid'}
+              </li>
+              <li>
+                {transactionDetails.signedByBuyer ? (
+                  <img src={check} alt="" />
+                ) : (
+                  <Icon icon="delete" />
+                )}{' '}
+                {transactionDetails.signedByBuyer ? 'Signed by' : 'Not signed by'}{' '}
+                {userStore.getUsernameById(transactionDetails.buyerIdCode)}
+              </li>
+              <li>
+                {transactionDetails.signedBySeller ? (
+                  <img src={check} alt="" />
+                ) : (
+                  <Icon icon="delete" />
+                )}{' '}
+                {transactionDetails.signedBySeller ? 'Signed by' : 'Not signed by'}{' '}
+                {userStore.getUsernameById(transactionDetails.sellerIdCode)}
+              </li>
+              <li>
+                {transactionDetails.signedByAll ? (
+                  <img src={check} alt="" />
+                ) : (
+                  <Icon icon="delete" />
+                )}{' '}
+                {transactionDetails.signedByAll
+                  ? 'Transaction complete'
+                  : 'Transaction not complete'}
+              </li>
+            </ul>
+          )}
 
           {this.renderUserAction()}
 
@@ -137,7 +178,7 @@ class OwnerChange extends Component {
     const {
       transactionStore,
       transactionStore: {transactionId, transactionStatus, loading, payTax, transactionDetails},
-      userStore: {currentUser, getUsernameById},
+      userStore: {currentUser},
     } = this.props;
     const newOwnerChosen = this.state.newOwner !== newOwnerPlaceholder;
     const userIsSeller = transactionDetails.sellerIdCode === parseInt(currentUser.code, 10);
@@ -156,42 +197,6 @@ class OwnerChange extends Component {
               SIGN CONTRACT{' '}
               {loading ? <Spinner className="loading-spinner" size={16} /> : <Icon icon="edit" />}
             </button>
-          );
-        } else {
-          return (
-            <ul className="transaction-overview">
-              <li>
-                <img src={check} alt="" /> State tax paid
-              </li>
-              <li>
-                {transactionDetails.signedBySeller ? (
-                  <img src={check} alt="" />
-                ) : (
-                  <Icon icon="delete" />
-                )}{' '}
-                {transactionDetails.signedBySeller ? 'Signed by' : 'Not signed by'}{' '}
-                {getUsernameById(transactionDetails.sellerIdCode)}
-              </li>
-              <li>
-                {transactionDetails.signedByBuyer ? (
-                  <img src={check} alt="" />
-                ) : (
-                  <Icon icon="delete" />
-                )}{' '}
-                {transactionDetails.signedByBuyer ? 'Signed by' : 'Not signed by'}{' '}
-                {getUsernameById(transactionDetails.buyerIdCode)}
-              </li>
-              <li>
-                {transactionDetails.signedByAll ? (
-                  <img src={check} alt="" />
-                ) : (
-                  <Icon icon="delete" />
-                )}{' '}
-                {transactionDetails.signedByAll
-                  ? 'Transaction complete'
-                  : 'Transaction not complete'}
-              </li>
-            </ul>
           );
         }
       } else {

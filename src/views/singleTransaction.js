@@ -4,6 +4,7 @@ import {Icon, Classes} from '@blueprintjs/core';
 import './ownerChange/styles.css';
 import info from '../assets/info.png';
 import {formatDate} from '../utils/date';
+import check from '../assets/check.png';
 
 class Transaction extends Component {
   state = {
@@ -13,7 +14,13 @@ class Transaction extends Component {
 
   render() {
     const {id} = this.props.match.params;
-    const {store, userStore, history, transactionStore} = this.props;
+    const {
+      store,
+      userStore,
+      history,
+      transactionStore,
+      transactionStore: {transactionDetails},
+    } = this.props;
     const loading =
       store.loading || transactionStore.loading || userStore.loading ? Classes.SKELETON : '';
 
@@ -21,9 +28,6 @@ class Transaction extends Component {
       <div className="owner-container">
         <div className="container-card">
           <h3>Ownership change for property {id}</h3>
-          <p className={loading}>
-            Started at {formatDate(transactionStore.transactionDetails.startedDate)}
-          </p>
           <div className={`main-address ${loading}`} style={{marginTop: 30}}>
             {store.detailedAddress}
             <div title="Show details" onClick={this.handleDetailsClick}>
@@ -33,14 +37,33 @@ class Transaction extends Component {
           <div className={`secondary-address ${loading}`}>
             {store.estateDetails.propertyType}, {store.estateDetails.propertySize} m<sup>2</sup>
           </div>
+          <ul className={`transaction-overview ${loading}`}>
+            <li>
+              <img src={check} alt="" /> Started on {formatDate(transactionDetails.startedDate)}
+            </li>
+            <li>
+              <img src={check} alt="" /> State tax paid
+            </li>
+            <li>
+              <img src={check} alt="" /> {userStore.getUsernameById(transactionDetails.buyerIdCode)}{' '}
+              signed on {formatDate(transactionDetails.signedByBuyer)}
+            </li>
+            <li>
+              <img src={check} alt="" />{' '}
+              {userStore.getUsernameById(transactionDetails.sellerIdCode)} signed on{' '}
+              {formatDate(transactionDetails.signedBySeller)}
+            </li>
+            <li>
+              <img src={check} alt="" /> Transaction complete
+            </li>
+          </ul>
 
           <div className={`actions ${loading}`} style={{marginTop: 20}}>
             <div className="owners">
               <h5>Previous owner</h5>
               <h3 className="owner-name">
-                {userStore.getUsernameById(transactionStore.transactionDetails.sellerIdCode)}
+                {userStore.getUsernameById(transactionDetails.sellerIdCode)}
               </h3>
-              Signed on {formatDate(transactionStore.transactionDetails.signedBySeller)}
             </div>
 
             <Icon icon={'chevron-right'} iconSize={30} className="action-icon" />
@@ -48,9 +71,8 @@ class Transaction extends Component {
             <div className={`owners ${loading}`}>
               <h5>New owner</h5>
               <h3 className="owner-name">
-                {userStore.getUsernameById(transactionStore.transactionDetails.buyerIdCode)}
+                {userStore.getUsernameById(transactionDetails.buyerIdCode)}
               </h3>
-              Signed on {formatDate(transactionStore.transactionDetails.signedByBuyer)}
             </div>
           </div>
           <button className="cancel-transaction" onClick={() => history.goBack()}>

@@ -115,6 +115,12 @@ h5 {
     border: none;
     margin-top: 8px;
 }
+.transaction-overview li:hover {
+    color: #333;
+    font-weight: 400;
+    cursor: initial;
+    background: transparent;
+}
 
 .transaction-overview img {
     width: 18px;
