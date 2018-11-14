@@ -11,7 +11,7 @@ class Transactions extends Component {
   render() {
     const {authstore, history, store} = this.props;
     const activeTransactions = authstore.userTransactions.length > 0;
-    const isDesktop = window.innerWidth > 1200;
+    const isDesktop = window.innerWidth > 1370;
     const completeText = isDesktop ? 'Transaction complete' : 'Complete';
     const pendingText = isDesktop ? 'Transaction in progress' : 'In progress';
 

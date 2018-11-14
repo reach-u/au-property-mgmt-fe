@@ -51,10 +51,10 @@ class Autocomplete extends Component {
     this.props.history.push(`/results?q=${e.value}`);
   }
 
-  handleChange(e) {
+  handleChange = e => {
     this.props.store.setQuery(e.target.value);
     this.setItems(e.target.value);
-  }
+  };
 
   handleSearch = (searchObject, myProperty = false) => {
     const {store, authstore, history} = this.props;
@@ -64,6 +64,23 @@ class Autocomplete extends Component {
 
   handleClick = () => {
     this.handleSearch(this.getValues());
+  };
+
+  handleMenuVisibilityChange = isOpen => {
+    if (isOpen) {
+      document.addEventListener('keydown', this.handleKeyDown);
+    } else {
+      setTimeout(() => {
+        document.removeEventListener('keydown', this.handleKeyDown);
+        document.querySelectorAll('.input-field')[0].blur();
+      }, 100);
+    }
+  };
+
+  handleKeyDown = key => {
+    if (key.keyCode === 13) {
+      this.handleClick();
+    }
   };
 
   getValues = () => {
@@ -82,6 +99,7 @@ class Autocomplete extends Component {
             className: 'input-field bp3-input bp3-large bp3-intent-primary',
             placeholder: 'Property number or address',
           }}
+          autoHighlight={false}
           items={this.state.items}
           getItemValue={item => item.label}
           renderItem={(item, highlighted) => (
@@ -94,6 +112,7 @@ class Autocomplete extends Component {
           value={this.props.store.query}
           onChange={e => this.handleChange(e)}
           onSelect={value => this.onSelect({value})}
+          onMenuVisibilityChange={this.handleMenuVisibilityChange}
           menuStyle={{
             boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
             background: 'rgba(255, 255, 255, 0.9)',

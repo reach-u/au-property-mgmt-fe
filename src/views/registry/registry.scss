@@ -8,11 +8,15 @@
   box-sizing: border-box;
 }
 
+.registry-search {
+  margin-bottom: 30px;
+}
+
 .content-container {
   width: 100%;
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1370px) {
   .registry-container {
     padding: 0;
     margin: 120px 115px 0;
@@ -36,8 +40,12 @@
 
   .results-map-container {
     width: 100%;
-    height: inherit;
+    height: 100%;
     z-index: 0;
+  }
+
+  .map {
+    height: 100%;
   }
 
   .table-container {

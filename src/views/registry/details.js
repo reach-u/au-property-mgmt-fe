@@ -21,7 +21,7 @@ class Details extends Component {
       detailsId,
     } = this.props.store;
     const {userId} = this.props.authstore;
-    const isDesktop = window.innerWidth > 1200;
+    const isDesktop = window.innerWidth > 1370;
     const mortgageData = estateDetails.mortgageSize
       ? `Mortgage ${estateDetails.mortgageSize}$ (${this.props.authstore.getUsernameById(
           estateDetails.mortgageSubject || 0
@@ -135,19 +135,21 @@ class Details extends Component {
               />
             </div>
 
-            <div className="iframe-container">
-              <a href={streetuUrl} target="_blank" rel="noopener noreferrer">
-                <div title="EyeVi street view" className="iframe-overlay">
-                  Click to open in new tab
-                </div>
-              </a>
-              <img
-                src={`${
-                  window.location.origin
-                }/au-property-mgmt-rest/api/1/priv/thumbnail/${detailsId || 0}`}
-                alt="Property street view"
-              />
-            </div>
+            {!!streetuUrl && (
+              <div className="iframe-container">
+                <a href={streetuUrl} target="_blank" rel="noopener noreferrer">
+                  <div title="EyeVi street view" className="iframe-overlay">
+                    Click to open in new tab
+                  </div>
+                </a>
+                <img
+                  src={`${
+                    window.location.origin
+                  }/au-property-mgmt-rest/api/1/priv/thumbnail/${detailsId || 0}`}
+                  alt="Property street view"
+                />
+              </div>
+            )}
           </div>
           <Overlay isOpen={this.state.overlayOpen} onClose={this.closeMap}>
             <div className="map-in-overlay">

@@ -29,7 +29,7 @@ class UserAuthDetails extends Component {
 
   render() {
     const {className, authstore} = this.props;
-    const isDesktop = window.innerWidth > 1200;
+    const isDesktop = window.innerWidth > 1370;
 
     return (
       <div className={className}>

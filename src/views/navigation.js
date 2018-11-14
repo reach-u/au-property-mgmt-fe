@@ -16,7 +16,7 @@ class Navigation extends Component {
 
   render() {
     const {history, authstore, store, location} = this.props;
-    const isDesktop = window.innerWidth > 1200;
+    const isDesktop = window.innerWidth > 1370;
     const isHomePage = location.pathname === '/search';
     const isSearch = location.pathname === '/results';
     const isProperties = location.pathname === '/properties';

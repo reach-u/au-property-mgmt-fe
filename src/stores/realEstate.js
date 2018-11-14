@@ -87,6 +87,12 @@ class RealEstateStore {
     return this.estateData.detailedData || {};
   }
 
+  resetData() {
+    this.estates = [];
+    this.query = '';
+    this.state = 'not_loaded';
+  }
+
   resetDetails() {
     this.details = null;
     this.detailsId = null;
@@ -115,6 +121,7 @@ decorate(RealEstateStore, {
   loading: observable,
   noResults: computed,
   query: observable,
+  resetData: action,
   resetDetails: action,
   setQuery: action,
   state: observable,

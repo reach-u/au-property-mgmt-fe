@@ -154,7 +154,7 @@ class App extends Component {
     userAuthStore.initAndLoginUsers();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     if (
       userAuthStore.userId !== this.state.userId &&
       this.props.location.pathname === '/properties'
@@ -162,6 +162,9 @@ class App extends Component {
       this.setState({userId: userAuthStore.userId}, () => {
         realEstateStore.fetchEstates(null, true, userAuthStore);
       });
+    }
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      realEstateStore.closeDetailsModal();
     }
   }
 }

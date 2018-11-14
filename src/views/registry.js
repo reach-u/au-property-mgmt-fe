@@ -22,7 +22,7 @@ class Registry extends Component {
 
   render() {
     const {realEstateStore} = this.props;
-    const isDesktop = window.innerWidth > 1200;
+    const isDesktop = window.innerWidth > 1370;
 
     return (
       <Fragment>
@@ -38,7 +38,7 @@ class Registry extends Component {
             </div>
             {isDesktop &&
               realEstateStore.dataAvailable && (
-                <Suspense fallback={loading}>
+                <Suspense fallback={loading} className="suspense">
                   <div className="results-map-container">
                     <Map ref={this.map} center={[-4.04569, 39.66366]} zoom={15.3} className="map">
                       <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png" />
@@ -81,6 +81,10 @@ class Registry extends Component {
       this.props.realEstateStore.setQuery(query);
       this.props.realEstateStore.fetchEstates(query);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.realEstateStore.resetData();
   }
 
   handleTableRowHover = (event, rowItem) => {

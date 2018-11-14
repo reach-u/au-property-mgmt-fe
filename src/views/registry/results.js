@@ -8,7 +8,7 @@ import './results.css';
 class Results extends Component {
   render() {
     const {store, onHover, activeRow} = this.props;
-    const isDesktop = window.innerWidth > 1200;
+    const isDesktop = window.innerWidth > 1370;
 
     if (store.dataAvailable) {
       return (
