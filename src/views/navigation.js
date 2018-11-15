@@ -57,7 +57,9 @@ class Navigation extends Component {
                   <span className="menu-close">
                     <Icon icon="cross" iconSize={25} />
                   </span>
-                  <Link to={'/results'}>Find a property</Link>
+                  <Link to={'/results'} className="menu-link">
+                    Find a property
+                  </Link>
                   {!!authstore.userAuth && (
                     <button
                       className="menu-link"
@@ -70,7 +72,9 @@ class Navigation extends Component {
                   )}
                   {!!authstore.userAuth && (
                     <div style={{display: 'flex', justifyContent: 'center', marginTop: 32}}>
-                      <Link to="/transactions">My transactions</Link>
+                      <Link to="/transactions" className="menu-link" style={{marginTop: 0}}>
+                        My transactions
+                      </Link>
                       {activeTransactions && (
                         <div className="transaction-notification">
                           {authstore.pendingTransactions.length}
@@ -78,7 +82,7 @@ class Navigation extends Component {
                       )}
                     </div>
                   )}
-                  <Link to="/help" style={{marginTop: 32}}>
+                  <Link to="/help" className="menu-link">
                     Help
                   </Link>
                 </div>

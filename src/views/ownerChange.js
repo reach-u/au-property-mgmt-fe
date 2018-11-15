@@ -5,6 +5,7 @@ import './ownerChange/styles.css';
 import info from '../assets/info.png';
 import * as Classes from '@blueprintjs/core/lib/esm/common/classes';
 import check from '../assets/check.png';
+import {loading} from '../App';
 
 const newOwnerPlaceholder = 'Not selected';
 
@@ -20,6 +21,7 @@ class OwnerChange extends Component {
       store,
       userStore,
       history,
+      transactionStore,
       transactionStore: {transactionDetails},
     } = this.props;
     const {newOwner, displayMenu} = this.state;
@@ -28,6 +30,11 @@ class OwnerChange extends Component {
         transactionDetails.signedBySeller) ||
       (transactionDetails.buyerIdCode === parseInt(userStore.currentUser.code, 10) &&
         transactionDetails.signedByBuyer);
+    const storeLoading = transactionStore.loading || store.loading || userStore.loading;
+
+    if (storeLoading) {
+      return loading;
+    }
 
     return (
       <div className="owner-container">

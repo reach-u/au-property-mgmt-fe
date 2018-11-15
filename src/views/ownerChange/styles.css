@@ -116,6 +116,7 @@ h5 {
     padding: 0;
     margin: 30px auto;
     opacity: 0.8;
+    transition: 300ms;
 }
 
 .transaction-overview li {

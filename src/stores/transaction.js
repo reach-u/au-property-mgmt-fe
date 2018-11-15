@@ -1,5 +1,6 @@
 import api from '../config/API';
 import {decorate, observable, action, computed, when, reaction} from 'mobx';
+import waitAtLeast from '../utils/gracefulLoader';
 
 class TransactionStore {
   constructor() {
@@ -41,7 +42,10 @@ class TransactionStore {
   fetchTransaction = () => {
     this.loading = true;
     if (this.transactionId) {
-      fetch(`${window.location.origin}/${api.transactionStatus(this.transactionId)}`)
+      waitAtLeast(
+        500,
+        fetch(`${window.location.origin}/${api.transactionStatus(this.transactionId)}`)
+      )
         .then(response => response.json())
         .then(data => {
           this.currentTransaction = data;
@@ -66,30 +70,27 @@ class TransactionStore {
     const url = `${window.location.origin}/${
       role === 'buyer' ? api.signBuyer(this.transactionId) : api.signSeller(this.transactionId)
     }`;
-    setTimeout(() => {
-      fetch(url, {method: 'POST'})
-        .then(response => response.json())
-        .then(data => {
-          this.currentTransaction = data;
-          this.transactionStatus = data.signedByAll ? 'complete' : this.transactionStatus;
-          this.loading = false;
-        });
-    }, 1500);
+    waitAtLeast(800, fetch(url, {method: 'POST'}))
+      .then(response => response.json())
+      .then(data => {
+        this.currentTransaction = data;
+        this.transactionStatus = data.signedByAll ? 'complete' : this.transactionStatus;
+        this.loading = false;
+      });
   };
 
   payTax = () => {
     this.loading = true;
-    setTimeout(() => {
-      const url = `${window.location.origin}/${api.payTax(this.transactionId)}`;
-      fetch(url, {method: 'POST'}).then(response => {
-        if (response.status === 200) {
-          this.transactionStatus = 'paid';
-        } else {
-          this.transactionStatus = 'error';
-        }
-        this.loading = false;
-      });
-    }, 2500);
+
+    const url = `${window.location.origin}/${api.payTax(this.transactionId)}`;
+    waitAtLeast(800, fetch(url, {method: 'POST'})).then(response => {
+      if (response.status === 200) {
+        this.transactionStatus = 'paid';
+      } else {
+        this.transactionStatus = 'error';
+      }
+      this.loading = false;
+    });
   };
 
   get transactionDetails() {

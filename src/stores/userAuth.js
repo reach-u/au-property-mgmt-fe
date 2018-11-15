@@ -31,7 +31,6 @@ class UserAuthStore {
   };
 
   fetchUserTransactions() {
-    this.loading = true;
     fetch(`${window.location.origin}/${api.getPersonsTransactions(this.userId)}`)
       .then(response => response.json())
       .then(data => {
@@ -44,7 +43,6 @@ class UserAuthStore {
           }
           return 0;
         });
-        this.loading = false;
       });
   }
 
@@ -54,7 +52,7 @@ class UserAuthStore {
       this.userAuth = null;
       this.userAuth = user;
       this.loading = false;
-    }, 600);
+    }, 500);
   }
 
   get currentUser() {

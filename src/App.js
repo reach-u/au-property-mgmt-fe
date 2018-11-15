@@ -5,21 +5,21 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import {withRouter} from 'react-router';
 import './index.css';
 import './views/navigation.scss';
-import {Spinner} from '@blueprintjs/core';
 import {userAuthStore} from './stores/userAuth';
 import {transactionStore} from './stores/transaction';
 import {Motion, spring} from 'react-motion';
 import {observer} from 'mobx-react';
 import Navigation from './views/navigation';
+import waitAtLeast from './utils/gracefulLoader';
 
-const NotFoundPage = lazy(() => import('./views/404'));
-const OwnerChange = lazy(() => import('./views/ownerChange'));
-const Search = lazy(() => import('./views/registry/search'));
-const Details = lazy(() => import('./views/registry/details'));
-const Transactions = lazy(() => import('./views/transactions'));
-const UserProperties = lazy(() => import('./views/userProperties'));
-const Help = lazy(() => import('./views/help'));
-const Transaction = lazy(() => import('./views/singleTransaction'));
+const NotFoundPage = lazy(() => waitAtLeast(600, import('./views/404')));
+const OwnerChange = lazy(() => waitAtLeast(600, import('./views/ownerChange')));
+const Search = lazy(() => waitAtLeast(600, import('./views/registry/search')));
+const Details = lazy(() => waitAtLeast(600, import('./views/registry/details')));
+const Transactions = lazy(() => waitAtLeast(600, import('./views/transactions')));
+const UserProperties = lazy(() => waitAtLeast(600, import('./views/userProperties')));
+const Help = lazy(() => waitAtLeast(600, import('./views/help')));
+const Transaction = lazy(() => waitAtLeast(600, import('./views/singleTransaction')));
 
 export const loading = (
   <div
@@ -29,8 +29,14 @@ export const loading = (
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      background: 'transparent',
     }}>
-    <Spinner intent="primary" />
+    <div className="lds-ellipsis">
+      <div />
+      <div />
+      <div />
+      <div />
+    </div>
   </div>
 );
 

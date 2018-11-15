@@ -184,12 +184,17 @@
 .menu-link {
   margin-top: 32px;
   border: none;
+  padding: 5px 0;
   background: transparent;
   color: $pt-intent-primary;
+  transition: 200ms;
 }
-.menu-link:focus {
+.menu-link:focus,
+.menu-link:hover {
   outline: none;
-  text-decoration: underline;
+  text-decoration: none;
+  color: white;
+  background-color: $pt-intent-primary;
 }
 
 .menu-close {

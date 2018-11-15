@@ -1,14 +1,15 @@
 import React, {Component, Fragment, lazy, Suspense} from 'react';
 import {observer} from 'mobx-react';
-import Results from './registry/results';
 import {ProgressBar} from '@blueprintjs/core';
 import './registry/registry.scss';
 import Autocomplete from '../components/AutoComplete';
 import L from 'leaflet';
 import {loading} from '../App';
+import waitAtLeast from '../utils/gracefulLoader';
 
-const Map = lazy(() => import('./fullDetails/leaflet-map'));
-const TileLayer = lazy(() => import('./fullDetails/leaflet-tilelayer'));
+const Map = lazy(() => waitAtLeast(600, import('./fullDetails/leaflet-map')));
+const TileLayer = lazy(() => waitAtLeast(600, import('./fullDetails/leaflet-tilelayer')));
+const Results = lazy(() => waitAtLeast(600, import('./registry/results')));
 
 class Registry extends Component {
   constructor(props) {
