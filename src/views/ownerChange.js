@@ -13,6 +13,7 @@ class OwnerChange extends Component {
   state = {
     newOwner: newOwnerPlaceholder,
     displayMenu: false,
+    loading: true,
   };
 
   render() {
@@ -30,7 +31,8 @@ class OwnerChange extends Component {
         transactionDetails.signedBySeller) ||
       (transactionDetails.buyerIdCode === parseInt(userStore.currentUser.code, 10) &&
         transactionDetails.signedByBuyer);
-    const storeLoading = transactionStore.loading || store.loading || userStore.loading;
+    const storeLoading =
+      transactionStore.loading || store.loading || userStore.loading || this.state.loading;
 
     if (storeLoading) {
       return loading;
@@ -159,6 +161,7 @@ class OwnerChange extends Component {
 
     store.fetchEstateDetails(params.id, false);
     transactionStore.fetchPropertyTransactions(params.id);
+    this.setState({loading: false});
   }
 
   componentDidUpdate(prevProps, prevState) {

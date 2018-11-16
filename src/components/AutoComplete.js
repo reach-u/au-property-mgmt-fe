@@ -3,6 +3,8 @@ import ReactAutocomplete from 'react-autocomplete';
 import api from '../config/API';
 import {withRouter} from 'react-router';
 import {Button} from '@blueprintjs/core';
+import {observer} from 'mobx-react';
+import waitAtLeast from '../utils/gracefulLoader';
 import '../views/registry/search.css';
 
 class Autocomplete extends Component {
@@ -10,11 +12,13 @@ class Autocomplete extends Component {
     super(props);
     this.state = {
       items: [],
+      loading: false,
     };
   }
 
   setItems(query) {
-    fetch(`${window.location.origin}/${api.estates(query)}`)
+    this.setState({loading: true, items: [{label: 'Loading...'}]});
+    waitAtLeast(200, fetch(`${window.location.origin}/${api.estates(query)}`))
       .then(response => response.json())
       .then(data => {
         if (data.error) {
@@ -30,7 +34,7 @@ class Autocomplete extends Component {
 
           results.sort((a, b) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0));
 
-          this.setState({items: results});
+          this.setState({items: results, loading: false});
         }
       });
   }
@@ -45,15 +49,15 @@ class Autocomplete extends Component {
   }
 
   onSelect(e) {
-    this.setState({value: e.value});
     this.props.store.setQuery(e.value);
-    this.props.store.fetchEstates(e.value);
-    this.props.history.push(`/results?q=${e.value}`);
+    this.handleSearch(e.value);
   }
 
   handleChange = e => {
     this.props.store.setQuery(e.target.value);
-    this.setItems(e.target.value);
+    if (e.target.value.length > 2 && !this.state.loading) {
+      this.setItems(e.target.value);
+    }
   };
 
   handleSearch = (searchObject, myProperty = false) => {
@@ -72,7 +76,6 @@ class Autocomplete extends Component {
     } else {
       setTimeout(() => {
         document.removeEventListener('keydown', this.handleKeyDown);
-        document.querySelectorAll('.input-field')[0].blur();
       }, 100);
     }
   };
@@ -105,7 +108,11 @@ class Autocomplete extends Component {
           renderItem={(item, highlighted) => (
             <div
               key={item.id}
-              style={{backgroundColor: highlighted ? '#eee' : 'transparent', padding: '1px 8px'}}>
+              style={{
+                backgroundColor: highlighted ? '#ddd' : 'transparent',
+                cursor: 'pointer',
+                padding: '1px 8px',
+              }}>
               {item.label}
             </div>
           )}
@@ -114,7 +121,7 @@ class Autocomplete extends Component {
           onSelect={value => this.onSelect({value})}
           onMenuVisibilityChange={this.handleMenuVisibilityChange}
           menuStyle={{
-            boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+            boxShadow: '0 2px 12px rgba(0, 0, 0, 0.18)',
             background: 'rgba(255, 255, 255, 0.9)',
             padding: '0 0',
             fontSize: '95%',
@@ -135,4 +142,4 @@ class Autocomplete extends Component {
   }
 }
 
-export default withRouter(Autocomplete);
+export default withRouter(observer(Autocomplete));
