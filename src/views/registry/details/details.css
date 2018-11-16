@@ -232,9 +232,9 @@
 
 @media screen and (min-width: 1370px) {
     .details-card {
-        position: fixed;
-        right: 50px;
-        top: 40px;
+        position: absolute;
+        right: 30px;
+        top: -50px;
         left: auto;
         z-index: 200;
         width: auto;
