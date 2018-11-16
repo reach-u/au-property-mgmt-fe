@@ -17,7 +17,7 @@ class Autocomplete extends Component {
   }
 
   setItems(query) {
-    this.setState({loading: true, items: [{label: 'Loading...'}]});
+    this.setState({loading: true, items: [{id: 0, label: 'Loading...'}]});
     waitAtLeast(200, fetch(`${window.location.origin}/${api.estates(query)}`))
       .then(response => response.json())
       .then(data => {
