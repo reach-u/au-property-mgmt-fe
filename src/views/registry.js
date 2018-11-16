@@ -73,6 +73,8 @@ class Registry extends Component {
     if (query) {
       this.props.realEstateStore.setQuery(query);
       this.props.realEstateStore.fetchEstates(query);
+    } else {
+      this.props.history.push('/search');
     }
   }
 
