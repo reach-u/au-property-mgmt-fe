@@ -143,7 +143,7 @@ class App extends Component {
               <div
                 style={{transform: `translateX(${style.x}px)`, zIndex: 1000}}
                 className="details-animation-container">
-                <Suspense fallback={loading}>
+                <Suspense fallback={<div />}>
                   {!!realEstateStore.detailsId && (
                     <Details store={realEstateStore} authstore={userAuthStore} />
                   )}

@@ -1,6 +1,5 @@
 import React, {Component, Fragment, lazy, Suspense} from 'react';
 import {observer} from 'mobx-react';
-import {ProgressBar} from '@blueprintjs/core';
 import './registry/registry.scss';
 import Autocomplete from '../components/AutoComplete';
 import L from 'leaflet';
@@ -17,6 +16,7 @@ class Registry extends Component {
     this.map = React.createRef();
     this.state = {
       mapRef: null,
+      mapCenter: [-4.04569, 39.66366],
       activeEstate: null,
     };
   }
@@ -39,21 +39,20 @@ class Registry extends Component {
             </div>
             {isDesktop &&
               realEstateStore.dataAvailable && (
-                <Suspense fallback={loading} className="suspense">
+                <Suspense fallback={loading}>
                   <div className="results-map-container">
-                    <Map ref={this.map} center={[-4.04569, 39.66366]} zoom={15.3} className="map">
+                    <Map
+                      ref={this.map}
+                      center={this.state.mapCenter}
+                      zoom={15.3}
+                      className="map"
+                      whenReady={() => this.setState({mapRef: 'loaded'})}>
                       <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png" />
                     </Map>
                   </div>
                 </Suspense>
               )}
           </div>
-
-          {realEstateStore.loading && (
-            <div style={{position: 'fixed', bottom: 0, left: 0, width: '100%', zIndex: 2000}}>
-              <ProgressBar intent="primary" />
-            </div>
-          )}
         </div>
       </Fragment>
     );
@@ -63,19 +62,12 @@ class Registry extends Component {
     if (this.props.realEstateStore.state === 'not_loaded' && this.state.mapRef) {
       this.setState({mapRef: null});
     }
-    if (this.map.current && !prevState.mapRef) {
-      this.setState({mapRef: 'loaded'});
-    }
     if (!prevState.mapRef && this.state.mapRef) {
       this.createPopups();
     }
   }
 
   componentDidMount() {
-    if (this.map.current && !this.state.mapRef) {
-      this.setState({mapRef: 'loaded'});
-    }
-
     const query = new URL(document.location).searchParams.get('q');
 
     if (query) {
@@ -114,7 +106,7 @@ class Registry extends Component {
   };
 
   createPopups = () => {
-    this.props.realEstateStore.estates.map(estate => {
+    this.props.realEstateStore.estates.map((estate, index) => {
       const popup = L.popup({
         closeButton: false,
         autoClose: false,
@@ -126,6 +118,10 @@ class Registry extends Component {
 
       popup.setContent(content);
       this.map.current.leafletElement.addLayer(popup);
+
+      if (index === 0) {
+        this.setState({mapCenter: [estate.coordinates.lat, estate.coordinates.lon]});
+      }
 
       return estate;
     });
