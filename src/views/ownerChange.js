@@ -22,7 +22,6 @@ class OwnerChange extends Component {
       store,
       userStore,
       history,
-      transactionStore,
       transactionStore: {transactionDetails},
     } = this.props;
     const {newOwner, displayMenu} = this.state;
@@ -31,8 +30,7 @@ class OwnerChange extends Component {
         transactionDetails.signedBySeller) ||
       (transactionDetails.buyerIdCode === parseInt(userStore.currentUser.code, 10) &&
         transactionDetails.signedByBuyer);
-    const storeLoading =
-      transactionStore.loading || store.loading || userStore.loading || this.state.loading;
+    const storeLoading = store.loading || userStore.loading || this.state.loading;
 
     if (storeLoading) {
       return loading;

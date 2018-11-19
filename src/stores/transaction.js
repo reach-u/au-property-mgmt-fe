@@ -1,10 +1,15 @@
 import api from '../config/API';
-import {decorate, observable, action, computed, when, reaction} from 'mobx';
+import {decorate, observable, action, computed, reaction} from 'mobx';
 import waitAtLeast from '../utils/gracefulLoader';
 
 class TransactionStore {
   constructor() {
-    when(() => this.transactionId, () => this.fetchTransaction());
+    reaction(
+      () => this.transactionId,
+      id => {
+        if (id) this.fetchTransaction();
+      }
+    );
     reaction(() => this.transactionStatus, () => this.fetchTransaction());
   }
 
