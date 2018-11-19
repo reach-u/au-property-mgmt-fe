@@ -324,3 +324,17 @@
         z-index: 10;
     }
 }
+
+@media screen and (max-height: 825px) {
+    .details-card {
+        height: calc(100vh - 130px);
+    }
+    .details-close {
+        position: fixed;
+        top: 35px;
+        right: 35px;
+    }
+    .button-container {
+        margin-bottom: 20px;
+    }
+}
