@@ -136,21 +136,21 @@ class App extends Component {
             </Switch>
           </Suspense>
 
-          <Motion
-            defaultStyle={{x: 2000}}
-            style={{x: spring(realEstateStore.detailsVisible ? 0 : 2000)}}>
-            {style => (
-              <div
-                style={{transform: `translateX(${style.x}px)`, zIndex: 1000}}
-                className="details-animation-container">
-                <Suspense fallback={<div />}>
+          <Suspense fallback={<div />}>
+            <Motion
+              defaultStyle={{x: 2000}}
+              style={{x: spring(realEstateStore.detailsVisible ? 0 : 2000)}}>
+              {style => (
+                <div
+                  style={{transform: `translateX(${style.x}px)`, zIndex: 1000}}
+                  className="details-animation-container">
                   {!!realEstateStore.detailsId && (
                     <Details store={realEstateStore} authstore={userAuthStore} />
                   )}
-                </Suspense>
-              </div>
-            )}
-          </Motion>
+                </div>
+              )}
+            </Motion>
+          </Suspense>
         </div>
       </Fragment>
     );
