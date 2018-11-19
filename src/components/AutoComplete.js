@@ -89,7 +89,7 @@ class Autocomplete extends Component {
   getValues = () => {
     const value = document.querySelector('.input-field').value;
 
-    if (!value) return;
+    if (!value) return '';
 
     return value;
   };

@@ -70,7 +70,7 @@ class Registry extends Component {
   componentDidMount() {
     const query = new URL(document.location).searchParams.get('q');
 
-    if (query) {
+    if (query || query === '') {
       this.props.realEstateStore.setQuery(query);
       this.props.realEstateStore.fetchEstates(query);
     } else {
