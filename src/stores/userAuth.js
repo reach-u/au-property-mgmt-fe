@@ -14,7 +14,13 @@ class UserAuthStore {
 
   initAndLoginUsers() {
     fetch(`${window.location.origin}/${api.getAllPersons()}`)
-      .then(response => response.json())
+      .then(response => {
+        if (response.json) {
+          return response.json();
+        } else {
+          return response;
+        }
+      })
       .then(data => {
         if (!data.error) {
           this.users = data.filter(user => !!user.givenName).sort(sortAlphabetically);
