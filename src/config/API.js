@@ -1,20 +1,16 @@
+const createUrl = (endpoint, parameters = []) =>
+  `${process.env.REACT_APP_BASE_URL}${endpoint}${parameters.join('/')}`;
+
 export default {
-  estates: query => `au-property-mgmt-rest/api/1/address?q=${query}`,
-  myEstates: query => `au-property-mgmt-rest/api/1/find_by_owner/${query}`,
-  details: id => `au-property-mgmt-rest/api/1/address/${id}`,
-  buyProperty: (buyerId, addressId) =>
-    `au-property-mgmt-rest/api/1/priv/re/buy/${buyerId}/${addressId}`,
-  signBuyer: transactionId => `au-property-mgmt-rest/api/1/priv/re/sign_by_buyer/${transactionId}`,
-  signSeller: transactionId =>
-    `au-property-mgmt-rest/api/1/priv/re/sign_by_seller/${transactionId}`,
-  transactionStatus: transactionId =>
-    `au-property-mgmt-rest/api/1/priv/re/details/${transactionId}`,
-  payTax: transactionId => `au-property-mgmt-rest/api/1/priv/re/pay_tax/${transactionId}`,
-  getAllPersons: function() {
-    return 'au-property-mgmt-rest/api/1/priv/proxy/persons';
-  },
-  getTransactions: addressId =>
-    `au-property-mgmt-rest/api/1/priv/re/details_by_address/${addressId}`,
-  getPersonsTransactions: personId =>
-    `au-property-mgmt-rest/api/1/priv/re/details_by_person/${personId}`,
+  estates: query => createUrl('/api/1/address?q=', [query]),
+  myEstates: query => createUrl('/api/1/find_by_owner/', [query]),
+  details: id => createUrl('/api/1/address/', [id]),
+  buyProperty: (buyerId, addressId) => createUrl('/api/1/priv/re/buy/', [buyerId, addressId]),
+  signBuyer: transactionId => createUrl('/api/1/priv/re/sign_by_buyer/', [transactionId]),
+  signSeller: transactionId => createUrl('/api/1/priv/re/sign_by_seller/', [transactionId]),
+  transactionStatus: transactionId => createUrl('/api/1/priv/re/details/', [transactionId]),
+  payTax: transactionId => createUrl('/api/1/priv/re/pay_tax/', [transactionId]),
+  getAllPersons: () => createUrl('/api/1/priv/proxy/persons'),
+  getTransactions: addressId => createUrl('/api/1/priv/re/details_by_address/', [addressId]),
+  getPersonsTransactions: personId => createUrl('/api/1/priv/re/details_by_person/', [personId]),
 };
