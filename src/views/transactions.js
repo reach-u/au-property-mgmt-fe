@@ -27,18 +27,7 @@ class Transactions extends Component {
             ].join(' ')}>
             <tbody>
               {authstore.userTransactions.map((item, index) => (
-                <tr
-                  key={index}
-                  className="user-properties-tr"
-                  onClick={() => {
-                    if (isDesktop) {
-                      return;
-                    }
-                    const url = item.signedByAll
-                      ? `/transaction/${item.transactionId}`
-                      : `/owner-change/${item.address.id}`;
-                    history.push(url);
-                  }}>
+                <tr key={index} className="user-properties-tr">
                   <td title={item.address.detailedData.buildingType}>
                     {item.address.detailedData.buildingType === 'School' ? (
                       <img src={school} alt="School" />
