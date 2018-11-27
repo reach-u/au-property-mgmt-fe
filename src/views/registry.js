@@ -29,17 +29,17 @@ class Registry extends Component {
       <Fragment>
         <div className="registry-container">
           <Autocomplete store={realEstateStore} className="registry-search" />
-          <div className="content-container">
-            <div className="table-container">
-              <Results
-                store={realEstateStore}
-                onHover={this.handleTableRowHover}
-                activeRow={this.state.activeEstate}
-              />
-            </div>
-            {isDesktop && (
-              <div className="results-map-container">
-                {this.state.loaded && (
+          {this.state.loaded && (
+            <div className="content-container">
+              <div className="table-container">
+                <Results
+                  store={realEstateStore}
+                  onHover={this.handleTableRowHover}
+                  activeRow={this.state.activeEstate}
+                />
+              </div>
+              {isDesktop && (
+                <div className="results-map-container">
                   <Map
                     ref={this.map}
                     center={this.state.mapCenter}
@@ -48,10 +48,10 @@ class Registry extends Component {
                     whenReady={() => this.setState({mapRef: 'loaded'})}>
                     <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png" />
                   </Map>
-                )}
-              </div>
-            )}
-          </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </Fragment>
     );

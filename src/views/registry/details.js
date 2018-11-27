@@ -160,6 +160,7 @@ class Details extends Component {
                 cadastry={estateDetails.cadastre}
                 isLargeMap={true}
                 handleClose={this.closeMap}
+                shouldMapRender={this.state.loaded}
               />
             </div>
           </Overlay>
@@ -169,7 +170,7 @@ class Details extends Component {
   }
 
   componentDidMount() {
-    this.setState({loaded: true});
+    setTimeout(() => this.setState({loaded: true}), 1);
   }
 
   closeMap = () => {
