@@ -1,5 +1,4 @@
 import React, {Component, Fragment, lazy, Suspense} from 'react';
-import Registry from './views/registry';
 import {realEstateStore} from './stores/realEstate';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import {withRouter} from 'react-router';
@@ -12,6 +11,7 @@ import {observer} from 'mobx-react';
 import Navigation from './views/navigation';
 import waitAtLeast from './utils/gracefulLoader';
 
+const Registry = lazy(() => waitAtLeast(600, import('./views/registry')));
 const NotFoundPage = lazy(() => waitAtLeast(600, import('./views/404')));
 const OwnerChange = lazy(() => waitAtLeast(600, import('./views/ownerChange')));
 const Search = lazy(() => waitAtLeast(600, import('./views/registry/search')));

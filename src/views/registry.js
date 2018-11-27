@@ -1,9 +1,8 @@
-import React, {Component, Fragment, lazy, Suspense} from 'react';
+import React, {Component, Fragment, lazy} from 'react';
 import {observer} from 'mobx-react';
 import './registry/registry.scss';
 import Autocomplete from '../components/AutoComplete';
 import L from 'leaflet';
-import {loading} from '../App';
 import waitAtLeast from '../utils/gracefulLoader';
 
 const Map = lazy(() => waitAtLeast(600, import('./fullDetails/leaflet-map')));
@@ -18,6 +17,7 @@ class Registry extends Component {
       mapRef: null,
       mapCenter: [-4.04569, 39.66366],
       activeEstate: null,
+      loaded: false,
     };
   }
 
@@ -37,21 +37,20 @@ class Registry extends Component {
                 activeRow={this.state.activeEstate}
               />
             </div>
-            {isDesktop &&
-              realEstateStore.dataAvailable && (
-                <Suspense fallback={loading}>
-                  <div className="results-map-container">
-                    <Map
-                      ref={this.map}
-                      center={this.state.mapCenter}
-                      zoom={15.3}
-                      className="map"
-                      whenReady={() => this.setState({mapRef: 'loaded'})}>
-                      <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png" />
-                    </Map>
-                  </div>
-                </Suspense>
-              )}
+            {isDesktop && (
+              <div className="results-map-container">
+                {this.state.loaded && (
+                  <Map
+                    ref={this.map}
+                    center={this.state.mapCenter}
+                    zoom={15.3}
+                    className="map"
+                    whenReady={() => this.setState({mapRef: 'loaded'})}>
+                    <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png" />
+                  </Map>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </Fragment>
@@ -76,6 +75,8 @@ class Registry extends Component {
     } else {
       this.props.history.push('/search');
     }
+
+    setTimeout(() => this.setState({loaded: true}), 1);
   }
 
   componentWillUnmount() {

@@ -32,23 +32,11 @@ class MapView extends Component {
   }
 
   render() {
-    const position = [this.state.lat, this.state.lon];
-    const {isLargeMap = false, showMarker = true} = this.props;
+    const {isLargeMap = false, shouldMapRender} = this.props;
 
     return (
       <div style={{position: 'relative', zIndex: 1, height: 'inherit'}}>
-        <Map
-          center={position}
-          zoom={this.state.zoom}
-          zoomControl={isLargeMap}
-          attributionControl={isLargeMap}
-          scrollWheelZoom={false}
-          ref={this.map}
-          className="map">
-          <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
-          <Polygon positions={this.state.cadastry} color="blue" />
-          {showMarker && <Marker position={position} />}
-        </Map>
+        {shouldMapRender && this.renderMap()}
         {isLargeMap && (
           <button className="map-button" title="Back to property" onClick={this.handleClick}>
             Recenter
@@ -65,6 +53,25 @@ class MapView extends Component {
       </div>
     );
   }
+
+  renderMap = () => {
+    const position = [this.state.lat, this.state.lon];
+    const {isLargeMap = false, showMarker = true} = this.props;
+    return (
+      <Map
+        center={position}
+        zoom={this.state.zoom}
+        zoomControl={isLargeMap}
+        attributionControl={isLargeMap}
+        scrollWheelZoom={false}
+        ref={this.map}
+        className="map">
+        <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
+        <Polygon positions={this.state.cadastry} color="blue" />
+        {showMarker && <Marker position={position} />}
+      </Map>
+    );
+  };
 
   handleClick = () => {
     const {lat, lon, zoom} = this.state;

@@ -11,6 +11,7 @@ import {formatDate} from '../../utils/date';
 class Details extends Component {
   state = {
     overlayOpen: false,
+    loaded: false,
   };
 
   render() {
@@ -132,6 +133,7 @@ class Details extends Component {
                 coords={coordinates}
                 cadastry={estateDetails.cadastre}
                 showMarker={isDesktop}
+                shouldMapRender={this.state.loaded}
               />
             </div>
 
@@ -164,6 +166,10 @@ class Details extends Component {
         </Card>
       </div>
     );
+  }
+
+  componentDidMount() {
+    this.setState({loaded: true});
   }
 
   closeMap = () => {
