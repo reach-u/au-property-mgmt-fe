@@ -53,7 +53,7 @@ class OwnerChange extends Component {
             <ul className="transaction-overview">
               <li>
                 {transactionDetails.paid ? <img src={check} alt="" /> : <Icon icon="delete" />}{' '}
-                {transactionDetails.paid ? 'State tax paid' : 'State tax not paid'}
+                {transactionDetails.paid ? 'State tax $100 paid' : 'State tax $100 not paid'}
               </li>
               <li>
                 {transactionDetails.signedByBuyer ? (
