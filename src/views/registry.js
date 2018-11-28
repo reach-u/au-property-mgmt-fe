@@ -1,5 +1,6 @@
 import React, {Component, Fragment, lazy} from 'react';
 import {observer} from 'mobx-react';
+import {reaction} from 'mobx';
 import './registry/registry.scss';
 import Autocomplete from '../components/AutoComplete';
 import L from 'leaflet';
@@ -19,6 +20,14 @@ class Registry extends Component {
       activeEstate: null,
       loaded: false,
     };
+    reaction(
+      () => this.props.realEstateStore.dataAvailable,
+      data => {
+        if (data && this.state.mapRef) {
+          this.createPopups();
+        }
+      }
+    );
   }
 
   render() {
@@ -58,9 +67,6 @@ class Registry extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.realEstateStore.state === 'not_loaded' && this.state.mapRef) {
-      this.setState({mapRef: null});
-    }
     if (!prevState.mapRef && this.state.mapRef) {
       this.createPopups();
     }
@@ -109,6 +115,11 @@ class Registry extends Component {
   };
 
   createPopups = () => {
+    this.map.current.leafletElement.eachLayer(layer => {
+      if (!layer.getTileUrl) {
+        this.map.current.leafletElement.removeLayer(layer);
+      }
+    });
     this.props.realEstateStore.estates.map((estate, index) => {
       const popup = L.popup({
         closeButton: false,
