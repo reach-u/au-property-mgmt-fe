@@ -1,36 +1,44 @@
 import React from 'react';
 import '../index.scss';
+import check from '../assets/check.png';
 
 const Help = () => {
   return (
     <div className="help-container">
       <h3>Land registry application</h3>
 
+      <p>Land Registry combines various data originating from different registries:</p>
+      <ul>
+        <li>
+          <img src={check} />
+          <p>
+            <strong>Land data</strong> – land parcels and their borders (together with visualization
+            on the map), limitations on land usage (areas forbidden for buildings, limits on
+            building heights, etc.)
+          </p>
+        </li>
+        <li>
+          <img src={check} />
+          <p>
+            <strong>Building data</strong> – building details such as height, number of floors,
+            water supply types, does the building have certificate of occupancy, EyeVi Street View
+            link for the building, etc.
+          </p>
+        </li>
+        <li>
+          <img src={check} />
+          <p>
+            <strong>Property data</strong> – details of the specific property (for example,
+            apartment, part of apartment building, built on certain land parcel)
+          </p>
+        </li>
+      </ul>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pharetra nibh eget tortor
-        rutrum fringilla. Quisque pellentesque scelerisque nisl, et malesuada nulla. Nulla semper
-        nibh orci, sit amet euismod nulla scelerisque ut. Sed lectus felis, eleifend quis lobortis
-        non, condimentum ut justo. Vivamus semper turpis quis quam pretium laoreet sit amet sed
-        erat. Aliquam in lacus vitae leo interdum tempus ac eu nunc. Etiam eget porta felis, quis
-        posuere nisl. Mauris a ornare diam. Praesent mattis magna ut diam tincidunt tempus. Sed
-        porta pulvinar fermentum. Morbi gravida vel felis ut tincidunt. Quisque sed luctus mi.
-        Suspendisse quis tortor pharetra, condimentum lacus id, mollis justo. Interdum et malesuada
-        fames ac ante ipsum primis in faucibus. Nullam dapibus ultrices cursus. Phasellus maximus
-        justo velit, nec fringilla orci dictum quis. Integer eu quam ac libero sagittis consequat eu
-        eget quam. Maecenas interdum risus a mattis lobortis. Aliquam at nisi mi. Quisque tincidunt
-        vestibulum velit eget molestie. Nunc suscipit libero euismod dolor sodales, quis iaculis
-        eros mollis. Quisque eleifend mi ut erat elementum, a mollis arcu elementum. Sed ut aliquam
-        dui. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus non eros porta,
-        viverra leo in, sodales magna. Cras at justo aliquet ex convallis scelerisque vitae ut ex.
-        Pellentesque efficitur tellus orci, nec volutpat erat accumsan volutpat.
+        Accessibility to different data within the system depends on specfic use cases and can also
+        be adjusted according to user roles (any non-authenticated user, authenticated user,
+        officials). In addition to providing property information, the solution also supports
+        property ownership transaction process (in a simplified form).
       </p>
-      <iframe
-        className="youtube"
-        title="Toto - Africa"
-        src="https://www.youtube.com/embed/FTQbiNvZqaY"
-        frameBorder="0"
-        allowFullScreen
-      />
     </div>
   );
 };
