@@ -10,7 +10,7 @@ const Help = () => {
       <p>Land Registry combines various data originating from different registries:</p>
       <ul>
         <li>
-          <img src={check} />
+          <img src={check} alt="check mark" />
           <p>
             <strong>Land data</strong> – land parcels and their borders (together with visualization
             on the map), limitations on land usage (areas forbidden for buildings, limits on
@@ -18,7 +18,7 @@ const Help = () => {
           </p>
         </li>
         <li>
-          <img src={check} />
+          <img src={check} alt="check mark" />
           <p>
             <strong>Building data</strong> – building details such as height, number of floors,
             water supply types, does the building have certificate of occupancy, EyeVi Street View
@@ -26,7 +26,7 @@ const Help = () => {
           </p>
         </li>
         <li>
-          <img src={check} />
+          <img src={check} alt="check mark" />
           <p>
             <strong>Property data</strong> – details of the specific property (for example,
             apartment, part of apartment building, built on certain land parcel)
