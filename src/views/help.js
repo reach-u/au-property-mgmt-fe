@@ -1,6 +1,7 @@
 import React from 'react';
 import '../index.scss';
 import check from '../assets/check.png';
+import pdf from '../assets/Land_Registry_demo_script.pdf';
 
 const Help = () => {
   return (
@@ -39,6 +40,12 @@ const Help = () => {
         officials). In addition to providing property information, the solution also supports
         property ownership transaction process (in a simplified form).
       </p>
+
+      <div className="demo-link">
+        <a href={pdf} target="_blank" rel="noopener noreferrer">
+          Read demo script
+        </a>
+      </div>
     </div>
   );
 };
