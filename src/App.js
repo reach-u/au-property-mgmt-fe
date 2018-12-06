@@ -151,6 +151,13 @@ class App extends Component {
               )}
             </Motion>
           </Suspense>
+
+          {this.props.location.pathname !== '/search' && (
+            <div className="footer">
+              Estonian Association of Information Technology and Telecommunications, contact:{' '}
+              <a href="mailto:info@itl.ee">info@itl.ee</a>
+            </div>
+          )}
         </div>
       </Fragment>
     );
