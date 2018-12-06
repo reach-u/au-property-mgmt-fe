@@ -2,6 +2,7 @@ import React from 'react';
 import '../index.scss';
 import check from '../assets/check.png';
 import pdf from '../assets/Land_Registry_demo_script.pdf';
+import itlLogo from '../assets/itl_logo.svg';
 
 const Help = () => {
   return (
@@ -45,6 +46,10 @@ const Help = () => {
         <a href={pdf} target="_blank" rel="noopener noreferrer">
           Read demo script
         </a>
+      </div>
+
+      <div className="itl-logo-container">
+        <img src={itlLogo} alt="ITL logo" height={70} />
       </div>
     </div>
   );
