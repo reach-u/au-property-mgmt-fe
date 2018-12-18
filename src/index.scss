@@ -68,6 +68,11 @@ h3 {
   background: white;
   text-align: center;
   font-size: 90%;
+  .footer-block {
+    display: inline-block;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
 }
 
 @media screen and (min-width: 1370px) {
