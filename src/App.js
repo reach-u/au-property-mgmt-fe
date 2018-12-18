@@ -10,6 +10,7 @@ import {Motion, spring} from 'react-motion';
 import {observer} from 'mobx-react';
 import Navigation from './views/navigation';
 import waitAtLeast from './utils/gracefulLoader';
+import itlLogo from "./assets/itl_logo.svg";
 
 const Registry = lazy(() => waitAtLeast(600, import('./views/registry')));
 const NotFoundPage = lazy(() => waitAtLeast(600, import('./views/404')));
@@ -154,6 +155,7 @@ class App extends Component {
 
           {/*{this.props.location.pathname !== '/search' && (*/}
             <div className="footer">
+              <div className="footer-block footer-logo"><img src={itlLogo} alt="ITL logo" height={15} /></div>
               <div className="footer-block">Estonian Association of Information Technology and Telecommunications</div>
               <div className="footer-block">Lõõtsa 6, 11415 Tallinn</div>
                <div className="footer-block">6177&nbsp;145</div>
