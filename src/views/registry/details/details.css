@@ -331,8 +331,8 @@
     }
     .details-close {
         position: fixed;
-        top: 30px;
-        right: 35px;
+        top: 45px;
+        right: 50px;
         z-index: 100;
         background: white !important;
     }
