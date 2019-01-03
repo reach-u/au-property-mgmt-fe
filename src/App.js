@@ -21,6 +21,8 @@ const Transactions = lazy(() => waitAtLeast(600, import('./views/transactions'))
 const UserProperties = lazy(() => waitAtLeast(600, import('./views/userProperties')));
 const Help = lazy(() => waitAtLeast(600, import('./views/help')));
 const Transaction = lazy(() => waitAtLeast(600, import('./views/singleTransaction')));
+const TaxAreaStats = lazy(() => waitAtLeast(600, import('./views/admin/TaxAreaStats')));
+const MonthStats = lazy(() => waitAtLeast(600, import('./views/admin/MonthStats')));
 
 export const loading = (
   <div
@@ -48,10 +50,11 @@ class App extends Component {
 
   render() {
     const isLoggedIn = !!userAuthStore.userAuth;
+    const isAdmin = userAuthStore.currentUser.code === "70101010000" || userAuthStore.currentUser.code === "80102010001";
 
     return (
       <Fragment>
-        <Navigation store={realEstateStore} authstore={userAuthStore} />
+        <Navigation store={realEstateStore} authstore={userAuthStore} isAdmin={isAdmin}/>
         <div className="body-container">
           <Suspense fallback={loading}>
             <Switch>
@@ -116,6 +119,30 @@ class App extends Component {
               ) : (
                 <Redirect to="/search" />
               )}
+              {isAdmin ? (
+                    <Route
+                        path="/tax-area-stats"
+                        render={props => (
+                            <Suspense fallback={loading}>
+                                <TaxAreaStats authstore={userAuthStore} store={realEstateStore} {...props} />
+                            </Suspense>
+                        )}
+                    />
+                ) : (
+                    <Redirect to="/search" />
+              )}
+              {isAdmin ? (
+                    <Route
+                        path="/month-stats"
+                        render={props => (
+                            <Suspense fallback={loading}>
+                                <MonthStats authstore={userAuthStore} store={realEstateStore} {...props} />
+                            </Suspense>
+                        )}
+                    />
+                ) : (
+                    <Redirect to="/search" />
+              )}
               {isLoggedIn ? (
                 <Route
                   path="/transaction/:id"
@@ -161,7 +188,6 @@ class App extends Component {
                <div className="footer-block">6177&nbsp;145</div>
                <div className="footer-block"><a href="mailto:info@itl.ee">info@itl.ee</a></div>
             </div>
-          )}
         </div>
       </Fragment>
     );

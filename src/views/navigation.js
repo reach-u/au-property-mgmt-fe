@@ -15,12 +15,14 @@ class Navigation extends Component {
   };
 
   render() {
-    const {history, authstore, store, location} = this.props;
+    const {history, authstore, store, location, isAdmin} = this.props;
     const isDesktop = window.innerWidth > 1370;
     const isHomePage = location.pathname === '/search';
     const isSearch = location.pathname === '/results';
     const isProperties = location.pathname === '/properties';
     const isTransactions = location.pathname === '/transactions';
+    const isAreaStats = location.pathname === '/tax-area-stats';
+    const isMonthStats  = location.pathname === '/month-stats';
     const isHelp = location.pathname === '/help';
     const activeTransactions = authstore.pendingTransactions.length > 0;
 
@@ -82,6 +84,20 @@ class Navigation extends Component {
                       )}
                     </div>
                   )}
+                  {isAdmin && (
+                      <div style={{display: 'flex', justifyContent: 'center', marginTop: 32}}>
+                        <Link to="/tax-area-stats" className="menu-link" style={{marginTop: 0}}>
+                          Stats per tax area
+                        </Link>
+                      </div>
+                  )}
+                  {isAdmin && (
+                      <div style={{display: 'flex', justifyContent: 'center', marginTop: 32}}>
+                        <Link to="/month-stats" className="menu-link" style={{marginTop: 0}}>
+                          Stats per month
+                        </Link>
+                      </div>
+                  )}
                   <Link to="/help" className="menu-link">
                     Help
                   </Link>
@@ -129,7 +145,26 @@ class Navigation extends Component {
                     </div>
                   )}
                 </Link>
-
+                {isAdmin && <Link
+                    to="/tax-area-stats"
+                    className="properties-button"
+                    title='Stats per tax area'
+                    style={{
+                      borderColor: isAreaStats ? '#008C8C' : 'white',
+                    }}>
+                  Stats per tax area
+                </Link>
+                }
+                {isAdmin && <Link
+                    to="/month-stats"
+                    className="properties-button"
+                    title='Stats per month'
+                    style={{
+                      borderColor: isMonthStats ? '#008C8C' : 'white',
+                    }}>
+                  Stats per month
+                </Link>
+                }
                 <Link
                   to="/help"
                   className="properties-button"
