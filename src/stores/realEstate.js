@@ -30,6 +30,7 @@ class RealEstateStore {
           this.state = 'loaded';
         } else {
           this.userEstates = data.sort((a, b) => a.id - b.id);
+          this.state = 'loaded';
         }
 
         this.loading = false;
@@ -64,6 +65,10 @@ class RealEstateStore {
 
   get dataAvailable() {
     return this.state === 'loaded' && this.estateCount > 0;
+  }
+
+  get userDataAvailable() {
+    return this.state === 'loaded' && this.userEstates.length > 0;
   }
 
   get noResults() {
@@ -106,6 +111,7 @@ class RealEstateStore {
 decorate(RealEstateStore, {
   closeDetailsModal: action,
   dataAvailable: computed,
+  userDataAvailable: computed,
   detailedAddress: computed,
   details: observable,
   detailsAvailable: computed,

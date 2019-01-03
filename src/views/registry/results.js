@@ -6,16 +6,17 @@ import school from '../../assets/baseline-school-24px.svg';
 import './results.css';
 
 class Results extends Component {
+
   render() {
     const {store, onHover, activeRow} = this.props;
     const isDesktop = window.innerWidth > 1370;
 
-    if (store.dataAvailable) {
+    if (this.props.dataAvailable) {
       return (
         <table
           className={[Classes.HTML_TABLE_STRIPED, Classes.HTML_TABLE, 'results-table'].join(' ')}>
           <tbody>
-            {store.estates.map((item, index) => (
+            {this.props.estates.map((item, index) => (
               <tr
                 key={index}
                 onClick={() => {

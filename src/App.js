@@ -97,7 +97,7 @@ class App extends Component {
                   path="/properties"
                   render={() => (
                     <Suspense fallback={loading}>
-                      <UserProperties store={realEstateStore} authstore={userAuthStore} />
+                      <UserProperties realEstateStore={realEstateStore} authstore={userAuthStore}/>
                     </Suspense>
                   )}
                 />
