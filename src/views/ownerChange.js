@@ -257,7 +257,7 @@ class OwnerChange extends Component {
       users.find(user => `${user.givenName} ${user.familyName}` === this.state.newOwner).code,
       params.id
     );
-    setTimeout(() => this.props.userStore.fetchUserTransactions(), 2000);
+    setTimeout(() => this.props.userStore.fetchUserTransactionsAndPayments(), 2000);
   };
 }
 

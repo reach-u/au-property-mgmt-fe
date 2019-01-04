@@ -4,12 +4,13 @@ import {sortAlphabetically} from '../utils/string';
 
 class UserAuthStore {
   constructor() {
-    reaction(() => this.userAuth, () => this.fetchUserTransactions());
+    reaction(() => this.userAuth, () => this.fetchUserTransactionsAndPayments());
   }
 
   userAuth = null;
   users = [];
   userTransactions = [];
+  userPayments = [];
   loading = false;
 
   initAndLoginUsers() {
@@ -36,11 +37,11 @@ class UserAuthStore {
     return `${user.givenName} ${user.familyName}`;
   };
 
-  fetchUserTransactions() {
+  fetchUserTransactionsAndPayments() {
     fetch(`${window.location.origin}/${api.getPersonsTransactions(this.userId)}`)
       .then(response => response.json())
-      .then(data => {
-        this.userTransactions = data.sort((a, b) => {
+      .then(transactions => {
+        this.userTransactions = transactions.sort((a, b) => {
           if (a.signedByAll > b.signedByAll) {
             return 1;
           }
@@ -49,6 +50,13 @@ class UserAuthStore {
           }
           return 0;
         });
+      })
+      .then(() => {
+        fetch(`${window.location.origin}/${api.getPersonsPayments(this.userId)}`)
+          .then(response => response.json())
+          .then(payments => {
+            this.userPayments = payments;
+          });
       });
   }
 
@@ -81,11 +89,15 @@ class UserAuthStore {
   get pendingTransactions() {
     return this.userTransactions.filter(item => !item.signedByAll);
   }
+
+  get pendingPayments() {
+    return this.userPayments.filter(item => !item.paid);
+  }
 }
 
 decorate(UserAuthStore, {
   changeUser: action,
-  fetchUserTransactions: action,
+  fetchUserTransactionsAndPayments: action,
   getUsernameById: action,
   loading: observable,
   userAuth: observable,
@@ -93,9 +105,11 @@ decorate(UserAuthStore, {
   initAndLoginUsers: action,
   currentUser: computed,
   pendingTransactions: computed,
+  pendingPayments: computed,
   userName: computed,
   userId: computed,
   userTransactions: observable,
+  userPayments: observable,
 });
 
 export const userAuthStore = new UserAuthStore();

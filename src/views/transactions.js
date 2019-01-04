@@ -109,7 +109,7 @@ class Transactions extends Component {
   }
 
   componentDidMount() {
-    this.props.authstore.fetchUserTransactions();
+    this.props.authstore.fetchUserTransactionsAndPayments();
   }
 }
 

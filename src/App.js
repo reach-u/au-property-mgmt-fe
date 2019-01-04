@@ -18,6 +18,7 @@ const OwnerChange = lazy(() => waitAtLeast(600, import('./views/ownerChange')));
 const Search = lazy(() => waitAtLeast(600, import('./views/registry/search')));
 const Details = lazy(() => waitAtLeast(600, import('./views/registry/details')));
 const Transactions = lazy(() => waitAtLeast(600, import('./views/transactions')));
+const Payments = lazy(() => waitAtLeast(600, import('./views/Payments')));
 const UserProperties = lazy(() => waitAtLeast(600, import('./views/userProperties')));
 const Help = lazy(() => waitAtLeast(600, import('./views/help')));
 const Transaction = lazy(() => waitAtLeast(600, import('./views/singleTransaction')));
@@ -35,10 +36,10 @@ export const loading = (
       background: 'transparent',
     }}>
     <div className="lds-ellipsis">
-      <div />
-      <div />
-      <div />
-      <div />
+      <div/>
+      <div/>
+      <div/>
+      <div/>
     </div>
   </div>
 );
@@ -58,14 +59,14 @@ class App extends Component {
         <div className="body-container">
           <Suspense fallback={loading}>
             <Switch>
-              <Redirect exact from="/" to="/search" />
+              <Redirect exact from="/" to="/search"/>
               <Route
                 path="/search"
                 render={props => (
-                  <Search {...props} store={realEstateStore} authstore={userAuthStore} />
+                  <Search {...props} store={realEstateStore} authstore={userAuthStore}/>
                 )}
               />
-              <Route path="/help" render={() => <Help />} />
+              <Route path="/help" render={() => <Help/>}/>
               <Route
                 path="/results"
                 render={props => (
@@ -93,7 +94,7 @@ class App extends Component {
                   )}
                 />
               ) : (
-                <Redirect to="/search" />
+                <Redirect to="/search"/>
               )}
               {isLoggedIn ? (
                 <Route
@@ -105,7 +106,7 @@ class App extends Component {
                   )}
                 />
               ) : (
-                <Redirect to="/search" />
+                <Redirect to="/search"/>
               )}
               {isLoggedIn ? (
                 <Route
@@ -117,31 +118,43 @@ class App extends Component {
                   )}
                 />
               ) : (
-                <Redirect to="/search" />
+                <Redirect to="/search"/>
+              )}
+              {isLoggedIn ? (
+                <Route
+                  path="/payments"
+                  render={props => (
+                    <Suspense fallback={loading}>
+                      <Payments authstore={userAuthStore} store={realEstateStore} {...props} />
+                    </Suspense>
+                  )}
+                />
+              ) : (
+                <Redirect to="/search"/>
               )}
               {isAdmin ? (
-                    <Route
-                        path="/tax-area-stats"
-                        render={props => (
-                            <Suspense fallback={loading}>
-                                <TaxAreaStats authstore={userAuthStore} store={realEstateStore} {...props} />
-                            </Suspense>
-                        )}
-                    />
-                ) : (
-                    <Redirect to="/search" />
+                <Route
+                  path="/tax-area-stats"
+                  render={props => (
+                    <Suspense fallback={loading}>
+                      <TaxAreaStats authstore={userAuthStore} store={realEstateStore} {...props} />
+                    </Suspense>
+                  )}
+                />
+              ) : (
+                <Redirect to="/search"/>
               )}
               {isAdmin ? (
-                    <Route
-                        path="/month-stats"
-                        render={props => (
-                            <Suspense fallback={loading}>
-                                <MonthStats authstore={userAuthStore} store={realEstateStore} {...props} />
-                            </Suspense>
-                        )}
-                    />
-                ) : (
-                    <Redirect to="/search" />
+                <Route
+                  path="/month-stats"
+                  render={props => (
+                    <Suspense fallback={loading}>
+                      <MonthStats authstore={userAuthStore} store={realEstateStore} {...props} />
+                    </Suspense>
+                  )}
+                />
+              ) : (
+                <Redirect to="/search"/>
               )}
               {isLoggedIn ? (
                 <Route
@@ -158,13 +171,13 @@ class App extends Component {
                   )}
                 />
               ) : (
-                <Redirect to="/search" />
+                <Redirect to="/search"/>
               )}
-              <Route path="/:id" render={() => <NotFoundPage />} />
+              <Route path="/:id" render={() => <NotFoundPage/>}/>
             </Switch>
           </Suspense>
 
-          <Suspense fallback={<div />}>
+          <Suspense fallback={<div/>}>
             <Motion
               defaultStyle={{x: 2000}}
               style={{x: spring(realEstateStore.detailsVisible ? 0 : 2000)}}>
@@ -173,7 +186,7 @@ class App extends Component {
                   style={{transform: `translateX(${style.x}px)`, zIndex: 1000}}
                   className="details-animation-container">
                   {!!realEstateStore.detailsId && (
-                    <Details store={realEstateStore} authstore={userAuthStore} />
+                    <Details store={realEstateStore} authstore={userAuthStore}/>
                   )}
                 </div>
               )}
@@ -181,13 +194,13 @@ class App extends Component {
           </Suspense>
 
           {/*{this.props.location.pathname !== '/search' && (*/}
-            <div className="footer">
-              <div className="footer-block footer-logo"><img src={itlLogo} alt="ITL logo" height={15} /></div>
-              <div className="footer-block">Estonian Association of Information Technology and Telecommunications</div>
-              <div className="footer-block">Lõõtsa 6, 11415 Tallinn</div>
-               <div className="footer-block">6177&nbsp;145</div>
-               <div className="footer-block"><a href="mailto:info@itl.ee">info@itl.ee</a></div>
-            </div>
+          <div className="footer">
+            <div className="footer-block footer-logo"><img src={itlLogo} alt="ITL logo" height={15}/></div>
+            <div className="footer-block">Estonian Association of Information Technology and Telecommunications</div>
+            <div className="footer-block">Lõõtsa 6, 11415 Tallinn</div>
+            <div className="footer-block">6177&nbsp;145</div>
+            <div className="footer-block"><a href="mailto:info@itl.ee">info@itl.ee</a></div>
+          </div>
         </div>
       </Fragment>
     );
