@@ -55,7 +55,7 @@ class UserAuthStore {
         fetch(`${window.location.origin}/${api.getPersonsPayments(this.userId)}`)
           .then(response => response.json())
           .then(payments => {
-            this.userPayments = payments;
+            this.userPayments = payments.reverse();
           });
       });
   }
@@ -91,7 +91,7 @@ class UserAuthStore {
   }
 
   get pendingPayments() {
-    return this.userPayments.filter(item => !item.paid);
+    return [].concat.apply([], this.userPayments.map(item => item.payments)).filter(item => !item.paid);
   }
 }
 

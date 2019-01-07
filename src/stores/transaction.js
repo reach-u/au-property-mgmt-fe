@@ -17,7 +17,6 @@ class TransactionStore {
   transactionId = null;
   currentTransaction = null;
   transactionStatus = 'unpaid';
-  payments = [];
   loading = false;
 
   fetchPropertyTransactions(addressId) {

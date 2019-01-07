@@ -18,7 +18,7 @@ const OwnerChange = lazy(() => waitAtLeast(600, import('./views/ownerChange')));
 const Search = lazy(() => waitAtLeast(600, import('./views/registry/search')));
 const Details = lazy(() => waitAtLeast(600, import('./views/registry/details')));
 const Transactions = lazy(() => waitAtLeast(600, import('./views/transactions')));
-const Payments = lazy(() => waitAtLeast(600, import('./views/Payments')));
+const Payments = lazy(() => waitAtLeast(600, import('./views/PaymentsList')));
 const UserProperties = lazy(() => waitAtLeast(600, import('./views/userProperties')));
 const Help = lazy(() => waitAtLeast(600, import('./views/help')));
 const Transaction = lazy(() => waitAtLeast(600, import('./views/singleTransaction')));
