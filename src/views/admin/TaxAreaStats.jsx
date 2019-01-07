@@ -36,7 +36,7 @@ class TaxAreaStats extends Component {
 
     render() {
         let total = this.calculateTotal();
-        const showBarChart = window.innerWidth >780;
+        const showBarChart = window.innerWidth > 780;
 
         return (
             <Fragment>
@@ -177,9 +177,12 @@ class TaxAreaStats extends Component {
 
     renderPieChart = () => {
         const dataValues = this.state.taxInfoList.map(taxInfo => ({x: taxInfo.name, y: taxInfo.paidAmount}));
-        const colorScale = d3.scale.category20();
 
-        let data = {
+        const colorScale = d3.scale.ordinal()
+            .domain(['Zone1', 'Zone2', 'Zone3'])
+            .range(["#008B8A", "#02FDCC", "#FF0A22"]);
+
+        const data = {
             values: dataValues
         };
 
@@ -192,26 +195,27 @@ class TaxAreaStats extends Component {
                 <h2>Distribution of planned amount by zone</h2>
                 <PieChart
                     data={data}
-                    color={colorScale}
+                    colorScale={colorScale}
                     hideLabels={true}
                     tooltipHtml={tooltip}
                     width={400}
                     height={400}
+                    sort={null}
                     margin={{top: 10, bottom: 10, left: 100, right: 100}}
                 />
-                {this.renderPieChartLegend()}
+                {this.renderPieChartLegend(colorScale)}
             </div>
         );
     };
 
-    renderPieChartLegend = () => {
-        const colorScale = d3.scale.category20();
+    renderPieChartLegend = (color) => {
+        // const colorScale = d3.scale.category20();
         return (
             <div className="legends">
                 {this.state.taxInfoList.map((taxInfo, i) =>
                     <div className="legend" key={i}>
                         <p>
-                            <span className="key-dot" style={{background: colorScale(i)}}></span>
+                            <span className="key-dot" style={{background: color(taxInfo.name)}}></span>
                             {taxInfo.name}
                         </p>
                     </div>)}
