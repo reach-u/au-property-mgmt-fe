@@ -112,6 +112,12 @@ class Details extends Component {
               )}{' '}
               {estateDetails.landLimitations1}
             </p>
+            <p>
+              Tax zone {estateDetails.taxZone.name}, ${estateDetails.taxZone.squareMeterPrice} / m<sup>2</sup> / mth
+            </p>
+            <p>
+              Monthly tax amount ${estateDetails.landTaxValue}
+            </p>
             <div className="button-container">
               {userId === estateDetails.currentOwner && (
                 <button className="owner-change-button" onClick={this.handleOwnershipClick}>
