@@ -134,12 +134,9 @@ class TaxAreaStats extends Component {
         let paidValues = newArray.map(taxInfo => ({x: taxInfo.name, y: taxInfo.paidAmount}));
         let unPaidValues = newArray.map(taxInfo => ({x: taxInfo.name, y: taxInfo.missingAmount}));
 
-        console.log(paidValues);
-        console.log(unPaidValues);
-
         let color = d3.scale.ordinal()
             .domain(["Paid", "Missing"])
-            .range(["#00CA75", "#FF495B"]);
+            .range(["#008B8A", "#FF0A22"]);
 
         let data = [{
             label: 'Paid',
@@ -150,47 +147,75 @@ class TaxAreaStats extends Component {
                 values: unPaidValues
             }];
 
+        let tooltip = function (name, previousValue, currentValue) {
+            return currentValue;
+        };
+
         return (
-            <div className="chart">
+            <div className="bar-chart chart">
+                <h2>Paid amount and missing amount by zone</h2>
                 <BarChart
                     data={data}
                     colorScale={color}
-                    width={700}
+                    width={600}
                     height={400}
+                    tooltipHtml={tooltip}
                     margin={{top: 10, bottom: 50, left: 90, right: 10}}/>
-                <div className="legend">
-                    <p><span className="key-dot paid"></span>Paid</p>
-                </div>
-                <div className="legend">
-                    <p><span className="key-dot unpaid"></span>Unpaid</p>
+                <div className="legends">
+                    <div className="legend">
+                        <p><span className="key-dot paid"></span>Amount paid</p>
+                    </div>
+                    <div className="legend">
+                        <p><span className="key-dot unpaid"></span>Amount missing</p>
+                    </div>
                 </div>
             </div>
         );
     };
 
-    renderPieChart() {
+    renderPieChart = () => {
+        const dataValues = this.state.taxInfoList.map(taxInfo => ({x: taxInfo.name, y: taxInfo.paidAmount}));
+        const colorScale = d3.scale.category20();
+
         let data = {
-            // label: 'somethingA',
-            values: [{x: 'SomethingA', y: 10}, {x: 'SomethingB', y: 4}, {x: 'SomethingC', y: 3}]
+            values: dataValues
         };
 
-        let tooltip = function (name) {
+        let tooltip = function (name, value) {
             return name;
         };
 
         return (
             <div className="chart">
+                <h2>Distribution of planned amount by zone</h2>
                 <PieChart
                     data={data}
+                    color={colorScale}
                     hideLabels={true}
                     tooltipHtml={tooltip}
                     width={400}
                     height={400}
                     margin={{top: 10, bottom: 10, left: 100, right: 100}}
                 />
+                {this.renderPieChartLegend()}
             </div>
         );
     };
+
+    renderPieChartLegend = () => {
+        const colorScale = d3.scale.category20();
+        return (
+            <div >
+                {this.state.taxInfoList.map((taxInfo, i) =>
+                    <div className="legend" key={i}>
+                        <p>
+                            <span className="key-dot" style={{background: colorScale(i)}}></span>
+                            {taxInfo.name}
+                        </p>
+                    </div>)}
+            </div>
+        );
+    }
 }
 
 export default observer(TaxAreaStats);

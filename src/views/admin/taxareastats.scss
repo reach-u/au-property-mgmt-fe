@@ -1,51 +1,58 @@
 .tax-area-table-container {
-  width: 50%;
-  height: inherit;
-  overflow: auto;
-  padding-left: 120px;
+  margin: 120px auto 40px;
+  width: 75%;
+
+  table {
+    width: 100%;
+
+    tr {
+      height: 42px;
+
+      td {
+        vertical-align: middle !important;
+      }
+    }
+  }
 }
 
 .tax-area-container {
-
-  margin-top: 160px;
-  display: flex;
   height: 100%;
   position: relative;
-  overflow: hidden;
 }
 
 .charts-container {
   width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-.charts {
-  //display: flex;
-  //position: relative;
-  width: 30%;
+  padding-bottom: 60px;
 }
 
 .chart {
   display: inline-block;
+  text-align: center;
+}
+
+.bar-chart{
+  margin: 0 220px 0;
 }
 
 .total-row {
   font-weight: bold;
 }
 
+.legends {
+  margin-left: 100px;
+}
+
 .legend {
   float: left;
   margin-right: 1em;
-
 }
 
 .paid {
-  background: #00CA75;
+  background: #008B8A;
 }
 
 .unpaid {
-  background: #FF495B;
+  background: #FF0A22;
 }
 
 .key-dot {
@@ -55,23 +62,6 @@
   width: 10px;
 }
 
-//
-//
-//@media screen and (min-width: 1370px) {
-//  .tax-area-container {
-//    padding: 0;
-//    margin: 120px 115px 0;
-//    justify-content: flex-start;
-//    height: 100%;
-//    width: 100%;
-//    box-sizing: initial;
-//    display: flex;
-//    height: 100%;
-//    position: relative;
-//    overflow: hidden;
-//  }
-//
-//  //table{
-//  //  width: calc(50% - 230px);
-//  //}
-//}
+@media screen and (min-width: 1370px) {
+
+}
