@@ -194,10 +194,8 @@ class TaxAreaStats extends Component {
         const zone3Percentage = (zone3.paidAmount / zone3.plannedAmount * 100).toFixed(1);
 
         return (
-
             <div className="circle-container chart">
                 <div className="zone1">
-
                 <h2>{zone1.name}</h2>
                 <CircularProgressbar
                     initialAnimation={true}
@@ -205,8 +203,8 @@ class TaxAreaStats extends Component {
                     text={`${zone1Percentage}%`}
                     strokeWidth={3}
                     styles={{
-                        path: {stroke: "#6D7BB2"},
-                        text: {fill: '#6D7BB2', fontSize: '2em'},
+                        path: {stroke: "#90AFAE"},
+                        text: {fill: '#90AFAE', fontSize: '2em'},
                     }}
                 />
                 </div>
@@ -219,8 +217,8 @@ class TaxAreaStats extends Component {
                     text={`${zone2Percentage}%`}
                     strokeWidth={3}
                     styles={{
-                        path: {stroke: "#6D7BB2"},
-                        text: {fill: '#6D7BB2', fontSize: '2em'},
+                        path: {stroke: "#90AFAE"},
+                        text: {fill: '#90AFAE', fontSize: '2em'},
                     }}
                 />
                 </div>
@@ -234,13 +232,12 @@ class TaxAreaStats extends Component {
                     text={`${zone3Percentage}%`}
                     strokeWidth={3}
                     styles={{
-                        path: {stroke: "#6D7BB2"},
-                        text: {fill: '#6D7BB2', fontSize: '2em'},
+                        path: {stroke: "#90AFAE"},
+                        text: {fill: '#90AFAE', fontSize: '2em'},
                     }}
                 />
              </div>
             </div>
-            // </div>
         );
     };
 
