@@ -31,7 +31,7 @@
 }
 
 .bar-chart{
-  margin: 0 220px 0;
+  margin: 0 calc(12%) 0;
 }
 
 .total-row {
@@ -45,6 +45,7 @@
 .legend {
   float: left;
   margin-right: 1em;
+  padding-bottom: 20px;
 }
 
 .paid {
@@ -62,6 +63,11 @@
   width: 10px;
 }
 
-@media screen and (min-width: 1370px) {
-
+@media screen and (max-width: 1380px) {
+  .bar-chart{
+    margin: 0 calc(50% - 300px) 0;
+  }
+  .pie-chart{
+    margin: 0 calc(50% - 200px) 0;
+  }
 }

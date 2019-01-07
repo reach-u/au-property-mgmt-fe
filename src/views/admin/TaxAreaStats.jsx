@@ -36,6 +36,8 @@ class TaxAreaStats extends Component {
 
     render() {
         let total = this.calculateTotal();
+        const showBarChart = window.innerWidth >780;
+
         return (
             <Fragment>
                 <div className="tax-area-container">
@@ -102,7 +104,7 @@ class TaxAreaStats extends Component {
                         </table>
                     </div>
                     <div className="charts-container">
-                        {this.renderBarChart()}
+                        {showBarChart && this.renderBarChart()}
                         {this.renderPieChart()}
                     </div>
                 </div>
@@ -186,7 +188,7 @@ class TaxAreaStats extends Component {
         };
 
         return (
-            <div className="chart">
+            <div className="pie-chart chart">
                 <h2>Distribution of planned amount by zone</h2>
                 <PieChart
                     data={data}
@@ -205,7 +207,7 @@ class TaxAreaStats extends Component {
     renderPieChartLegend = () => {
         const colorScale = d3.scale.category20();
         return (
-            <div >
+            <div className="legends">
                 {this.state.taxInfoList.map((taxInfo, i) =>
                     <div className="legend" key={i}>
                         <p>
