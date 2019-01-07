@@ -1,0 +1,77 @@
+.tax-area-table-container {
+  width: 50%;
+  height: inherit;
+  overflow: auto;
+  padding-left: 120px;
+}
+
+.tax-area-container {
+
+  margin-top: 160px;
+  display: flex;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.charts-container {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.charts {
+  //display: flex;
+  //position: relative;
+  width: 30%;
+}
+
+.chart {
+  display: inline-block;
+}
+
+.total-row {
+  font-weight: bold;
+}
+
+.legend {
+  float: left;
+  margin-right: 1em;
+
+}
+
+.paid {
+  background: #00CA75;
+}
+
+.unpaid {
+  background: #FF495B;
+}
+
+.key-dot {
+  display: inline-block;
+  height: 10px;
+  margin-right: .5em;
+  width: 10px;
+}
+
+//
+//
+//@media screen and (min-width: 1370px) {
+//  .tax-area-container {
+//    padding: 0;
+//    margin: 120px 115px 0;
+//    justify-content: flex-start;
+//    height: 100%;
+//    width: 100%;
+//    box-sizing: initial;
+//    display: flex;
+//    height: 100%;
+//    position: relative;
+//    overflow: hidden;
+//  }
+//
+//  //table{
+//  //  width: calc(50% - 230px);
+//  //}
+//}
