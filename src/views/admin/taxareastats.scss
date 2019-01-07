@@ -10,7 +10,8 @@
 
       th {
         text-align: right;
-        &.name-row{
+
+        &.name-row {
           text-align: left;
         }
       }
@@ -19,7 +20,8 @@
         vertical-align: middle !important;
         padding-right: 10px !important;
         text-align: right;
-        &.name-row{
+
+        &.name-row {
           text-align: left;
         }
       }
@@ -75,11 +77,74 @@
   width: 10px;
 }
 
+.circle-container {
+  width: 50%;
+  margin: 0 0 0 11%;
+  vertical-align: top;
+
+  &.chart {
+    display: inline-flex;
+  }
+
+  svg {
+    height: 200px;
+  }
+}
+
 @media screen and (max-width: 1380px) {
   .bar-chart {
     margin: 0 calc(50% - 300px) 0;
   }
   .pie-chart {
     margin: 0 calc(50% - 200px) 0;
+  }
+
+
+  .circle-container {
+    width: 85%;
+    margin: 0 0 0 9%;
+    vertical-align: top;
+
+    &.chart {
+      display: inline-flex;
+
+      .zone1 {
+        width: 33%;
+      }
+
+      .zone2 {
+        width: 33%;
+      }
+
+      .zone3 {
+        width: 33%;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 900px) {
+
+  .circle-container {
+    width: 85%;
+    margin: 0 0 0 9%;
+    vertical-align: top;
+
+    &.chart {
+      display: block;
+
+      .zone1 {
+        width: 100%;
+      }
+
+      .zone2 {
+        width: 100%;
+      }
+
+      .zone3 {
+        width: 100%;
+      }
+    }
   }
 }

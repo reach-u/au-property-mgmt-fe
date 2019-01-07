@@ -8,6 +8,8 @@ import api from '../../config/API';
 import {observer} from 'mobx-react';
 import {Classes} from "@blueprintjs/core";
 import {BarChart, d3, PieChart} from 'react-d3-components';
+import CircularProgressbar from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 class TaxAreaStats extends Component {
 
@@ -104,7 +106,8 @@ class TaxAreaStats extends Component {
                         </table>
                     </div>
                     <div className="charts-container">
-                        {showBarChart && this.renderBarChart()}
+                        {/*{showBarChart && this.renderBarChart()}*/}
+                        {this.state.taxInfoList.length > 0 && this.renderCircles()}
                         {this.renderPieChart()}
                     </div>
                 </div>
@@ -138,7 +141,7 @@ class TaxAreaStats extends Component {
 
         let color = d3.scale.ordinal()
             .domain(["Paid", "Missing"])
-            .range(["#008B8A", "#FF0A22"]);
+            .range(["#95B1B0", "#CF5467"]);
 
         let data = [{
             label: 'Paid',
@@ -175,13 +178,79 @@ class TaxAreaStats extends Component {
         );
     };
 
+    renderCircles = () => {
+        let zone1 = this.state.taxInfoList.find(taxInfo => {
+            return taxInfo.name === 'Zone1'
+        });
+        let zone2 = this.state.taxInfoList.find(taxInfo => {
+            return taxInfo.name === 'Zone2'
+        });
+        let zone3 = this.state.taxInfoList.find(taxInfo => {
+            return taxInfo.name === 'Zone3'
+        });
+
+        const zone1Percentage = (zone1.paidAmount / zone1.plannedAmount * 100).toFixed(1);
+        const zone2Percentage = (zone2.paidAmount / zone2.plannedAmount * 100).toFixed(1);
+        const zone3Percentage = (zone3.paidAmount / zone3.plannedAmount * 100).toFixed(1);
+
+        return (
+
+            <div className="circle-container chart">
+                <div className="zone1">
+
+                <h2>{zone1.name}</h2>
+                <CircularProgressbar
+                    initialAnimation={true}
+                    percentage={zone1Percentage}
+                    text={`${zone1Percentage}%`}
+                    strokeWidth={3}
+                    styles={{
+                        path: {stroke: "#6D7BB2"},
+                        text: {fill: '#6D7BB2', fontSize: '2em'},
+                    }}
+                />
+                </div>
+                <div className="zone2">
+                <h2>{zone2.name}</h2>
+                <CircularProgressbar
+
+                    initialAnimation={true}
+                    percentage={zone2Percentage}
+                    text={`${zone2Percentage}%`}
+                    strokeWidth={3}
+                    styles={{
+                        path: {stroke: "#6D7BB2"},
+                        text: {fill: '#6D7BB2', fontSize: '2em'},
+                    }}
+                />
+                </div>
+                <div className="zone3">
+
+                <h2>{zone3.name}</h2>
+
+                <CircularProgressbar
+                    initialAnimation={true}
+                    percentage={zone3Percentage}
+                    text={`${zone3Percentage}%`}
+                    strokeWidth={3}
+                    styles={{
+                        path: {stroke: "#6D7BB2"},
+                        text: {fill: '#6D7BB2', fontSize: '2em'},
+                    }}
+                />
+             </div>
+            </div>
+            // </div>
+        );
+    };
+
     renderPieChart = () => {
         const dataValues = this.state.taxInfoList.map(taxInfo => ({x: taxInfo.name, y: taxInfo.plannedAmount}));
         const total = this.calculateTotal();
 
         const colorScale = d3.scale.ordinal()
             .domain(['Zone1', 'Zone2', 'Zone3'])
-            .range(["#008B8A", "#02FDCC", "#FF0A22"]);
+            .range(["#95B1B0", "#6D7BB2", "#3A4A7D"]);
 
         const data = {
             values: dataValues
@@ -200,7 +269,7 @@ class TaxAreaStats extends Component {
                     hideLabels={true}
                     tooltipHtml={tooltip}
                     width={400}
-                    height={400}
+                    height={200}
                     sort={null}
                     margin={{top: 10, bottom: 10, left: 100, right: 100}}
                 />
