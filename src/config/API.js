@@ -12,6 +12,7 @@ export default {
   payTax: transactionId => createUrl('/api/1/priv/re/pay_tax/', [transactionId]),
   getAllPersons: () => createUrl('/api/1/priv/proxy/persons'),
   getLandTaxAreaStats: () => createUrl('/api/1/priv/landtax/stats/area'),
+  getLandTaxMonthlyStats: () => createUrl('/api/1/priv/landtax/stats/month'),
   getTransactions: addressId => createUrl('/api/1/priv/re/details_by_address/', [addressId]),
   getPersonsTransactions: personId => createUrl('/api/1/priv/re/details_by_person/', [personId]),
 };
