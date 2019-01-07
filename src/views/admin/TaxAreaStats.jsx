@@ -108,7 +108,7 @@ class TaxAreaStats extends Component {
                     <div className="charts-container">
                         {/*{showBarChart && this.renderBarChart()}*/}
                         {this.state.taxInfoList.length > 0 && this.renderCircles()}
-                        {this.renderPieChart()}
+                        {this.state.taxInfoList.length > 0 && this.renderPieChart()}
                     </div>
                 </div>
             </Fragment>
