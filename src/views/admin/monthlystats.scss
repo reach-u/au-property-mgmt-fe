@@ -1,0 +1,40 @@
+@import "./taxareastats";
+
+.monthly-tax-container {
+  margin: 120px auto 40px;
+  height: 100%;
+  display: flex;
+  position: relative;
+}
+
+.monthly-tax-table-container {
+  width: 50%;
+  margin-left: 40px;
+  table {
+    width: 90%;
+    tr {
+      height: 42px;
+
+      td {
+        vertical-align: middle !important;
+      }
+    }
+  }
+}
+
+.monthly-charts-container {
+  width: 50%;
+  padding-bottom: 60px;
+}
+
+@media screen and (max-width: 1380px) {
+  .monthly-tax-container {
+    display: block;
+  }
+  .monthly-charts-container {
+    width: 100%;
+  }
+  .monthly-tax-table-container {
+    width: 100%;
+  }
+}
