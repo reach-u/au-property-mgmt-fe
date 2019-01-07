@@ -46,7 +46,7 @@ class TaxAreaStats extends Component {
                             className={[Classes.HTML_TABLE_STRIPED, Classes.HTML_TABLE].join(' ')}>
                             <thead>
                             <tr>
-                                <th>
+                                <th className="name-row">
                                     Zone Name
                                 </th>
                                 <th>
@@ -66,38 +66,38 @@ class TaxAreaStats extends Component {
                             <tbody>
                             {this.state.taxInfoList.map((taxInfo, index) => (
                                 <tr key={index}>
-                                    <td title="Zone name">
+                                    <td title="Zone name" className="name-row">
                                         {taxInfo.name}
                                     </td>
                                     <td title="m2 plan">
-                                        {taxInfo.numberOfSquareMeters}
+                                        {taxInfo.numberOfSquareMeters.toLocaleString()}
                                     </td>
                                     <td title="planned amount">
-                                        {taxInfo.plannedAmount}
+                                        {taxInfo.plannedAmount.toLocaleString()}
                                     </td>
                                     <td title="paid amount">
-                                        {taxInfo.paidAmount}
+                                        {taxInfo.paidAmount.toLocaleString()}
                                     </td>
                                     <td title="missing amount">
-                                        {taxInfo.missingAmount}
+                                        {taxInfo.missingAmount.toLocaleString()}
                                     </td>
                                 </tr>
                             ))}
                             <tr className="total-row">
-                                <td title="Total">
+                                <td title="Total" className="name-row">
                                     Total
                                 </td>
                                 <td title="m2 plan">
-                                    {total.numberOfSquareMeters}
+                                    {total.numberOfSquareMeters.toLocaleString()}
                                 </td>
                                 <td title="planned amount">
-                                    {total.plannedAmount}
+                                    {total.plannedAmount.toLocaleString()}
                                 </td>
                                 <td title="paid amount">
-                                    {total.paidAmount}
+                                    {total.paidAmount.toLocaleString()}
                                 </td>
                                 <td title="missing amount">
-                                    {total.missingAmount}
+                                    {total.missingAmount.toLocaleString()}
                                 </td>
                             </tr>
                             </tbody>
@@ -150,7 +150,7 @@ class TaxAreaStats extends Component {
             }];
 
         let tooltip = function (name, previousValue, currentValue) {
-            return currentValue;
+            return currentValue.toLocaleString();
         };
 
         return (
@@ -176,7 +176,8 @@ class TaxAreaStats extends Component {
     };
 
     renderPieChart = () => {
-        const dataValues = this.state.taxInfoList.map(taxInfo => ({x: taxInfo.name, y: taxInfo.paidAmount}));
+        const dataValues = this.state.taxInfoList.map(taxInfo => ({x: taxInfo.name, y: taxInfo.plannedAmount}));
+        const total = this.calculateTotal();
 
         const colorScale = d3.scale.ordinal()
             .domain(['Zone1', 'Zone2', 'Zone3'])
@@ -187,7 +188,7 @@ class TaxAreaStats extends Component {
         };
 
         let tooltip = function (name, value) {
-            return name;
+            return (value / total.plannedAmount * 100).toFixed(1) + "%";
         };
 
         return (
@@ -209,7 +210,6 @@ class TaxAreaStats extends Component {
     };
 
     renderPieChartLegend = (color) => {
-        // const colorScale = d3.scale.category20();
         return (
             <div className="legends">
                 {this.state.taxInfoList.map((taxInfo, i) =>
