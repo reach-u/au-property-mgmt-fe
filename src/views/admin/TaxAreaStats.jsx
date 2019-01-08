@@ -195,51 +195,26 @@ class TaxAreaStats extends Component {
 
         return (
             <div className="circle-container chart">
-                <div className="zone1">
-                <h2>{zone1.name}</h2>
-                <CircularProgressbar
-                    initialAnimation={true}
-                    percentage={zone1Percentage}
-                    text={`${zone1Percentage}%`}
-                    strokeWidth={3}
-                    styles={{
-                        path: {stroke: "#90AFAE"},
-                        text: {fill: '#90AFAE', fontSize: '2em'},
-                    }}
-                />
-                </div>
-                <div className="zone2">
-                <h2>{zone2.name}</h2>
-                <CircularProgressbar
-
-                    initialAnimation={true}
-                    percentage={zone2Percentage}
-                    text={`${zone2Percentage}%`}
-                    strokeWidth={3}
-                    styles={{
-                        path: {stroke: "#90AFAE"},
-                        text: {fill: '#90AFAE', fontSize: '2em'},
-                    }}
-                />
-                </div>
-                <div className="zone3">
-
-                <h2>{zone3.name}</h2>
-
-                <CircularProgressbar
-                    initialAnimation={true}
-                    percentage={zone3Percentage}
-                    text={`${zone3Percentage}%`}
-                    strokeWidth={3}
-                    styles={{
-                        path: {stroke: "#90AFAE"},
-                        text: {fill: '#90AFAE', fontSize: '2em'},
-                    }}
-                />
-             </div>
+                {this.drawCircle(zone1.name, zone1Percentage)}
+                {this.drawCircle(zone2.name, zone2Percentage)}
+                {this.drawCircle(zone3.name, zone3Percentage)}
             </div>
         );
     };
+
+    drawCircle(name, percentage) {
+        return (
+            <div className="zone">
+                <h2>{name}</h2>
+                <CircularProgressbar
+                    initialAnimation={true}
+                    percentage={percentage}
+                    text={`${percentage}%`}
+                    strokeWidth={3}
+                />
+            </div>
+        );
+    }
 
     renderPieChart = () => {
         const dataValues = this.state.taxInfoList.map(taxInfo => ({x: taxInfo.name, y: taxInfo.plannedAmount}));

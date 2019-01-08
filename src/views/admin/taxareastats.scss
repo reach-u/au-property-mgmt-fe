@@ -88,6 +88,15 @@
 
   svg {
     height: 200px;
+
+    .CircularProgressbar-path {
+      stroke: #90AFAE;
+    }
+
+    .CircularProgressbar-text {
+      fill: #90AFAE;
+      font-size: 2em;
+    }
   }
 }
 
@@ -108,23 +117,17 @@
     &.chart {
       display: inline-flex;
 
-      .zone1 {
-        width: 33%;
-      }
-
-      .zone2 {
-        width: 33%;
-      }
-
-      .zone3 {
+      .zone {
         width: 33%;
       }
     }
   }
 }
 
-
 @media screen and (max-width: 900px) {
+  .tax-area-table-container {
+    width: 95%;
+  }
 
   .circle-container {
     width: 85%;
@@ -134,15 +137,7 @@
     &.chart {
       display: block;
 
-      .zone1 {
-        width: 100%;
-      }
-
-      .zone2 {
-        width: 100%;
-      }
-
-      .zone3 {
+      .zone {
         width: 100%;
       }
     }
