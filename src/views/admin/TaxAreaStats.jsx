@@ -194,10 +194,15 @@ class TaxAreaStats extends Component {
         const zone3Percentage = (zone3.paidAmount / zone3.plannedAmount * 100).toFixed(1);
 
         return (
-            <div className="circle-container chart">
+            <div className="circle-wrapper chart">
+                <div className="zone-tax-header">
+                    <h2>Paid tax amount 2018</h2>
+                </div>
+                <div className="circle-container">
                 {this.drawCircle(zone1.name, zone1Percentage)}
                 {this.drawCircle(zone2.name, zone2Percentage)}
                 {this.drawCircle(zone3.name, zone3Percentage)}
+                </div>
             </div>
         );
     };
@@ -206,7 +211,7 @@ class TaxAreaStats extends Component {
         const className = percentage > 70 ? "positive" : "negative";
         return (
             <div className="zone">
-                <h2>{name}</h2>
+                <h3>{name}</h3>
                 <CircularProgressbar
                     className={className}
                     initialAnimation={true}
@@ -239,13 +244,15 @@ class TaxAreaStats extends Component {
                 <h2>Distribution of planned amount by zone</h2>
                 <PieChart
                     data={data}
+                    innerRadius={90}
+                    outerRadius={60}
                     colorScale={colorScale}
                     hideLabels={true}
                     tooltipHtml={tooltip}
-                    width={400}
-                    height={200}
+                    width={250}
+                    height={250}
                     sort={null}
-                    margin={{top: 10, bottom: 10, left: 100, right: 100}}
+                    margin={{top: 30, bottom: 30, left: 100, right: 100}}
                 />
                 {this.renderPieChartLegend(colorScale)}
             </div>

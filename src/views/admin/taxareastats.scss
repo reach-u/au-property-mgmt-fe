@@ -36,11 +36,11 @@
 
 .charts-container {
   width: 100%;
+  display: inline-flex;
   padding-bottom: 60px;
 }
 
 .chart {
-  display: inline-block;
   text-align: center;
 }
 
@@ -77,14 +77,14 @@
   width: 10px;
 }
 
-.circle-container {
-  width: 50%;
-  margin: 0 0 0 11%;
-  vertical-align: top;
+.circle-wrapper{
+  width: 45%;
+  margin: 0 3% 0 14%;
+}
 
-  &.chart {
-    display: inline-flex;
-  }
+.circle-container {
+  display: inline-flex;
+  vertical-align: top;
 
   svg {
     height: 200px;
@@ -121,15 +121,18 @@
     margin: 0 calc(50% - 200px) 0;
   }
 
+  .charts-container {
+    width: 100%;
+    display: block;
+    padding-bottom: 60px;
+  }
 
-  .circle-container {
+  .circle-wrapper {
     width: 85%;
     margin: 0 0 0 9%;
     vertical-align: top;
 
     &.chart {
-      display: inline-flex;
-
       .zone {
         width: 33%;
       }
@@ -142,12 +145,12 @@
     width: 95%;
   }
 
-  .circle-container {
+  .circle-wrapper {
     width: 85%;
     margin: 0 0 0 9%;
     vertical-align: top;
 
-    &.chart {
+    .circle-container {
       display: block;
 
       .zone {
