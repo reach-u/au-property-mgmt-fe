@@ -15,4 +15,5 @@ export default {
   getLandTaxMonthlyStats: () => createUrl('/api/1/priv/landtax/stats/month'),
   getTransactions: addressId => createUrl('/api/1/priv/re/details_by_address/', [addressId]),
   getPersonsTransactions: personId => createUrl('/api/1/priv/re/details_by_person/', [personId]),
+  getTaxZones: () => createUrl('/api/1/priv/landtax/zones')
 };
