@@ -55,7 +55,7 @@ class UserAuthStore {
         fetch(`${window.location.origin}/${api.getPersonsPayments(this.userId)}`)
           .then(response => response.json())
           .then(payments => {
-            this.userPayments = payments.reverse();
+            this.userPayments = payments.length > 0 ? payments.reverse() : [];
           });
       });
   }

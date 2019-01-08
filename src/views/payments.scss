@@ -1,26 +1,98 @@
-.payments-list {
-  table {
-    margin-bottom: 10px;
+.payment-table {
+  margin: 110px auto;
+  width: 55%;
+
+  .table-container {
+    width: 100%;
+  }
+
+  .main-table-tr {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .main-table-td {
+    background-color: white !important;
+    width: 180px;
+    padding-top: 5px !important;
+  }
+
+  .main-table-row-container {
+    border-top: 1px solid black;
+    padding: 6px 0;
+  }
+
+  .main-table-row-container:first-of-type {
+    border-top: none;
+  }
+
+  .collapse-button-td {
+    background-color: white !important;
+  }
+
+  .collapse-button, .collapse-button:focus {
+    background-color: #008B8A;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    height: 28px;
+    width: 28px;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 2px;
+    outline: none;
+  }
+
+  .bold-text {
+    font-weight: 600;
+  }
+
+  .align-right {
+    text-align: right !important;
+  }
+
+  .separate-last-td {
+    margin-left:60px;
+    width: 80px !important;
   }
 }
 
-.payment-row {
-  width: 80%;
-}
-
-.payments-of-one-month {
-  margin: 0;
-}
-
-.payment-td-start {
-  width: 50px;
-}
-
-.payment-td {
-  width: 150px;
-}
-
 .detailed-month {
-  width: 70%;
-  margin: 0 auto;
+  width: 66%;
+  margin: 10px 0 10px auto;
+
+  table {
+    width: 100%;
+    border-spacing: 0;
+  }
+
+  .single-property-row:nth-child(odd) {
+    background: #e6e6e6;
+  }
+
+  .single-property-row:hover {
+    border-left: 4px solid #008B8A;
+  }
+
+  .single-property-row {
+    display: flex;
+    justify-content: space-between;
+    border-left: 4px solid transparent;
+  }
+
+  .property-td {
+    padding: 10px 0;
+    margin-left: 20px;
+    width: 160px;
+  }
+
+  .property-align-right-td {
+    width: 160px;
+    padding: 10px 0;
+    text-align: right !important;
+  }
+
+  .number {
+    width: 20px;
+  }
 }

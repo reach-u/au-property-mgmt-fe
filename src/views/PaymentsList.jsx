@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import {NonIdealState, ProgressBar} from '@blueprintjs/core';
-import './registry/results.css';
-import './registry/registry.scss';
 import "./payments.scss";
 import PaymentsOfOneMonth from "./PaymentsOfOneMonth";
 
@@ -14,14 +12,18 @@ class PaymentsList extends Component {
 
     if (activePayments) {
       return (
-        <div className="registry-container user-properties payments-list">
-          {authstore.userPayments.map((item, index) =>
-            <PaymentsOfOneMonth
-              month={item}
-              key={index}
-              {...this.props}
-            />
-          )}
+        <div className="payment-table">
+          <table className="table-container">
+            <tbody>
+            {authstore.userPayments.map((item, index) =>
+              <PaymentsOfOneMonth
+                month={item}
+                key={index}
+                {...this.props}
+              />
+            )}
+            </tbody>
+          </table>
         </div>
       )
     } else if (authstore.loading) {
