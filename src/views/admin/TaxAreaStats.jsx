@@ -52,7 +52,7 @@ class TaxAreaStats extends Component {
                                     Zone Name
                                 </th>
                                 <th>
-                                    m<sup>2</sup> plan
+                                    m<sup>2</sup>
                                 </th>
                                 <th>
                                     Amount (plan)
@@ -203,10 +203,12 @@ class TaxAreaStats extends Component {
     };
 
     drawCircle(name, percentage) {
+        const className = percentage > 70 ? "positive" : "negative";
         return (
             <div className="zone">
                 <h2>{name}</h2>
                 <CircularProgressbar
+                    className={className}
                     initialAnimation={true}
                     percentage={percentage}
                     text={`${percentage}%`}
@@ -222,7 +224,7 @@ class TaxAreaStats extends Component {
 
         const colorScale = d3.scale.ordinal()
             .domain(['Zone1', 'Zone2', 'Zone3'])
-            .range(["#95B1B0", "#6D7BB2", "#3A4A7D"]);
+            .range(["#9DD2EA", "#61C0F2", "#098BBA"]);
 
         const data = {
             values: dataValues

@@ -89,13 +89,26 @@
   svg {
     height: 200px;
 
-    .CircularProgressbar-path {
-      stroke: #90AFAE;
+    &.positive {
+      .CircularProgressbar-path {
+        stroke: #00AAAD;
+      }
+
+      .CircularProgressbar-text {
+        fill: #00AAAD;
+        font-size: 1.5em;
+      }
     }
 
-    .CircularProgressbar-text {
-      fill: #90AFAE;
-      font-size: 2em;
+    &.negative {
+      .CircularProgressbar-path {
+        stroke: #CF5467;
+      }
+
+      .CircularProgressbar-text {
+        fill: #CF5467;
+        font-size: 1.5em;
+      }
     }
   }
 }
