@@ -1,7 +1,6 @@
 import React, {Component, Fragment} from 'react';
 
 import '../navigation.scss';
-import '../registry/registry.scss';
 import '../registry/results.css';
 import './taxareastats.scss';
 import api from '../../config/API';
@@ -208,13 +207,10 @@ class TaxAreaStats extends Component {
     };
 
     drawCircle(name, percentage) {
-        const className = percentage > 70 ? "positive" : "negative";
         return (
             <div className="zone">
                 <h3>{name}</h3>
                 <CircularProgressbar
-                    className={className}
-                    initialAnimation={true}
                     percentage={percentage}
                     text={`${percentage}%`}
                     strokeWidth={3}

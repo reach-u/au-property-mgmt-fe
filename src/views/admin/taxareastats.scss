@@ -77,7 +77,7 @@
   width: 10px;
 }
 
-.circle-wrapper{
+.circle-wrapper {
   width: 45%;
   margin: 0 3% 0 14%;
 }
@@ -89,28 +89,23 @@
   svg {
     height: 200px;
 
-    &.positive {
-      .CircularProgressbar-path {
-        stroke: #00AAAD;
-      }
-
-      .CircularProgressbar-text {
-        fill: #00AAAD;
-        font-size: 1.5em;
-      }
+    .CircularProgressbar-trail {
+      stroke: #CF5467;
     }
 
-    &.negative {
-      .CircularProgressbar-path {
-        stroke: #CF5467;
-      }
+    .CircularProgressbar-path {
+      stroke: #00AAAD;
+    }
 
-      .CircularProgressbar-text {
-        fill: #CF5467;
-        font-size: 1.5em;
-      }
+    .CircularProgressbar-text {
+      fill: #00AAAD;
+      font-size: 1.5em;
     }
   }
+}
+
+.tooltip {
+  background: white;
 }
 
 @media screen and (max-width: 1380px) {
@@ -142,12 +137,20 @@
 
 @media screen and (max-width: 900px) {
   .tax-area-table-container {
-    width: 95%;
+    width: 90%;
+    margin: 50px 10px 40px;
+
+    table {
+      font-size: 12px;
+    }
   }
 
+  h2{
+    margin: 0 50px 0;
+  }
   .circle-wrapper {
-    width: 85%;
-    margin: 0 0 0 9%;
+    width: 80%;
+    margin: 0 0 0 10%;
     vertical-align: top;
 
     .circle-container {
