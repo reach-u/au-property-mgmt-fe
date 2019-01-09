@@ -21,7 +21,6 @@ class PropertyListView extends React.Component {
             mapCenter: [-4.04569, 39.66366],
             activeEstate: null,
             taxZones: null,
-            activeTaxZoneColor: '#709be0'
         };
         reaction(
             () => this.props.realEstateStore.dataAvailable,
@@ -70,7 +69,7 @@ class PropertyListView extends React.Component {
         );
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.fetchTaxZones();
     }
 
@@ -170,23 +169,42 @@ class PropertyListView extends React.Component {
 
     createTaxLayers = () => {
         this.state.taxZones.forEach((pol) => {
-            const polygonContent = L.polygon(pol.zoneCoordinates, {
-                color: this.state.activeTaxZoneColor,
-            });
-            polygonContent.on('mouseover', function() {
-                this.setStyle({
-                    color: '#2055aa'
-                })
-            });
-            polygonContent.on('mouseout', function() {
-                this.setStyle({
-                    color: '#709be0'
-                })
-            });
+                switch (pol.name) {
+
+                }
+            const polygonContent = L.polygon(pol.zoneCoordinates );
+            switch (pol.name) {
+                case 'Zone1':
+                    this.createPolygonContent(polygonContent, '#2055aa', '#709be0');
+                    break;
+                case 'Zone2':
+                    this.createPolygonContent(polygonContent, '#b78507', '#e2ba56');
+                    break;
+                case 'Zone3':
+                    this.createPolygonContent(polygonContent, '#2055aa', '#709be0');
+                    break;
+
+
+            }
+            // this.createPolygonContent(polygonContent, '#2055aa', '#709be0');
 
             this.map.current.leafletElement.addLayer(polygonContent);
         });
+
     };
+
+    createPolygonContent = (polygonContent, color1, color2) => {
+        polygonContent.on('mouseover', function() {
+            this.setStyle({
+                color: color1
+            })
+        });
+        polygonContent.on('mouseout', function() {
+            this.setStyle({
+                color: color2
+            })
+        });
+    }
 }
 
 export default observer(PropertyListView);
