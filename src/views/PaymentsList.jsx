@@ -5,7 +5,7 @@ import './registry/registry.scss';
 import './registry/results.css';
 import './payments.scss';
 import {observer} from 'mobx-react';
-import {Classes} from "@blueprintjs/core";
+import {Classes, NonIdealState, ProgressBar} from "@blueprintjs/core";
 import PaymentsOfOneMonth from "./PaymentsOfOneMonth";
 
 class PaymentsList extends Component {
@@ -16,21 +16,38 @@ class PaymentsList extends Component {
   render() {
     const {authstore} = this.props;
     let allPayments = authstore.userPayments;
+    let unpaidPayments = authstore.pendingPayments.length > 0;
 
-    return (
-      <Fragment>
-        <div className="monthly-tax-container">
-          <div className="monthly-tax-table-container">
-            <table
-              className={[Classes.HTML_TABLE_STRIPED, Classes.HTML_TABLE].join(' ')}>
-              {this.renderTableHeader()}
-              {this.renderTableContent(allPayments)}
-              {this.renderTableFooter(allPayments)}
-            </table>
+    if (unpaidPayments) {
+      return (
+        <Fragment>
+          <div className="monthly-tax-container">
+            <div className="monthly-tax-table-container">
+              <table
+                className={[Classes.HTML_TABLE_STRIPED, Classes.HTML_TABLE].join(' ')}>
+                {this.renderTableHeader()}
+                {this.renderTableContent(allPayments)}
+                {this.renderTableFooter(allPayments)}
+              </table>
+            </div>
           </div>
+        </Fragment>
+      )
+    } else if (authstore.loading) {
+      return (
+        <div style={{position: 'fixed', bottom: 0, left: 0, width: '100%', zIndex: 2000}}>
+          <ProgressBar intent="primary"/>
         </div>
-      </Fragment>
-    )
+      );
+    } else {
+      return (
+        <NonIdealState
+          icon="swap-horizontal"
+          title="No payments"
+          description="You have no payments at this point of time."
+        />
+      );
+    }
   }
 
   renderTableContent(allPayments) {
