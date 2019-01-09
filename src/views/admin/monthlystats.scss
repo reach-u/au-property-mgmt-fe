@@ -10,7 +10,14 @@
 .monthly-tax-table-container {
   width: 50%;
   margin-left: 120px;
+
   table {
+    tbody {
+      .main-table-row {
+          background: white !important;
+      }
+    }
+
     width: 90%;
     margin-bottom: 30px;
     tr {
@@ -55,13 +62,25 @@
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 
+.legends {
+  margin-left: 80px;
+  justify-content: center;
+  display: flex;
+}
+
+.legend {
+  float: left;
+  margin-right: 1em;
+  padding-bottom: 20px;
+}
+
 .reminder-button span {
   margin-left: 12px;
   opacity: 0.9;
 }
 
 .paid {
-  background: #098bba;
+  background: #00AAAD;
 }
 
 .unpaid {

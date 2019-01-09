@@ -82,27 +82,27 @@ class MonthStats extends Component {
                                 </tr>
                             </thead>
                             {this.state.taxInfoList.map((taxInfo, index) => (
-                                [<tbody key={index}>{this.getTableDataRow(taxInfo)}</tbody>,
-                                this.getTableExpandedRows(taxInfo, authstore)
+                                [
+                                    <tbody key={index}>
+                                        {this.renderTableDataRow(taxInfo)}
+                                    </tbody>,
+                                    this.renderTableExpandedRows(taxInfo, authstore)
                                 ]
-
                             ))}
                             <tbody key="total-row">
-                                <tr className="total-row">
-                                    <td>
-
-                                    </td>
-                                    <td title="Total" className="text-row">
+                                <tr className="total-row main-table-row">
+                                    <td className="main-table-row"></td>
+                                    <td title="Total" className="text-row main-table-row">
                                         Total
                                     </td>
-                                    <td title="planned amount">
-                                        {total.plannedAmount.toLocaleString('en-US')}
+                                    <td title="planned amount" className="main-table-row">
+                                        {total.plannedAmount.toLocaleString()}
                                     </td>
-                                    <td title="paid amount">
-                                        {total.paidAmount.toLocaleString('en-US')}
+                                    <td title="paid amount" className="main-table-row">
+                                        {total.paidAmount.toLocaleString()}
                                     </td>
-                                    <td title="missing amount">
-                                        {total.missingAmount.toLocaleString('en-US')}
+                                    <td title="missing amount" className="main-table-row">
+                                        {total.missingAmount.toLocaleString()}
                                     </td>
                                 </tr>
                             </tbody>
@@ -116,36 +116,36 @@ class MonthStats extends Component {
         )
     }
 
-    getTableDataRow = (taxInfo) => {
+    renderTableDataRow = (taxInfo) => {
         return (
-            <tr key={taxInfo.name}>
-                <td className="text-row">
+            <tr key={taxInfo.name} className="main-table-row">
+                <td className="text-row main-table-row">
                     {taxInfo.missingAmount > 0 &&
                         <span className="open-debtors" onClick={() => this.handleExpandDebtorsTable(taxInfo)} title="Expand">
                             <Icon icon={taxInfo.expanded ? "chevron-down" : "chevron-right"} />
                         </span>
                     }
                 </td>
-                <td title="Month name" className="text-row">
+                <td title="Month" className="text-row main-table-row">
                     {taxInfo.name}
                 </td>
-                <td title="planned amount">
-                    {taxInfo.plannedAmount.toLocaleString('en-US')}
+                <td title="planned amount" className="main-table-row">
+                    {taxInfo.plannedAmount.toLocaleString()}
                 </td>
-                <td title="paid amount">
-                    {taxInfo.paidAmount.toLocaleString('en-US')}
+                <td title="paid amount" className="main-table-row">
+                    {taxInfo.paidAmount.toLocaleString()}
                 </td>
-                <td title="missing amount">
-                    {taxInfo.missingAmount.toLocaleString('en-US')}
+                <td title="missing amount" className="main-table-row">
+                    {taxInfo.missingAmount.toLocaleString()}
                 </td>
             </tr>);
     };
 
-    getTableExpandedRows = (taxInfo, authstore) => {
-        var indebtedOwners = taxInfo.indebtedOwners;
-        var debtorAddresses = taxInfo.debtorAddresses;
+    renderTableExpandedRows = (taxInfo, authstore) => {
+        let indebtedOwners = taxInfo.indebtedOwners;
+        let debtorAddresses = taxInfo.debtorAddresses;
 
-        var rowArray = [
+        let rowArray = [
             <tr key={taxInfo.name + '_expanded'} className={taxInfo.expanded ? "show-row" : "hide-row"}>
                 <th className="text-row">
                     Properties
@@ -177,13 +177,13 @@ class MonthStats extends Component {
                         {authstore.getUsernameById(owner.name)}
                     </td>
                     <td>
-                        {owner.paidAmount.toLocaleString('en-US')}
+                        {owner.paidAmount.toLocaleString()}
                     </td>
                     <td>
-                        {owner.missingAmount.toLocaleString('en-US')}
+                        {owner.missingAmount.toLocaleString()}
                     </td>
                     <td>
-                        <button className="reminder-button" onClick={() => this.handleReminderButtonClick()}>Send reminder</button>
+                        <button className="reminder-button">Send reminder</button>
                     </td>
                 </tr>
             ),
@@ -217,7 +217,7 @@ class MonthStats extends Component {
                     <td className="text-row">
                         {address.house}, {address.street}, {address.county}, {address.country}
                     </td>
-                    <td>{address.detailedData.landTaxValue.toLocaleString('en-US')}</td>
+                    <td>{address.detailedData.landTaxValue.toLocaleString()}</td>
                     <td></td>
                 </tr>
             ))
@@ -228,18 +228,18 @@ class MonthStats extends Component {
     }
 
     handleExpandAddressesTable = (taxInfo, owner) => {
-        var taxInfoIndex = this.state.taxInfoList.indexOf(taxInfo);
+        let taxInfoIndex = this.state.taxInfoList.indexOf(taxInfo);
         if (taxInfoIndex !== -1) {
-            var ownerIndex = this.state.taxInfoList[taxInfoIndex].indebtedOwners.indexOf(owner);
+            let ownerIndex = this.state.taxInfoList[taxInfoIndex].indebtedOwners.indexOf(owner);
             owner.isAddressesExpanded = !owner.isAddressesExpanded;
-            var taxInfoList = this.state.taxInfoList;
+            let taxInfoList = this.state.taxInfoList;
             taxInfoList[taxInfoIndex].indebtedOwners[ownerIndex] = owner;
             this.setState({ taxInfoList: taxInfoList });
         }
     };
 
     handleExpandDebtorsTable = taxInfo => {
-        var index = this.state.taxInfoList.indexOf(taxInfo);
+        let index = this.state.taxInfoList.indexOf(taxInfo);
         if (index !== -1) {
             taxInfo.expanded = !taxInfo.expanded;
             if (!taxInfo.expanded) {
@@ -247,7 +247,7 @@ class MonthStats extends Component {
                     owner => { owner.isAddressesExpanded = false; }
                 );
             }
-            var taxInfoList = this.state.taxInfoList;
+            let taxInfoList = this.state.taxInfoList;
             taxInfoList[index] = taxInfo;
             this.setState({ taxInfoList: taxInfoList });
         }
@@ -289,14 +289,14 @@ class MonthStats extends Component {
 
         let color = d3.scale.ordinal()
             .domain(["Paid", "Missing"])
-            .range(["#098BBA", "#FF495B"]);
+            .range(["#00AAAD", "#FF495B"]);
 
         let tooltip = function (name, previousValue, currentValue) {
             return currentValue;
         };
 
 
-        var barChartWidth = this.state.parentWidth > 1380 ? 700 : this.state.parentWidth;
+        let barChartWidth = this.state.parentWidth > 1380 ? 700 : this.state.parentWidth;
 
         return (
             <div className="chart">
