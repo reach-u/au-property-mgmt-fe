@@ -141,24 +141,36 @@
     margin: 50px 10px 40px;
 
     table {
-      font-size: 12px;
+      font-size: 12px !important;
     }
   }
 
-  h2{
+  h2 {
     margin: 0 50px 0;
   }
-  .circle-wrapper {
-    width: 80%;
-    margin: 0 0 0 10%;
-    vertical-align: top;
 
-    .circle-container {
-      display: block;
+  .charts-container {
+    width: 85%;
 
-      .zone {
-        width: 100%;
+    .chart {
+      width: 100%;
+      margin: 0 0 0 10%;
+    }
+
+    .circle-wrapper {
+      vertical-align: top;
+
+      .circle-container {
+        display: block;
+
+        .zone {
+          width: 100%;
+        }
       }
+    }
+
+    .legends {
+      margin-left: 20%;
     }
   }
 }

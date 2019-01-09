@@ -6,7 +6,7 @@ import './taxareastats.scss';
 import api from '../../config/API';
 import {observer} from 'mobx-react';
 import {Classes} from "@blueprintjs/core";
-import {BarChart, d3, PieChart} from 'react-d3-components';
+import {d3, PieChart} from 'react-d3-components';
 import CircularProgressbar from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
@@ -37,7 +37,6 @@ class TaxAreaStats extends Component {
 
     render() {
         let total = this.calculateTotal();
-        const showBarChart = window.innerWidth > 780;
 
         return (
             <Fragment>
@@ -105,7 +104,6 @@ class TaxAreaStats extends Component {
                         </table>
                     </div>
                     <div className="charts-container">
-                        {/*{showBarChart && this.renderBarChart()}*/}
                         {this.state.taxInfoList.length > 0 && this.renderCircles()}
                         {this.state.taxInfoList.length > 0 && this.renderPieChart()}
                     </div>
@@ -131,50 +129,6 @@ class TaxAreaStats extends Component {
             }), initialValue);
         total.name = "Total";
         return total;
-    };
-
-    renderBarChart = () => {
-        let newArray = [...this.state.taxInfoList, this.calculateTotal()];
-        let paidValues = newArray.map(taxInfo => ({x: taxInfo.name, y: taxInfo.paidAmount}));
-        let unPaidValues = newArray.map(taxInfo => ({x: taxInfo.name, y: taxInfo.missingAmount}));
-
-        let color = d3.scale.ordinal()
-            .domain(["Paid", "Missing"])
-            .range(["#95B1B0", "#CF5467"]);
-
-        let data = [{
-            label: 'Paid',
-            values: paidValues
-        },
-            {
-                label: 'Missing',
-                values: unPaidValues
-            }];
-
-        let tooltip = function (name, previousValue, currentValue) {
-            return currentValue.toLocaleString();
-        };
-
-        return (
-            <div className="bar-chart chart">
-                <h2>Paid amount and missing amount by zone</h2>
-                <BarChart
-                    data={data}
-                    colorScale={color}
-                    width={600}
-                    height={400}
-                    tooltipHtml={tooltip}
-                    margin={{top: 10, bottom: 50, left: 90, right: 10}}/>
-                <div className="legends">
-                    <div className="legend">
-                        <p><span className="key-dot paid"></span>Amount paid</p>
-                    </div>
-                    <div className="legend">
-                        <p><span className="key-dot unpaid"></span>Amount missing</p>
-                    </div>
-                </div>
-            </div>
-        );
     };
 
     renderCircles = () => {
