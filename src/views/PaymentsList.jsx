@@ -50,11 +50,11 @@ class PaymentsList extends Component {
   }
 
   renderTableContent(allPayments) {
-    return allPayments.map((month, index) =>
+    return allPayments.map((month, key) =>
       <PaymentsOfMonth
         month={month}
         {...this.props}
-        key={index}
+        key={key}
       />);
   }
 
