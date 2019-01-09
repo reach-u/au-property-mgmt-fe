@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './navigation.scss';
 import './registry/registry.scss';
 import './registry/results.css';
-import './payments.scss';
+import './admin/monthlystats.scss';
 import school from './../assets/baseline-school-24px.svg';
 import {observer} from 'mobx-react';
 import api from './../config/API';
