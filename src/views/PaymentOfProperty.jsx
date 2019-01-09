@@ -36,7 +36,7 @@ class PaymentOfProperty extends Component {
                 ? <Spinner className="loading-spinner" size={12}/>
                 : <Icon icon='dollar'/>}
             </button>
-            : <span className="paid">Paid</span>}
+            : <span className="paid-button">Paid</span>}
         </td>
       </tr>
     )
