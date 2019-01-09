@@ -1,13 +1,12 @@
 import React, {Component, Fragment} from 'react';
 
 import '../navigation.scss';
-import '../registry/registry.scss';
 import '../registry/results.css';
 import './taxareastats.scss';
 import api from '../../config/API';
 import {observer} from 'mobx-react';
 import {Classes} from "@blueprintjs/core";
-import {BarChart, d3, PieChart} from 'react-d3-components';
+import {d3, PieChart} from 'react-d3-components';
 import CircularProgressbar from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
@@ -38,7 +37,6 @@ class TaxAreaStats extends Component {
 
     render() {
         let total = this.calculateTotal();
-        const showBarChart = window.innerWidth > 780;
 
         return (
             <Fragment>
@@ -52,7 +50,7 @@ class TaxAreaStats extends Component {
                                     Zone Name
                                 </th>
                                 <th>
-                                    m<sup>2</sup> plan
+                                    m<sup>2</sup>
                                 </th>
                                 <th>
                                     Amount (plan)
@@ -106,7 +104,6 @@ class TaxAreaStats extends Component {
                         </table>
                     </div>
                     <div className="charts-container">
-                        {/*{showBarChart && this.renderBarChart()}*/}
                         {this.state.taxInfoList.length > 0 && this.renderCircles()}
                         {this.state.taxInfoList.length > 0 && this.renderPieChart()}
                     </div>
@@ -134,50 +131,6 @@ class TaxAreaStats extends Component {
         return total;
     };
 
-    renderBarChart = () => {
-        let newArray = [...this.state.taxInfoList, this.calculateTotal()];
-        let paidValues = newArray.map(taxInfo => ({x: taxInfo.name, y: taxInfo.paidAmount}));
-        let unPaidValues = newArray.map(taxInfo => ({x: taxInfo.name, y: taxInfo.missingAmount}));
-
-        let color = d3.scale.ordinal()
-            .domain(["Paid", "Missing"])
-            .range(["#95B1B0", "#CF5467"]);
-
-        let data = [{
-            label: 'Paid',
-            values: paidValues
-        },
-            {
-                label: 'Missing',
-                values: unPaidValues
-            }];
-
-        let tooltip = function (name, previousValue, currentValue) {
-            return currentValue.toLocaleString();
-        };
-
-        return (
-            <div className="bar-chart chart">
-                <h2>Paid amount and missing amount by zone</h2>
-                <BarChart
-                    data={data}
-                    colorScale={color}
-                    width={600}
-                    height={400}
-                    tooltipHtml={tooltip}
-                    margin={{top: 10, bottom: 50, left: 90, right: 10}}/>
-                <div className="legends">
-                    <div className="legend">
-                        <p><span className="key-dot paid"></span>Amount paid</p>
-                    </div>
-                    <div className="legend">
-                        <p><span className="key-dot unpaid"></span>Amount missing</p>
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
     renderCircles = () => {
         let zone1 = this.state.taxInfoList.find(taxInfo => {
             return taxInfo.name === 'Zone1'
@@ -194,52 +147,31 @@ class TaxAreaStats extends Component {
         const zone3Percentage = (zone3.paidAmount / zone3.plannedAmount * 100).toFixed(1);
 
         return (
-            <div className="circle-container chart">
-                <div className="zone1">
-                <h2>{zone1.name}</h2>
-                <CircularProgressbar
-                    initialAnimation={true}
-                    percentage={zone1Percentage}
-                    text={`${zone1Percentage}%`}
-                    strokeWidth={3}
-                    styles={{
-                        path: {stroke: "#90AFAE"},
-                        text: {fill: '#90AFAE', fontSize: '2em'},
-                    }}
-                />
+            <div className="circle-wrapper chart">
+                <div className="zone-tax-header">
+                    <h2>Paid tax amount 2018</h2>
                 </div>
-                <div className="zone2">
-                <h2>{zone2.name}</h2>
-                <CircularProgressbar
-
-                    initialAnimation={true}
-                    percentage={zone2Percentage}
-                    text={`${zone2Percentage}%`}
-                    strokeWidth={3}
-                    styles={{
-                        path: {stroke: "#90AFAE"},
-                        text: {fill: '#90AFAE', fontSize: '2em'},
-                    }}
-                />
+                <div className="circle-container">
+                {this.drawCircle(zone1.name, zone1Percentage)}
+                {this.drawCircle(zone2.name, zone2Percentage)}
+                {this.drawCircle(zone3.name, zone3Percentage)}
                 </div>
-                <div className="zone3">
-
-                <h2>{zone3.name}</h2>
-
-                <CircularProgressbar
-                    initialAnimation={true}
-                    percentage={zone3Percentage}
-                    text={`${zone3Percentage}%`}
-                    strokeWidth={3}
-                    styles={{
-                        path: {stroke: "#90AFAE"},
-                        text: {fill: '#90AFAE', fontSize: '2em'},
-                    }}
-                />
-             </div>
             </div>
         );
     };
+
+    drawCircle(name, percentage) {
+        return (
+            <div className="zone">
+                <h3>{name}</h3>
+                <CircularProgressbar
+                    percentage={percentage}
+                    text={`${percentage}%`}
+                    strokeWidth={3}
+                />
+            </div>
+        );
+    }
 
     renderPieChart = () => {
         const dataValues = this.state.taxInfoList.map(taxInfo => ({x: taxInfo.name, y: taxInfo.plannedAmount}));
@@ -247,7 +179,7 @@ class TaxAreaStats extends Component {
 
         const colorScale = d3.scale.ordinal()
             .domain(['Zone1', 'Zone2', 'Zone3'])
-            .range(["#95B1B0", "#6D7BB2", "#3A4A7D"]);
+            .range(["#9DD2EA", "#61C0F2", "#098BBA"]);
 
         const data = {
             values: dataValues
@@ -262,13 +194,15 @@ class TaxAreaStats extends Component {
                 <h2>Distribution of planned amount by zone</h2>
                 <PieChart
                     data={data}
+                    innerRadius={90}
+                    outerRadius={60}
                     colorScale={colorScale}
                     hideLabels={true}
                     tooltipHtml={tooltip}
-                    width={400}
-                    height={200}
+                    width={250}
+                    height={250}
                     sort={null}
-                    margin={{top: 10, bottom: 10, left: 100, right: 100}}
+                    margin={{top: 30, bottom: 30, left: 100, right: 100}}
                 />
                 {this.renderPieChartLegend(colorScale)}
             </div>
