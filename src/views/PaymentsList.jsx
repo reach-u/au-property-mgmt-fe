@@ -6,7 +6,7 @@ import './registry/results.css';
 import './payments.scss';
 import {observer} from 'mobx-react';
 import {Classes, NonIdealState, ProgressBar} from "@blueprintjs/core";
-import PaymentsOfOneMonth from "./PaymentsOfOneMonth";
+import PaymentsOfMonth from "./PaymentsOfMonth";
 
 class PaymentsList extends Component {
 
@@ -52,10 +52,10 @@ class PaymentsList extends Component {
 
   renderTableContent(allPayments) {
     return allPayments.map((month, index) =>
-      <PaymentsOfOneMonth
+      <PaymentsOfMonth
         month={month}
-        key={index}
         {...this.props}
+        key={index}
       />);
   }
 
@@ -68,12 +68,12 @@ class PaymentsList extends Component {
     return (
       <tbody key="total-row">
       <tr className="total-row">
-        <td/>
-        <td title="Total" className="text-row bold">Total</td>
-        <td title="Planned amount" className="bold">{sumOfAllPayments.toLocaleString('en-US')}</td>
-        <td title="Paid amount" className="bold">{(sumOfAllPayments - sumOfAllUnpaidPayments).toLocaleString('en-US')}</td>
-        <td title="Missing amount" className="bold">{sumOfAllUnpaidPayments.toLocaleString('en-US')}</td>
-        <td/>
+        <td className="color-to-white"/>
+        <td title="Total" className="text-row bold color-to-white">Total</td>
+        <td title="Planned amount" className="bold color-to-white">{sumOfAllPayments.toLocaleString('en-US')}</td>
+        <td title="Paid amount" className="bold color-to-white">{(sumOfAllPayments - sumOfAllUnpaidPayments).toLocaleString('en-US')}</td>
+        <td title="Missing amount" className="bold color-to-white">{sumOfAllUnpaidPayments.toLocaleString('en-US')}</td>
+        <td className="color-to-white"/>
       </tr>
       </tbody>
     );

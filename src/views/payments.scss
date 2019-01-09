@@ -7,6 +7,33 @@
   .bold {
     font-weight: 600;
   }
+
+  .paid {
+    padding-right: 24px;
+  }
+
+  .loading-spinner {
+    display: inline-block;
+    margin-left: 7px;
+
+    .bp3-spinner-head {
+      stroke: white;
+    }
+  }
+
+  .bp3-icon-dollar {
+    height: 12px;
+    margin-left: 3px;
+    opacity: 1;
+  }
+
+  table {
+    tbody {
+      .color-to-white {
+        background: white !important;
+      }
+    }
+  }
 }
 
 .payment-table-container {
@@ -23,6 +50,7 @@
 
         &.text-row {
           text-align: left;
+          padding-left: 8px !important;
         }
       }
 
