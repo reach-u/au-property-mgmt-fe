@@ -36,11 +36,12 @@
 
 .charts-container {
   width: 100%;
+  display: inline-flex;
+  margin-top: 60px;
   padding-bottom: 60px;
 }
 
 .chart {
-  display: inline-block;
   text-align: center;
 }
 
@@ -62,14 +63,6 @@
   padding-bottom: 20px;
 }
 
-.paid {
-  background: #008B8A;
-}
-
-.unpaid {
-  background: #FF0A22;
-}
-
 .key-dot {
   display: inline-block;
   height: 10px;
@@ -77,18 +70,35 @@
   width: 10px;
 }
 
-.circle-container {
-  width: 50%;
-  margin: 0 0 0 11%;
-  vertical-align: top;
+.circle-wrapper {
+  width: 45%;
+  margin: 0 3% 0 14%;
+}
 
-  &.chart {
-    display: inline-flex;
-  }
+.circle-container {
+  display: inline-flex;
+  vertical-align: top;
 
   svg {
     height: 200px;
+
+    .CircularProgressbar-trail {
+      stroke: #CF5467;
+    }
+
+    .CircularProgressbar-path {
+      stroke: #00AAAD;
+    }
+
+    .CircularProgressbar-text {
+      fill: #00AAAD;
+      font-size: 1.5em;
+    }
   }
+}
+
+.tooltip {
+  background: white;
 }
 
 @media screen and (max-width: 1380px) {
@@ -99,51 +109,64 @@
     margin: 0 calc(50% - 200px) 0;
   }
 
+  .charts-container {
+    width: 100%;
+    display: block;
+    padding-bottom: 60px;
+  }
 
-  .circle-container {
+  .circle-wrapper {
     width: 85%;
     margin: 0 0 0 9%;
     vertical-align: top;
 
     &.chart {
-      display: inline-flex;
-
-      .zone1 {
-        width: 33%;
-      }
-
-      .zone2 {
-        width: 33%;
-      }
-
-      .zone3 {
+      .zone {
         width: 33%;
       }
     }
   }
 }
 
-
 @media screen and (max-width: 900px) {
+  .tax-area-table-container {
+    width: 90%;
+    margin: 50px 10px 40px;
 
-  .circle-container {
+    table {
+      font-size: 12px !important;
+    }
+  }
+
+  h2 {
+    margin: 0 50px 0;
+  }
+
+  .charts-container {
     width: 85%;
-    margin: 0 0 0 9%;
-    vertical-align: top;
 
-    &.chart {
-      display: block;
+    .chart {
+      width: 100%;
+      margin: 0 0 0 10%;
+    }
 
-      .zone1 {
-        width: 100%;
+    .circle-wrapper {
+      vertical-align: top;
+
+      .circle-container {
+        display: block;
+
+        .zone {
+          width: 100%;
+        }
       }
+    }
 
-      .zone2 {
-        width: 100%;
-      }
+    .pie-chart {
+      margin-top: 40px;
 
-      .zone3 {
-        width: 100%;
+      .legends {
+        margin-left: 20%;
       }
     }
   }
