@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import {Icon, Spinner} from "@blueprintjs/core";
 import PaymentOfProperty from "./PaymentOfProperty";
+import api from "../config/API";
 
 class PaymentsOfMonth extends Component {
 
   state = {
-    expanded: false,
+    expanded: this.props.authstore.openedPaymentRows.includes(this.props.month.monthName),
     payAllButtonLoading: false
   };
 
@@ -26,12 +27,13 @@ class PaymentsOfMonth extends Component {
     let unpaidPayments = allPayments.filter(payment => !payment.paid);
     let sumOfAllPayments = this.sumOfPayments(allPayments);
     let sumOfUnpaidPayments = this.sumOfPayments(unpaidPayments);
+    let monthName = month.monthName;
 
     return (
       <tr>
         <td className="text-row color-to-white">
           {sumOfUnpaidPayments > 0 &&
-          <span className="open-debtors" onClick={this.toggleRow} title="Expand">
+          <span className="open-debtors" onClick={this.toggleRow(month.monthName)} title="Expand">
             <Icon icon={this.state.expanded ? "chevron-down" : "chevron-right"}/>
           </span>}
         </td>
@@ -49,7 +51,7 @@ class PaymentsOfMonth extends Component {
         </td>
         <td title="Pay all" className="button-row color-to-white">
           {sumOfUnpaidPayments > 0 &&
-          <button className="pay-button" onClick={this.handlePayAll(unpaidPayments)}>
+          <button className="pay-button" onClick={this.handlePayAll(unpaidPayments, monthName)}>
             PAY ALL
             {this.state.payAllButtonLoading
               ? <Spinner className="loading-spinner" size={12}/>
@@ -83,6 +85,7 @@ class PaymentsOfMonth extends Component {
           payment={payment}
           expanded={this.state.expanded}
           key={index}
+          {...this.props}
         />
       )]
     );
@@ -90,26 +93,31 @@ class PaymentsOfMonth extends Component {
     return (<tbody>{rowArray}</tbody>);
   };
 
-  toggleRow = () => {
+  toggleRow = (month) => () => {
     this.setState({
       expanded: !this.state.expanded
-    })
+    });
+
+    this.props.authstore.handleNewOpenedPaymentRow(month);
   };
 
-  handlePayAll = (payments) => () => {
+  handlePayAll = (payments, month) => () => {
     this.setState({
       payAllButtonLoading: true
-    }, this.handleLoader);
+    });
 
-    console.log(payments.map(payment => payment.id));
+    payments.forEach(payment => this.payLandTax(payment.id, month));
   };
 
-  handleLoader = () => {
-    setTimeout(() => {
-      this.setState({
-        payAllButtonLoading: false
-      })
-    }, 3000)
+  payLandTax = (id, month) => {
+    fetch(`${window.location.origin}/${api.payLandTax(id)}`, {method: 'POST'})
+      .then(response => response.json())
+      .then(payment => {
+        setTimeout(() => {
+          this.props.authstore.fetchUserTransactionsAndPayments();
+          this.props.authstore.removeFromOpenedPaymentRows(month);
+        }, 2000)
+      });
   }
 }
 

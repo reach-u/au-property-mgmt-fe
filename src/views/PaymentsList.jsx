@@ -17,9 +17,8 @@ class PaymentsList extends Component {
   render() {
     const {authstore} = this.props;
     let allPayments = authstore.userPayments;
-    let unpaidPayments = authstore.pendingPayments.length > 0;
 
-    if (unpaidPayments) {
+    if (allPayments.length > 0) {
       return (
         <Fragment>
           <div className="payment-container">

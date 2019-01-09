@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import {Icon, Spinner} from "@blueprintjs/core";
 import {formatDate} from "../utils/date";
+import api from "../config/API";
 
 
 class PaymentOfProperty extends Component {
@@ -44,18 +45,21 @@ class PaymentOfProperty extends Component {
   handleSinglePay = () => {
     this.setState({
       payButtonLoading: true
-    }, this.handleLoader);
+    });
 
-    console.log(this.props.payment.id);
+    let paymentId = this.props.payment.id;
+    this.payLandTax(paymentId);
   };
 
-  handleLoader = () => {
-    setTimeout(() => {
-      this.setState({
-        payButtonLoading: false
-      })
-    }, 3000)
-  }
+  payLandTax = (id) => {
+    fetch(`${window.location.origin}/${api.payLandTax(id)}`, {method: 'POST'})
+      .then(response => response.json())
+      .then(payment => {
+        setTimeout(() => {
+          this.props.authstore.fetchUserTransactionsAndPayments();
+        }, 2000)
+      });
+  };
 }
 
 export default observer(PaymentOfProperty);

@@ -11,6 +11,7 @@ class UserAuthStore {
   users = [];
   userTransactions = [];
   userPayments = [];
+  openedPaymentRows = [];
   loading = false;
 
   initAndLoginUsers() {
@@ -55,6 +56,16 @@ class UserAuthStore {
         fetch(`${window.location.origin}/${api.getPersonsPayments(this.userId)}`)
           .then(response => response.json())
           .then(payments => {
+            this.userPayments = [];
+            payments.forEach(month => month.payments.sort((a, b) => {
+              if (a.id > b.id) {
+                return 1;
+              }
+              if (a.id < b.id) {
+                return -1;
+              }
+              return 0;
+            }));
             this.userPayments = payments.length > 0 ? payments.reverse() : [];
           });
       });
@@ -67,6 +78,20 @@ class UserAuthStore {
       this.userAuth = user;
       this.loading = false;
     }, 500);
+  }
+
+  handleNewOpenedPaymentRow(newId) {
+    if (this.openedPaymentRows.includes(newId)) {
+      this.openedPaymentRows = this.openedPaymentRows.filter(id => id !== newId);
+    } else {
+      this.openedPaymentRows.push(newId);
+    }
+  }
+
+  removeFromOpenedPaymentRows(oldId) {
+    if (this.openedPaymentRows.includes(oldId)) {
+      this.openedPaymentRows = this.openedPaymentRows.filter(id => id !== oldId);
+    }
   }
 
   get currentUser() {
