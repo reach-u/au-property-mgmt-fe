@@ -36,10 +36,10 @@ export const loading = (
       background: 'transparent',
     }}>
     <div className="lds-ellipsis">
-      <div/>
-      <div/>
-      <div/>
-      <div/>
+      <div />
+      <div />
+      <div />
+      <div />
     </div>
   </div>
 );
@@ -132,6 +132,23 @@ class App extends Component {
               ) : (
                 <Redirect to="/search"/>
               )}
+                {isLoggedIn ? (
+                    <Route
+                        path="/transaction/:id"
+                        render={props => (
+                            <Suspense fallback={loading}>
+                                <Transaction
+                                    store={realEstateStore}
+                                    transactionStore={transactionStore}
+                                    userStore={userAuthStore}
+                                    {...props}
+                                />
+                            </Suspense>
+                        )}
+                    />
+                ) : (
+                    <Redirect to="/search" />
+                )}
               {isAdmin ? (
                 <Route
                   path="/tax-area-stats"
@@ -171,13 +188,13 @@ class App extends Component {
                   )}
                 />
               ) : (
-                <Redirect to="/search"/>
+                <Redirect to="/search" />
               )}
-              <Route path="/:id" render={() => <NotFoundPage/>}/>
+              <Route path="/:id" render={() => <NotFoundPage />} />
             </Switch>
           </Suspense>
 
-          <Suspense fallback={<div/>}>
+          <Suspense fallback={<div />}>
             <Motion
               defaultStyle={{x: 2000}}
               style={{x: spring(realEstateStore.detailsVisible ? 0 : 2000)}}>
@@ -186,7 +203,7 @@ class App extends Component {
                   style={{transform: `translateX(${style.x}px)`, zIndex: 1000}}
                   className="details-animation-container">
                   {!!realEstateStore.detailsId && (
-                    <Details store={realEstateStore} authstore={userAuthStore}/>
+                    <Details store={realEstateStore} authstore={userAuthStore} />
                   )}
                 </div>
               )}
@@ -194,13 +211,13 @@ class App extends Component {
           </Suspense>
 
           {/*{this.props.location.pathname !== '/search' && (*/}
-          <div className="footer">
-            <div className="footer-block footer-logo"><img src={itlLogo} alt="ITL logo" height={15}/></div>
-            <div className="footer-block">Estonian Association of Information Technology and Telecommunications</div>
-            <div className="footer-block">Lõõtsa 6, 11415 Tallinn</div>
-            <div className="footer-block">6177&nbsp;145</div>
-            <div className="footer-block"><a href="mailto:info@itl.ee">info@itl.ee</a></div>
-          </div>
+            {window.innerWidth > 1370 && <div className="footer">
+              <div className="footer-block footer-logo"><img src={itlLogo} alt="ITL logo" height={15} /></div>
+              <div className="footer-block">Estonian Association of Information Technology and Telecommunications</div>
+              <div className="footer-block">Lõõtsa 6, 11415 Tallinn</div>
+               <div className="footer-block">6177&nbsp;145</div>
+               <div className="footer-block"><a href="mailto:info@itl.ee">info@itl.ee</a></div>
+            </div>}
         </div>
       </Fragment>
     );

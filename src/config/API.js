@@ -16,4 +16,5 @@ export default {
   getTransactions: addressId => createUrl('/api/1/priv/re/details_by_address/', [addressId]),
   getPersonsTransactions: personId => createUrl('/api/1/priv/re/details_by_person/', [personId]),
   getPersonsPayments: personId => createUrl('/api/1/priv/landtax/payments/', [personId]),
+  getTaxZones: () => createUrl('/api/1/priv/landtax/zones')
 };

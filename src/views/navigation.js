@@ -75,8 +75,8 @@ class Navigation extends Component {
                     </button>
                   )}
                   {!!authstore.userAuth && (
-                    <div style={{display: 'flex', justifyContent: 'center', marginTop: 32}}>
-                      <Link to="/transactions" className="menu-link" style={{marginTop: 0}}>
+                    <Fragment>
+                      <Link to="/transactions" className="menu-link">
                         My transactions
                       </Link>
                       {activeTransactions && (
@@ -84,21 +84,17 @@ class Navigation extends Component {
                           {authstore.pendingTransactions.length}
                         </div>
                       )}
-                    </div>
+                    </Fragment>
                   )}
                   {isAdmin && (
-                      <div style={{display: 'flex', justifyContent: 'center', marginTop: 32}}>
-                        <Link to="/tax-area-stats" className="menu-link" style={{marginTop: 0}}>
+                        <Link to="/tax-area-stats" className="menu-link">
                           Stats per tax area
                         </Link>
-                      </div>
                   )}
                   {isAdmin && (
-                      <div style={{display: 'flex', justifyContent: 'center', marginTop: 32}}>
-                        <Link to="/month-stats" className="menu-link" style={{marginTop: 0}}>
+                        <Link to="/month-stats" className="menu-link">
                           Stats per month
                         </Link>
-                      </div>
                   )}
                   <Link to="/help" className="menu-link">
                     Help
