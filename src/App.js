@@ -119,6 +119,23 @@ class App extends Component {
               ) : (
                 <Redirect to="/search" />
               )}
+                {isLoggedIn ? (
+                    <Route
+                        path="/transaction/:id"
+                        render={props => (
+                            <Suspense fallback={loading}>
+                                <Transaction
+                                    store={realEstateStore}
+                                    transactionStore={transactionStore}
+                                    userStore={userAuthStore}
+                                    {...props}
+                                />
+                            </Suspense>
+                        )}
+                    />
+                ) : (
+                    <Redirect to="/search" />
+                )}
               {isAdmin ? (
                     <Route
                         path="/tax-area-stats"
@@ -142,23 +159,6 @@ class App extends Component {
                     />
                 ) : (
                     <Redirect to="/search" />
-              )}
-              {isLoggedIn ? (
-                <Route
-                  path="/transaction/:id"
-                  render={props => (
-                    <Suspense fallback={loading}>
-                      <Transaction
-                        store={realEstateStore}
-                        transactionStore={transactionStore}
-                        userStore={userAuthStore}
-                        {...props}
-                      />
-                    </Suspense>
-                  )}
-                />
-              ) : (
-                <Redirect to="/search" />
               )}
               <Route path="/:id" render={() => <NotFoundPage />} />
             </Switch>
