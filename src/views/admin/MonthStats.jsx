@@ -10,15 +10,13 @@ import {observer} from 'mobx-react';
 import api from '../../config/API';
 import {Classes, Icon} from "@blueprintjs/core";
 import {BarChart, d3} from 'react-d3-components';
+import {ReminderButton} from "../../components/ReminderButton";
 
 class MonthStats extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      taxInfoList: []
-    };
-  }
+  state = {
+    taxInfoList: []
+  };
 
   handleResize() {
     let elem = ReactDOM.findDOMNode(this);
@@ -185,16 +183,15 @@ class MonthStats extends Component {
     return (
         <tr key={address.id} className={owner.isAddressesExpanded ? "show-row" : "hide-row"}>
           <td>
+          </td>
+          <td className="text-row">
             {address.detailedData.buildingType === 'School' ? (
                 <img src={school} alt="School"/>
             ) : address.detailedData.buildingType === 'Apartment building' ? (
                 <Icon icon="office" iconSize={20} className="table-icon"/>
             ) : (
                 <Icon icon="home" iconSize={20} className="table-icon"/>
-            )}
-          </td>
-          <td className="text-row">
-            {address.street} {address.house}{address.apartment ? `-${address.apartment}` : ''}
+            )} {address.street} {address.house}{address.apartment ? `-${address.apartment}` : ''}
           </td>
           <td className="text-row">
             {address.house}, {address.street}, {address.county}, {address.country}
@@ -221,19 +218,19 @@ class MonthStats extends Component {
 
   renderExpandedOwnersHeader = (taxInfo) => {
     return (<tr key={taxInfo.name + '_expanded'} className={taxInfo.expanded ? "show-row" : "hide-row"}>
-      <th className="text-row">
+      <th className="text-row main-table-row">
         Properties
       </th>
-      <th className="text-row">
+      <th className="text-row main-table-row">
         Owner name
       </th>
-      <th>
+      <th className="main-table-row">
         Amount paid
       </th>
-      <th>
+      <th className="main-table-row">
         Amount missing
       </th>
-      <th>
+      <th className="main-table-row">
         Send reminder
       </th>
     </tr>);
@@ -242,23 +239,23 @@ class MonthStats extends Component {
   renderExpandedOwnersContent = (authstore, taxInfo, owner) => {
     return (
         <tr key={owner.name + '_owner'} className={taxInfo.expanded ? "show-row" : "hide-row"}>
-          <td className="text-row">
+          <td className="text-row main-table-row">
                         <span className="open-addresses" onClick={() => this.handleExpandAddressesTable(taxInfo, owner)}
                               title="Expand">
                             <Icon icon={owner.isAddressesExpanded ? "chevron-down" : "chevron-right"}/>
                         </span>
           </td>
-          <td className="text-row">
+          <td className="text-row main-table-row">
             {authstore.getUsernameById(owner.name)}
           </td>
-          <td>
+          <td className="main-table-row">
             {owner.paidAmount.toLocaleString()}
           </td>
-          <td>
+          <td className="main-table-row">
             {owner.missingAmount.toLocaleString()}
           </td>
-          <td>
-            <button className="reminder-button">Send reminder</button>
+          <td className="main-table-row">
+            <ReminderButton/>
           </td>
         </tr>
     );

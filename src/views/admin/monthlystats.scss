@@ -11,6 +11,14 @@
   width: 50%;
   margin-left: 120px;
 
+  tr:nth-child(even) td {
+    background: #efefef !important;
+  }
+
+  tr:nth-child(odd) td {
+    background: white !important;
+  }
+
   table {
     tbody {
       .main-table-row {
@@ -20,11 +28,13 @@
 
     width: 90%;
     margin-bottom: 30px;
+
     tr {
       height: 42px;
 
       th {
         text-align: right;
+        padding: 6px;
 
         &.text-row {
           text-align: left;
@@ -57,9 +67,12 @@
   transition: 200ms;
   cursor: pointer;
 }
-.reminder-button:hover {
+.reminder-button:hover:enabled {
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+.reminder-button:disabled {
+  background: #00AAAD;
 }
 
 .legends {
@@ -109,9 +122,6 @@
   }
   .monthly-charts-container {
     width: 75%;
-    svg {
-      viewbox: 0 0 60 55;
-    }
   }
   .monthly-tax-table-container {
     width: 75%;
