@@ -16,6 +16,19 @@
   width: 100%;
 }
 
+.info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+.info h4 {
+  margin: 0 0 5px;
+  color: #777;
+}
+
 @media screen and (min-width: 1370px) {
   .registry-container {
     padding: 0;
@@ -78,3 +91,80 @@
     text-decoration: underline;
   }
 }
+
+
+.greentext {
+  color: #008B8A;
+}
+
+.zoneInfo {
+  margin-top: 6px;
+}
+
+.key-dot {
+  display: inline-block;
+  height: 10px;
+  margin-right: .5em;
+  width: 10px;
+}
+
+.normal-text {
+  color:black;
+}
+
+.zone1-color{
+  background: #9DD2EA;
+}
+
+.zone2-color{
+  background: #61C0F2;
+}
+
+.zone3-color{
+  background: #098BBA;
+}
+
+.form {
+  *, *:after, *:before {box-sizing: border-box;}
+  display: flex;
+  padding-bottom: 3px;
+
+  input {
+    position: absolute;
+    opacity: 0;
+
+    &:checked + label svg path {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  #showLegendLabel, #showTaxZonesLabel {
+    --d: 20px;
+  }
+
+  span {
+    padding-top: 3px;
+    padding-left: 5px;
+  }
+
+  label {
+    display: block;
+    border: 1px solid #008B8A;
+    width: var(--d); height: var(--d);
+    border-radius: 3px;
+    cursor: pointer;
+
+
+    svg {
+      pointer-events: none;
+      path {
+        fill: none;
+        stroke: #008B8A;
+        stroke-width: 4px;
+        stroke-dasharray: 100;
+        stroke-dashoffset: 101;
+      }
+    }
+  }
+}
+

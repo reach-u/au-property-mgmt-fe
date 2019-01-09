@@ -4,6 +4,7 @@ import './registry/registry.scss';
 import L from "leaflet";
 import waitAtLeast from "../utils/gracefulLoader";
 import {observer} from "mobx-react";
+import Control from 'react-leaflet-control';
 import api from "../config/API";
 
 const Map = lazy(() => waitAtLeast(600, import('./fullDetails/leaflet-map')));
@@ -21,13 +22,15 @@ class PropertyListView extends React.Component {
             mapCenter: [-4.04569, 39.66366],
             activeEstate: null,
             taxZones: null,
+            showTaxZones: false,
+            showLegend: false,
+            layers: L.layerGroup()
         };
         reaction(
             () => this.props.realEstateStore.dataAvailable,
             data => {
                 if (data && this.state.mapRef) {
                     this.createPopups();
-                    this.createTaxLayers();
                 }
             },
         );
@@ -60,6 +63,54 @@ class PropertyListView extends React.Component {
                                     whenReady={() => this.setState({mapRef: 'loaded'})}>
                                     <TileLayer
                                         url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"/>
+                                    <Control className="info">
+                                        <div>
+                                            <div className="form">
+                                                <input type="checkbox" id="showTaxZones"
+                                                       defaultChecked={this.state.showTaxZones}
+                                                       onChange={this.handleShowTaxZonesToggle}/>
+                                                <label htmlFor="showTaxZones" id="showTaxZonesLabel">
+                                                    <svg viewBox="0,0,50,50">
+                                                        <path d="M5 30 L 20 45 L 45 5"/>
+                                                    </svg>
+                                                </label>
+                                                <span className="greentext">Show land tax zones</span>
+                                            </div>
+                                            <div className="form">
+                                                <input type="checkbox" id="showLegend"
+                                                       defaultChecked={this.state.showLegend}
+                                                       onChange={this.handleShowLegendToggle}/>
+                                                <label htmlFor="showLegend" id="showLegendLabel">
+                                                    <svg viewBox="0,0,50,50">
+                                                        <path d="M5 30 L 20 45 L 45 5"/>
+                                                    </svg>
+                                                </label>
+                                                <span className="greentext">Show legend</span>
+                                            </div>
+                                            {this.state.showLegend &&
+                                            <Fragment>
+                                                <div className="greentext zoneInfo">
+                                                    <p>Monthly tax rate:</p>
+                                                    <p>
+                                                        <span className="key-dot zone1-color"></span>
+                                                        <span className="normal-text">Zone1: </span>
+                                                        <b>$10 per sqm</b>
+                                                    </p>
+                                                    <p>
+                                                        <span className="key-dot zone2-color"></span>
+                                                        <span className="normal-text">Zone2: </span>
+                                                        <b>$25 per sqm</b>
+                                                    </p>
+                                                    <p>
+                                                        <span className="key-dot zone3-color"></span>
+                                                        <span className="normal-text">Zone3: </span>
+                                                        <b>$18 per sqm</b>
+                                                    </p>
+                                                </div>
+                                            </Fragment>
+                                            }
+                                        </div>
+                                    </Control>
                                 </Map>
                             </div>
                         )}
@@ -76,7 +127,6 @@ class PropertyListView extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (!prevState.mapRef && this.state.mapRef) {
             this.createPopups();
-            this.createTaxLayers();
         }
     }
 
@@ -169,42 +219,76 @@ class PropertyListView extends React.Component {
 
     createTaxLayers = () => {
         this.state.taxZones.forEach((pol) => {
-                switch (pol.name) {
-
-                }
-            const polygonContent = L.polygon(pol.zoneCoordinates );
+            let initialColor;
             switch (pol.name) {
                 case 'Zone1':
-                    this.createPolygonContent(polygonContent, '#2055aa', '#709be0');
+                    initialColor = '#679fda';
                     break;
                 case 'Zone2':
-                    this.createPolygonContent(polygonContent, '#b78507', '#e2ba56');
+                    initialColor = '#1574A6';
                     break;
                 case 'Zone3':
-                    this.createPolygonContent(polygonContent, '#2055aa', '#709be0');
+                    initialColor = '#003F6E';
                     break;
-
-
+                default:
+                    initialColor = '#679fda';
             }
-            // this.createPolygonContent(polygonContent, '#2055aa', '#709be0');
+            console.log(initialColor);
+            let polygonContent = L.polygon(pol.zoneCoordinates, {color: initialColor}).bindTooltip(pol.name,{sticky:true});
+            switch (pol.name) {
+                case 'Zone1':
+                    this.createPolygonContent(polygonContent, initialColor, '#5fb5dd');
+                    break;
+                case 'Zone2':
+                    this.createPolygonContent(polygonContent, initialColor, '#448aaf');
+                    break;
+                case 'Zone3':
+                    this.createPolygonContent(polygonContent, initialColor, '#709be0');
+                    break;
+                default:
+                    this.createPolygonContent(polygonContent, initialColor, '#5fb5dd');
+            }
+            this.state.layers.addLayer(polygonContent);
 
-            this.map.current.leafletElement.addLayer(polygonContent);
         });
-
+        this.map.current.leafletElement._addLayers(this.state.layers);
     };
 
     createPolygonContent = (polygonContent, color1, color2) => {
-        polygonContent.on('mouseover', function() {
+        polygonContent.on('mouseover', function () {
             this.setStyle({
                 color: color1
             })
         });
-        polygonContent.on('mouseout', function() {
+        polygonContent.on('mouseout', function () {
             this.setStyle({
                 color: color2
             })
         });
-    }
+    };
+
+    removeTaxLayers = () => {
+        this.state.layers.clearLayers();
+    };
+
+    handleShowTaxZonesToggle = () => {
+        if (this.state.taxZones != null && this.state.mapRef != null) {
+            if (!this.state.showTaxZones) {
+                this.createTaxLayers();
+            } else {
+                this.removeTaxLayers();
+            }
+        }
+        this.setState({
+            showTaxZones: !this.state.showTaxZones
+        });
+    };
+
+    handleShowLegendToggle = () => {
+        this.setState({
+            showLegend: !this.state.showLegend
+        });
+    };
 }
 
 export default observer(PropertyListView);
