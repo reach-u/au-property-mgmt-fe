@@ -9,6 +9,7 @@ import {Classes, NonIdealState, ProgressBar} from "@blueprintjs/core";
 import PaymentsOfOneMonth from "./PaymentsOfOneMonth";
 
 class PaymentsList extends Component {
+
   componentDidMount() {
     this.props.authstore.fetchUserTransactionsAndPayments();
   }
@@ -21,10 +22,9 @@ class PaymentsList extends Component {
     if (unpaidPayments) {
       return (
         <Fragment>
-          <div className="monthly-tax-container">
-            <div className="monthly-tax-table-container">
-              <table
-                className={[Classes.HTML_TABLE_STRIPED, Classes.HTML_TABLE].join(' ')}>
+          <div className="payment-container">
+            <div className="payment-table-container">
+              <table className={[Classes.HTML_TABLE_STRIPED, Classes.HTML_TABLE].join(' ')}>
                 {this.renderTableHeader()}
                 {this.renderTableContent(allPayments)}
                 {this.renderTableFooter(allPayments)}
@@ -60,22 +60,27 @@ class PaymentsList extends Component {
   }
 
   renderTableFooter = (allPayments) => {
-    let listOfAllPayments = allPayments.map(month => month.payments);
-    let unpaidPayments = allPayments.filter(payment => payment.paid);
-    let sumOfAllPayments = listOfAllPayments.map(payment => payment.payable).reduce((a, b) => a + b, 0);
-    let sumOfAllUnpaidPayments = unpaidPayments.map(payment => payment.payable).reduce((a, b) => a + b, 0);
+    let listOfAllPayments = [].concat.apply([], allPayments.map(item => item.payments));
+    let unpaidPayments = listOfAllPayments.filter(payment => !payment.paid);
+    let sumOfAllPayments = this.calculateSumOfPayments(listOfAllPayments);
+    let sumOfAllUnpaidPayments = this.calculateSumOfPayments(unpaidPayments);
 
     return (
       <tbody key="total-row">
       <tr className="total-row">
         <td/>
-        <td title="Total" className="text-row">Total</td>
-        <td title="planned amount">{sumOfAllPayments.toLocaleString('en-US')}</td>
-        <td title="paid amount">{(sumOfAllPayments - sumOfAllUnpaidPayments).toLocaleString('en-US')}</td>
-        <td title="missing amount">{sumOfAllUnpaidPayments.toLocaleString('en-US')}</td>
+        <td title="Total" className="text-row bold">Total</td>
+        <td title="Planned amount" className="bold">{sumOfAllPayments.toLocaleString('en-US')}</td>
+        <td title="Paid amount" className="bold">{(sumOfAllPayments - sumOfAllUnpaidPayments).toLocaleString('en-US')}</td>
+        <td title="Missing amount" className="bold">{sumOfAllUnpaidPayments.toLocaleString('en-US')}</td>
+        <td/>
       </tr>
       </tbody>
     );
+  };
+
+  calculateSumOfPayments = (payments) => {
+    return payments.map(payment => payment.payable).reduce((a, b) => a + b, 0);
   };
 
   renderTableHeader = () => {
@@ -84,9 +89,10 @@ class PaymentsList extends Component {
       <tr>
         <th className="text-row"/>
         <th className="text-row">Month</th>
-        <th>Amount (planned)</th>
-        <th>Amount paid</th>
-        <th>Amount missing</th>
+        <th>Amount planned ($)</th>
+        <th>Amount paid ($)</th>
+        <th>Amount missing ($)</th>
+        <th/>
       </tr>
       </thead>
     );
