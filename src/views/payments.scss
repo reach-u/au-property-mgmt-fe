@@ -1,98 +1,103 @@
-.payment-table {
-  margin: 110px auto;
-  width: 55%;
+@import "./taxareastats";
 
-  .table-container {
-    width: 100%;
-  }
+.monthly-tax-container {
+  margin: 120px auto 40px;
+  height: 100%;
+  display: flex;
+  position: relative;
+}
 
-  .main-table-tr {
-    display: flex;
-    justify-content: space-between;
-  }
+.monthly-tax-table-container {
+  width: 50%;
+  margin-left: 120px;
+  table {
+    width: 90%;
+    margin-bottom: 30px;
+    tr {
+      height: 42px;
 
-  .main-table-td {
-    background-color: white !important;
-    width: 180px;
-    padding-top: 5px !important;
-  }
+      th {
+        text-align: right;
 
-  .main-table-row-container {
-    border-top: 1px solid black;
-    padding: 6px 0;
-  }
+        &.text-row {
+          text-align: left;
+        }
+      }
 
-  .main-table-row-container:first-of-type {
-    border-top: none;
-  }
+      td {
+        vertical-align: middle !important;
+        text-align: right;
 
-  .collapse-button-td {
-    background-color: white !important;
-  }
-
-  .collapse-button, .collapse-button:focus {
-    background-color: #008B8A;
-    color: white;
-    border-radius: 5px;
-    border: none;
-    height: 28px;
-    width: 28px;
-    font-size: 22px;
-    font-weight: 600;
-    padding: 2px;
-    outline: none;
-  }
-
-  .bold-text {
-    font-weight: 600;
-  }
-
-  .align-right {
-    text-align: right !important;
-  }
-
-  .separate-last-td {
-    margin-left:60px;
-    width: 80px !important;
+        &.text-row {
+          text-align: left;
+        }
+      }
+    }
   }
 }
 
-.detailed-month {
-  width: 66%;
-  margin: 10px 0 10px auto;
+.reminder-button {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1pt;
+  background: #008c8c;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+  0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  transition: 200ms;
+  cursor: pointer;
+}
+.reminder-button:hover {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+  0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
 
-  table {
-    width: 100%;
-    border-spacing: 0;
+.reminder-button span {
+  margin-left: 12px;
+  opacity: 0.9;
+}
+
+.paid {
+  background: #098bba;
+}
+
+.unpaid {
+  background: #ff495b;
+}
+
+.table-icon {
+  color: #888;
+}
+
+.monthly-charts-container {
+  width: 50%;
+  padding-bottom: 60px;
+}
+
+.hide-row {
+  display: none;
+}
+
+@media screen and (max-width: 1380px) {
+  .monthly-tax-table-container {
+    margin-left: 10px;
   }
-
-  .single-property-row:nth-child(odd) {
-    background: #e6e6e6;
+  .monthly-tax-container {
+    display: block;
   }
-
-  .single-property-row:hover {
-    border-left: 4px solid #008B8A;
+  .monthly-charts-container {
+    width: 75%;
+    svg {
+      viewbox: 0 0 60 55;
+    }
   }
-
-  .single-property-row {
-    display: flex;
-    justify-content: space-between;
-    border-left: 4px solid transparent;
-  }
-
-  .property-td {
-    padding: 10px 0;
-    margin-left: 20px;
-    width: 160px;
-  }
-
-  .property-align-right-td {
-    width: 160px;
-    padding: 10px 0;
-    text-align: right !important;
-  }
-
-  .number {
-    width: 20px;
+  .monthly-tax-table-container {
+    width: 75%;
+    table {
+      width: 80%;
+    }
   }
 }

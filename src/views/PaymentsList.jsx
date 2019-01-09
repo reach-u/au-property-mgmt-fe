@@ -14,7 +14,15 @@ class PaymentsList extends Component {
       return (
         <div className="payment-table">
           <table className="table-container">
-            <tbody>
+            <tr className="main-table-header">
+              <th/>
+              <th>Month</th>
+              <th>Number of Properties</th>
+              <th>Total</th>
+              <th>Paid</th>
+              <th>Unpaid</th>
+              <th/>
+            </tr>
             {authstore.userPayments.map((item, index) =>
               <PaymentsOfOneMonth
                 month={item}
@@ -22,7 +30,6 @@ class PaymentsList extends Component {
                 {...this.props}
               />
             )}
-            </tbody>
           </table>
         </div>
       )
