@@ -37,6 +37,7 @@
 .charts-container {
   width: 100%;
   display: inline-flex;
+  margin-top: 60px;
   padding-bottom: 60px;
 }
 
@@ -169,8 +170,12 @@
       }
     }
 
-    .legends {
-      margin-left: 20%;
+    .pie-chart {
+      margin-top: 40px;
+
+      .legends {
+        margin-left: 20%;
+      }
     }
   }
 }
