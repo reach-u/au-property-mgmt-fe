@@ -36,8 +36,12 @@ td:last-child div img {
     vertical-align: middle;
 }
 
-tr:nth-child(odd) td {
+tr:nth-child(even) td {
     background: #efefef !important;
+}
+
+tr:nth-child(odd) td {
+    background: white !important;
 }
 
 .main-details {

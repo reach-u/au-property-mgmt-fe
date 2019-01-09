@@ -21,10 +21,12 @@ class Navigation extends Component {
     const isSearch = location.pathname === '/results';
     const isProperties = location.pathname === '/properties';
     const isTransactions = location.pathname === '/transactions';
+    const isPayments = location.pathname === '/payments';
     const isAreaStats = location.pathname === '/tax-area-stats';
     const isMonthStats  = location.pathname === '/month-stats';
     const isHelp = location.pathname === '/help';
     const activeTransactions = authstore.pendingTransactions.length > 0;
+    const pendingPayments = authstore.pendingPayments.length > 0;
 
     return (
       <Fragment>
@@ -138,6 +140,20 @@ class Navigation extends Component {
                   {activeTransactions && (
                     <div className="transaction-notification">
                       {authstore.pendingTransactions.length}
+                    </div>
+                  )}
+                </Link>
+                <Link
+                  to="/payments"
+                  className="properties-button"
+                  title="My payments"
+                  style={{
+                    borderColor: isPayments ? '#008C8C' : 'white',
+                  }}>
+                  My payments
+                  {pendingPayments && (
+                    <div className="transaction-notification">
+                      {authstore.pendingPayments.length}
                     </div>
                   )}
                 </Link>

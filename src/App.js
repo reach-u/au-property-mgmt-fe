@@ -18,6 +18,7 @@ const OwnerChange = lazy(() => waitAtLeast(600, import('./views/ownerChange')));
 const Search = lazy(() => waitAtLeast(600, import('./views/registry/search')));
 const Details = lazy(() => waitAtLeast(600, import('./views/registry/details')));
 const Transactions = lazy(() => waitAtLeast(600, import('./views/transactions')));
+const Payments = lazy(() => waitAtLeast(600, import('./views/PaymentsList')));
 const UserProperties = lazy(() => waitAtLeast(600, import('./views/userProperties')));
 const Help = lazy(() => waitAtLeast(600, import('./views/help')));
 const Transaction = lazy(() => waitAtLeast(600, import('./views/singleTransaction')));
@@ -117,6 +118,18 @@ class App extends Component {
                   )}
                 />
               ) : (
+                <Redirect to="/search"/>
+              )}
+              {isLoggedIn ? (
+                <Route
+                  path="/payments"
+                  render={props => (
+                    <Suspense fallback={loading}>
+                      <Payments authstore={userAuthStore} store={realEstateStore} {...props} />
+                    </Suspense>
+                  )}
+                />
+              ) : (
                 <Redirect to="/search" />
               )}
                 {isLoggedIn ? (
@@ -159,6 +172,23 @@ class App extends Component {
                     />
                 ) : (
                     <Redirect to="/search" />
+              )}
+              {isLoggedIn ? (
+                <Route
+                  path="/transaction/:id"
+                  render={props => (
+                    <Suspense fallback={loading}>
+                      <Transaction
+                        store={realEstateStore}
+                        transactionStore={transactionStore}
+                        userStore={userAuthStore}
+                        {...props}
+                      />
+                    </Suspense>
+                  )}
+                />
+              ) : (
+                <Redirect to="/search" />
               )}
               <Route path="/:id" render={() => <NotFoundPage />} />
             </Switch>

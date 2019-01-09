@@ -1,5 +1,4 @@
 export const humanReadable = input => {
-  console.log(input);
   let newString = '';
   for (let i = 0; i < input.length; i++) {
     if (isUpper(input.charAt(i))) {
