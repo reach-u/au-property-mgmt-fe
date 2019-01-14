@@ -43,7 +43,7 @@
     width: 90%;
     margin-bottom: 30px;
     tr {
-      height: 42px;
+      height: 36px;
 
       th {
         text-align: right;
@@ -51,6 +51,14 @@
         &.text-row {
           text-align: left;
           padding-left: 8px !important;
+        }
+
+        &.bottom-align{
+          vertical-align: bottom;
+        }
+
+        &.th-address{
+          padding-left: 25px!important;
         }
       }
 
@@ -64,9 +72,21 @@
           padding-right: 6px !important;
         }
 
+        &.white-td {
+          background: white !important;
+        }
+
         &.button-row {
           padding-right: 6px !important;
         }
+
+        &.address-td{
+          padding-left: 25px!important;
+        }
+      }
+
+      &.month-table-first-row {
+        height: 70px;
       }
     }
   }
@@ -86,6 +106,7 @@
   transition: 200ms;
   cursor: pointer;
 }
+
 .pay-button:hover {
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
   0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
@@ -96,6 +117,10 @@
   opacity: 0.9;
 }
 
+.open-debtors {
+  color: #008B8A;
+}
+
 .hide-row {
   display: none;
 }
@@ -103,7 +128,8 @@
 @media screen and (max-width: 1380px) {
   .payment-table-container {
     margin-left: 6px;
-    table{
+
+    table {
       font-size: 1.5vh;
     }
   }
@@ -112,16 +138,63 @@
   }
   .payment-table-container {
     width: 75%;
+
     table {
       width: 80%;
     }
   }
   .pay-button {
     font-size: 1.5vh;
-    svg{
+
+    svg {
       height: 10px;
       width: 10px;
     }
   }
 
+}
+
+@media screen and (max-width: 800px) {
+
+  .payment-table-container {
+    table {
+      tr {
+        height: 36px;
+        th {
+          text-align: right;
+
+          &.text-row {
+            text-align: left;
+            padding-left: 6px !important;
+          }
+
+          &.bottom-align{
+            vertical-align: bottom;
+          }
+
+          &.th-address{
+            padding-left: 6px!important;
+          }
+        }
+
+        td {
+          vertical-align: middle !important;
+          text-align: right;
+          padding-right: 12px !important;
+
+          &.button-row {
+            padding-right: 6px !important;
+          }
+
+          &.address-td{
+            padding-left: 6px!important;
+          }
+        }
+
+        &.month-table-first-row {
+          height: 100px;
+        }
+      }
+    }
+  }
 }

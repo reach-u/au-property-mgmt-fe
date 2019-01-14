@@ -13,10 +13,10 @@ class PaymentOfProperty extends Component {
   render() {
     const { payment, expanded} = this.props;
 
-    return (
+      return (
       <tr className={expanded ? "show-row" : "hide-row"}>
-        <td/>
-        <td className="text-row">
+        <td className="white-td"/>
+        <td className="text-row address-td">
           {`${payment.address.street} ${payment.address.house}${
             payment.address.apartment ? `-${payment.address.apartment}` : ''
             }`}
@@ -24,14 +24,16 @@ class PaymentOfProperty extends Component {
         <td>
           {formatDate(payment.dueDate)}
         </td>
-        <td/>
         <td>
-          {payment.payable.toLocaleString('en-US')}
+            {this.getPaidAmount(payment)}
+        </td>
+        <td>
+          {this.getDueAmount(payment)}
         </td>
         <td className="button-row">
           {!payment.paid
             ? <button className="pay-button" onClick={this.handleSinglePay}>
-              PAY
+              Pay
               {this.state.payButtonLoading
                 ? <Spinner className="loading-spinner" size={12}/>
                 : <Icon icon='dollar'/>}
@@ -42,7 +44,15 @@ class PaymentOfProperty extends Component {
     )
   }
 
-  handleSinglePay = () => {
+    getPaidAmount(payment) {
+        return payment.paid ? payment.payable.toLocaleString('en-US') : 0;
+    }
+
+    getDueAmount(payment) {
+        return !payment.paid ? payment.payable.toLocaleString('en-US') : 0;
+    }
+
+    handleSinglePay = () => {
     this.setState({
       payButtonLoading: true
     });
