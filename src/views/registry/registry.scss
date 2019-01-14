@@ -148,12 +148,17 @@
   }
 
   label {
+
     display: block;
     border: 1px solid #008B8A;
     width: var(--d); height: var(--d);
     border-radius: 3px;
     cursor: pointer;
 
+    &.text-label{
+      border: none;
+      padding-top: 5px;
+    }
 
     svg {
       pointer-events: none;

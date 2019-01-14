@@ -14,7 +14,9 @@ export default class Legend extends React.Component {
                             <path d="M5 30 L 20 45 L 45 5"/>
                         </svg>
                     </label>
-                    <span className="greentext">Show land tax zones</span>
+                    <label htmlFor="showTaxZones" className="text-label">
+                        <span className="greentext">Show land tax zones</span>
+                    </label>
                 </div>
                 <div className="form">
                     <input type="checkbox" id="showLegend"
@@ -25,7 +27,9 @@ export default class Legend extends React.Component {
                             <path d="M5 30 L 20 45 L 45 5"/>
                         </svg>
                     </label>
-                    <span className="greentext">Show legend</span>
+                    <label htmlFor="showLegend" className="text-label">
+                        <span className="greentext">Show legend</span>
+                    </label>
                 </div>
                 {this.props.showLegend &&
                 <Fragment>
