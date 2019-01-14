@@ -32,10 +32,9 @@ class PaymentsOfMonth extends Component {
     return (
       <tr>
         <td className="text-row color-to-white">
-          {sumOfUnpaidPayments > 0 &&
           <span className="open-debtors" onClick={this.toggleRow(month.monthName)} title="Expand">
             <Icon icon={this.state.expanded ? "chevron-down" : "chevron-right"}/>
-          </span>}
+          </span>
         </td>
         <td title="Month name" className="text-row color-to-white">
           {month.monthName}

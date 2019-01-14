@@ -75,29 +75,29 @@ class Navigation extends Component {
                     </button>
                   )}
                   {!!authstore.userAuth && (
-                    <div className="notification-menu-link-div">
+                      <Link to="/transactions" className="menu-link">
+                        <div className="notification-menu-link-div">
                       {activeTransactions && (
                             <div className="transaction-notification">
                                 {authstore.pendingTransactions.length}
                             </div>
                       )}
-                      <Link to="/transactions" className="menu-link">
+
                         My transactions
+                        </div>
                       </Link>
-                    </div>
                   )}
                   {!!authstore.userAuth && (
-                      <div className="notification-menu-link-div">
+                      <Link to="/payments" className="menu-link">
+                        <div className="notification-menu-link-div">
                           {pendingPayments && (
                               <div className="transaction-notification">
                                   {authstore.pendingPayments.length}
                               </div>
                           )}
-                      <Link to="/payments" className="menu-link">
                         My payments
+                        </div>
                       </Link>
-
-                      </div>
                   )}
 
 
