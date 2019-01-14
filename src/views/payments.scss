@@ -102,7 +102,10 @@
 
 @media screen and (max-width: 1380px) {
   .payment-table-container {
-    margin-left: 10px;
+    margin-left: 6px;
+    table{
+      font-size: 1.5vh;
+    }
   }
   .payment-container {
     display: block;
@@ -113,4 +116,12 @@
       width: 80%;
     }
   }
+  .pay-button {
+    font-size: 1.5vh;
+    svg{
+      height: 10px;
+      width: 10px;
+    }
+  }
+
 }

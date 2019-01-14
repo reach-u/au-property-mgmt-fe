@@ -105,7 +105,7 @@
 }
 
 .monthly-charts-container {
-  width: 50%;
+  //width: 50%;
   padding-bottom: 60px;
 }
 
@@ -113,14 +113,34 @@
   display: none;
 }
 
+h2{
+  margin:0 25% 0;
+}
+
 @media screen and (max-width: 1380px) {
   .monthly-tax-table-container {
     margin-left: 10px;
+    table {
+      font-size: 12px;
+
+      tr >th {
+        padding: 0px;
+    }
+
+      svg{
+        height: 12px;
+        width: 12px;
+      }
+      .reminder-button{
+        font-size: 12px;
+        padding: 4px 8px;
+      }
+    }
   }
   .monthly-tax-container {
     display: block;
   }
-  .monthly-charts-container {
+  .chart {
     width: 75%;
   }
   .monthly-tax-table-container {

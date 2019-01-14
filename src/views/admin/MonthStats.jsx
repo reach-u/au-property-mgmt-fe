@@ -219,7 +219,6 @@ class MonthStats extends Component {
   renderExpandedOwnersHeader = (taxInfo) => {
     return (<tr key={taxInfo.name + '_expanded'} className={taxInfo.expanded ? "show-row" : "hide-row"}>
       <th className="text-row main-table-row">
-        Properties
       </th>
       <th className="text-row main-table-row">
         Owner name
@@ -332,11 +331,12 @@ class MonthStats extends Component {
     };
 
 
-    let barChartWidth = this.state.parentWidth > 1380 ? 700 : this.state.parentWidth;
+    let barChartWidth = this.state.parentWidth > 1380 ? 700 : this.state.parentWidth - 40;
 
     return (
+      <Fragment>
+        <h2>Monthly paid and missing amounts</h2>
         <div className="chart">
-          <h2>Monthly paid and missing amounts</h2>
           <BarChart
               data={data}
               colorScale={color}
@@ -355,6 +355,7 @@ class MonthStats extends Component {
             </div>
           </div>
         </div>
+      </Fragment>
     );
   };
 }
