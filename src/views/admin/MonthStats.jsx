@@ -219,7 +219,6 @@ class MonthStats extends Component {
   renderExpandedOwnersHeader = (taxInfo) => {
     return (<tr key={taxInfo.name + '_expanded'} className={taxInfo.expanded ? "show-row" : "hide-row"}>
       <th className="text-row main-table-row">
-        {/*Properties*/}
       </th>
       <th className="text-row main-table-row">
         Owner name
