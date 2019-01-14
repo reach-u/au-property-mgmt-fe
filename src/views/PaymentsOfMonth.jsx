@@ -51,7 +51,7 @@ class PaymentsOfMonth extends Component {
         <td title="Pay all" className="button-row color-to-white">
           {sumOfUnpaidPayments > 0 &&
           <button className="pay-button" onClick={this.handlePayAll(unpaidPayments, monthName)}>
-            PAY ALL
+            Pay all
             {this.state.payAllButtonLoading
               ? <Spinner className="loading-spinner" size={12}/>
               : <Icon icon='dollar'/>}
@@ -67,13 +67,15 @@ class PaymentsOfMonth extends Component {
   renderTableExpandedRows = (month) => {
     let payments = month.payments;
 
+    let expansionClassName = this.state.expanded ? "show-row" : "hide-row";
+
     let rowArray = [
-      <tr key={month.monthName} className={this.state.expanded ? "show-row" : "hide-row"}>
+      <tr key={month.monthName} className={`${expansionClassName} month-table-first-row`}>
         <th/>
-        <th className="text-row">Address</th>
-        <th>Due date</th>
-        <th/>
-        <th>Amount ($)</th>
+        <th className="text-row bottom-align th-address">Address</th>
+        <th className="bottom-align">Due date</th>
+        <th className="bottom-align"> Amount paid (USD) </th>
+        <th className="bottom-align">Amount due (USD)</th>
         <th/>
       </tr>
     ];
@@ -88,6 +90,15 @@ class PaymentsOfMonth extends Component {
         />
       )]
     );
+
+    rowArray.push(<tr key={month.monthName + "_end"} className={`${expansionClassName} month-table-first-row`}>
+      <td className="white-td"/>
+      <td className="white-td"/>
+      <td className="white-td"/>
+      <td className="white-td"/>
+      <td className="white-td"/>
+      <td className="white-td"/>
+    </tr>);
 
     return (<tbody>{rowArray}</tbody>);
   };

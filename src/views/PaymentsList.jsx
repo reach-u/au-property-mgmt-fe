@@ -88,9 +88,9 @@ class PaymentsList extends Component {
       <tr>
         <th className="text-row"/>
         <th className="text-row">Month</th>
-        <th>Amount planned ($)</th>
-        <th>Amount paid ($)</th>
-        <th>Amount missing ($)</th>
+        <th>Total amount (USD)</th>
+        <th>Amount paid (USD)</th>
+        <th>Amount due (USD)</th>
         <th/>
       </tr>
       </thead>
