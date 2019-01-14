@@ -184,16 +184,16 @@ class PropertyListView extends React.Component {
             let hoverColor;
             switch (pol.name) {
                 case 'Zone1':
-                    defaultColor = '#5582A9';
-                    hoverColor = '#5fb5dd';
+                    defaultColor = '#E2DC95';
+                    hoverColor = '#938a28';
                     break;
                 case 'Zone2':
-                    defaultColor = '#13567D';
-                    hoverColor = '#448aaf';
+                    defaultColor = '#95B1B0';
+                    hoverColor = '#455d5d';
                     break;
                 case 'Zone3':
-                    defaultColor = '#003F6E';
-                    hoverColor = '#709be0';
+                    defaultColor = '#098BBA';
+                    hoverColor = '#04455c';
                     break;
                 default:
                     defaultColor = '#679fda';
@@ -210,7 +210,7 @@ class PropertyListView extends React.Component {
     createPolygonContent = (polygonContent, defaultColor, hoverColor) => {
         polygonContent.on('mouseover', function () {
             this.setStyle({
-                color: hoverColor
+                color: hoverColor,
             })
         });
         polygonContent.on('mouseout', function () {
