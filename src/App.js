@@ -52,6 +52,7 @@ class App extends Component {
   render() {
     const isLoggedIn = !!userAuthStore.userAuth;
     const isAdmin = userAuthStore.currentUser.code === "70101010000" || userAuthStore.currentUser.code === "80102010001";
+    const userIsLoading = userAuthStore.loading;
 
     return (
       <Fragment>
@@ -202,7 +203,7 @@ class App extends Component {
                 <div
                   style={{transform: `translateX(${style.x}px)`, zIndex: 1000}}
                   className="details-animation-container">
-                  {!!realEstateStore.detailsId && (
+                  {!userIsLoading && !!realEstateStore.detailsId && (
                     <Details store={realEstateStore} authstore={userAuthStore} />
                   )}
                 </div>

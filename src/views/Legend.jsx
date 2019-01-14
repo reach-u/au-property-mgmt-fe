@@ -2,10 +2,6 @@ import React, {Fragment} from 'react';
 
 export default class Legend extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>
