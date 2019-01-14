@@ -179,7 +179,7 @@ class TaxAreaStats extends Component {
 
         const colorScale = d3.scale.ordinal()
             .domain(['Zone1', 'Zone2', 'Zone3'])
-            .range(["#9DD2EA", "#61C0F2", "#098BBA"]);
+            .range(["#E2DC95", "#95B1B0", "#098BBA"]);
 
         const data = {
             values: dataValues
