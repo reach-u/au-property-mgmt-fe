@@ -112,9 +112,12 @@
 .hide-row {
   display: none;
 }
+.open-debtors{
+  color: #008B8A;
+}
 
 h2{
-  margin:0 25% 0;
+  margin:0 0 0 25%;
 }
 
 @media screen and (max-width: 1380px) {
@@ -148,5 +151,11 @@ h2{
     table {
       width: 80%;
     }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  h2{
+    margin:0 25% 0;
   }
 }

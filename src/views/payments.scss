@@ -37,8 +37,8 @@
 }
 
 .payment-table-container {
-  width: 60%;
-  margin-left: 120px;
+  width: 100%;
+  margin: 0 220px 0 300px;
   table {
     width: 90%;
     margin-bottom: 30px;
@@ -60,6 +60,10 @@
         &.th-address{
           padding-left: 25px!important;
         }
+      }
+
+      td:nth-child(1) {
+        width: 90px;
       }
 
       td {
