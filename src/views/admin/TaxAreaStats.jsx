@@ -47,38 +47,38 @@ class TaxAreaStats extends Component {
                             <thead>
                             <tr>
                                 <th className="name-row">
-                                    Zone Name
+                                    Zone
                                 </th>
                                 <th>
                                     m<sup>2</sup>
                                 </th>
                                 <th>
-                                    Amount (plan)
+                                    Total amount (USD)
                                 </th>
                                 <th>
-                                    Amount paid
+                                    Amount paid (USD)
                                 </th>
                                 <th>
-                                    Amount missing
+                                    Amount due (USD)
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
                             {this.state.taxInfoList.map((taxInfo, index) => (
                                 <tr key={index}>
-                                    <td title="Zone name" className="name-row">
+                                    <td title="Zone" className="name-row">
                                         {taxInfo.name}
                                     </td>
-                                    <td title="m2 plan">
+                                    <td title="m2">
                                         {taxInfo.numberOfSquareMeters.toLocaleString()}
                                     </td>
-                                    <td title="planned amount">
+                                    <td title="Total amount">
                                         {taxInfo.plannedAmount.toLocaleString()}
                                     </td>
-                                    <td title="paid amount">
+                                    <td title="Amount paid">
                                         {taxInfo.paidAmount.toLocaleString()}
                                     </td>
-                                    <td title="missing amount">
+                                    <td title="Amount due">
                                         {taxInfo.missingAmount.toLocaleString()}
                                     </td>
                                 </tr>
@@ -87,16 +87,16 @@ class TaxAreaStats extends Component {
                                 <td title="Total" className="name-row">
                                     Total
                                 </td>
-                                <td title="m2 plan">
+                                <td title="m2">
                                     {total.numberOfSquareMeters.toLocaleString()}
                                 </td>
-                                <td title="planned amount">
+                                <td title="Total amount">
                                     {total.plannedAmount.toLocaleString()}
                                 </td>
-                                <td title="paid amount">
+                                <td title="Amount paid">
                                     {total.paidAmount.toLocaleString()}
                                 </td>
-                                <td title="missing amount">
+                                <td title="Amount due">
                                     {total.missingAmount.toLocaleString()}
                                 </td>
                             </tr>

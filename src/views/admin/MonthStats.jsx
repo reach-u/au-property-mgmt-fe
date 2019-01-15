@@ -90,13 +90,13 @@ class MonthStats extends Component {
           <td title="Total" className="text-row main-table-row">
             Total
           </td>
-          <td title="planned amount" className="main-table-row">
+          <td title="Total amount" className="main-table-row">
             {total.plannedAmount.toLocaleString()}
           </td>
-          <td title="paid amount" className="main-table-row">
+          <td title="Amount paid" className="main-table-row">
             {total.paidAmount.toLocaleString()}
           </td>
-          <td title="missing amount" className="main-table-row">
+          <td title="Amount due" className="main-table-row">
             {total.missingAmount.toLocaleString()}
           </td>
         </tr>
@@ -116,13 +116,13 @@ class MonthStats extends Component {
             Month
           </th>
           <th>
-            Amount (plan)
+            Total amount (USD)
           </th>
           <th>
-            Amount paid
+            Amount paid (USD)
           </th>
           <th>
-            Amount missing
+            Amount due (USD)
           </th>
         </tr>
         </thead>
@@ -143,13 +143,13 @@ class MonthStats extends Component {
           <td title="Month" className="text-row main-table-row">
             {taxInfo.name}
           </td>
-          <td title="planned amount" className="main-table-row">
+          <td title="Total amount" className="main-table-row">
             {taxInfo.plannedAmount.toLocaleString()}
           </td>
-          <td title="paid amount" className="main-table-row">
+          <td title="Amount paid" className="main-table-row">
             {taxInfo.paidAmount.toLocaleString()}
           </td>
-          <td title="missing amount" className="main-table-row">
+          <td title="Amount due" className="main-table-row">
             {taxInfo.missingAmount.toLocaleString()}
           </td>
         </tr>);
@@ -211,7 +211,7 @@ class MonthStats extends Component {
       <th className="text-row">
         Address
       </th>
-      <th>Amount missing</th>
+      <th>Amount due (USD)</th>
       <th/>
     </tr>);
   };
@@ -224,10 +224,10 @@ class MonthStats extends Component {
         Owner name
       </th>
       <th className="main-table-row">
-        Amount paid
+        Amount paid (USD)
       </th>
       <th className="main-table-row">
-        Amount missing
+        Amount due (USD)
       </th>
       <th className="main-table-row">
         Send reminder
@@ -239,7 +239,7 @@ class MonthStats extends Component {
     return (
         <tr key={owner.name + '_owner'} className={taxInfo.expanded ? "show-row" : "hide-row"}>
           <td className="text-row main-table-row">
-                        <span className="open-addresses" onClick={() => this.handleExpandAddressesTable(taxInfo, owner)}
+                        <span className="open-addresses open-debtors" onClick={() => this.handleExpandAddressesTable(taxInfo, owner)}
                               title="Expand">
                             <Icon icon={owner.isAddressesExpanded ? "chevron-down" : "chevron-right"}/>
                         </span>
