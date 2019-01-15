@@ -145,6 +145,9 @@ class PropertyListView extends React.Component {
 
             return estate;
         });
+        if (this.state.showTaxZones) {
+            this.createTaxLayers();
+        }
     };
 
     createPopupContent = (estate, popupLayer) => {
@@ -179,6 +182,7 @@ class PropertyListView extends React.Component {
 
 
     createTaxLayers = () => {
+        this.removeTaxLayers();
         this.state.taxZones.forEach((pol) => {
             let defaultColor;
             let hoverColor;
@@ -199,7 +203,7 @@ class PropertyListView extends React.Component {
                     defaultColor = '#679fda';
                     hoverColor = '#5fb5dd';
             }
-            let polygonContent = L.polygon(pol.zoneCoordinates, {color: defaultColor}).bindTooltip(pol.name,{sticky:true});
+            let polygonContent = L.polygon(pol.zoneCoordinates, {color: defaultColor}).bindTooltip(pol.name, {sticky: true});
             this.createPolygonContent(polygonContent, defaultColor, hoverColor);
             this.state.layers.addLayer(polygonContent);
 
