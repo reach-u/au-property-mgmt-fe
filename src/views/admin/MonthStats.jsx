@@ -90,13 +90,13 @@ class MonthStats extends Component {
           <td title="Total" className="text-row main-table-row">
             Total
           </td>
-          <td title="planned amount" className="main-table-row">
+          <td title="Total amount" className="main-table-row">
             {total.plannedAmount.toLocaleString()}
           </td>
-          <td title="paid amount" className="main-table-row">
+          <td title="Amount paid" className="main-table-row">
             {total.paidAmount.toLocaleString()}
           </td>
-          <td title="missing amount" className="main-table-row">
+          <td title="Amount due" className="main-table-row">
             {total.missingAmount.toLocaleString()}
           </td>
         </tr>
@@ -143,13 +143,13 @@ class MonthStats extends Component {
           <td title="Month" className="text-row main-table-row">
             {taxInfo.name}
           </td>
-          <td title="planned amount" className="main-table-row">
+          <td title="Total amount" className="main-table-row">
             {taxInfo.plannedAmount.toLocaleString()}
           </td>
-          <td title="paid amount" className="main-table-row">
+          <td title="Amount paid" className="main-table-row">
             {taxInfo.paidAmount.toLocaleString()}
           </td>
-          <td title="missing amount" className="main-table-row">
+          <td title="Amount due" className="main-table-row">
             {taxInfo.missingAmount.toLocaleString()}
           </td>
         </tr>);
