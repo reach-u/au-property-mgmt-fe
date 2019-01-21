@@ -34,6 +34,24 @@ const Help = () => {
             apartment, part of apartment building, built on certain land parcel)
           </p>
         </li>
+        <li>
+          <img src={check} alt="check mark" />
+          <p>
+            <strong>Land tax data for potential buyers</strong>: monthly land tax data of each property and tax zones visualized on the map
+          </p>
+        </li>
+        <li>
+          <img src={check} alt="check mark" />
+          <p>
+            <strong>Land tax data for property owner</strong>: overview of land tax amounts and payments and option to pay invoices
+          </p>
+        </li>
+        <li>
+          <img src={check} alt="check mark" />
+          <p>
+            <strong>Land tax data for tax administrator</strong>: different land tax statistics, including paid and unpaid tax amounts per tax zone and per month, information about debtors and option to send reminders about unpaid tax invoices.
+          </p>
+        </li>
       </ul>
       <p>
         Accessibility to different data within the system depends on specfic use cases and can also
