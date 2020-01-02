@@ -212,13 +212,19 @@ class App extends Component {
           </Suspense>
 
           {/*{this.props.location.pathname !== '/search' && (*/}
-            {window.innerWidth > 1370 && <div className="footer">
-              <div className="footer-block footer-logo"><img src={itlLogo} alt="ITL logo" height={15} /></div>
-              <div className="footer-block">Estonian Association of Information Technology and Telecommunications</div>
-              <div className="footer-block">Lõõtsa 6, 11415 Tallinn</div>
-               <div className="footer-block">6177&nbsp;145</div>
-               <div className="footer-block"><a href="mailto:info@itl.ee">info@itl.ee</a></div>
-            </div>}
+          {window.innerWidth > 1370 && (
+            <div className="footer">
+              <div className="footer-block footer-logo">
+                <img src={itlLogo} alt="ITL logo" height={15} />
+              </div>
+              <div className="footer-block">Estonian ICT Cluster</div>
+              <div className="footer-block">
+                <a href="https://www.e-estoniax.com" target="_blank" rel="noopener">
+                  www.e-estoniax.com
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </Fragment>
     );
