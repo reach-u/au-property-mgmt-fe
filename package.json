@@ -8,7 +8,7 @@
     "mobx": "^5.5.2",
     "mobx-react": "^5.3.5",
     "moment": "^2.23.0",
-    "node-sass": "^4.9.4",
+    "node-sass": "^7.0.0",
     "react": "^16.6.0",
     "react-autocomplete": "^1.8.1",
     "react-bootstrap-dropdown-menu": "^1.1.15",
